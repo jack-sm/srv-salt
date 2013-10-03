@@ -1,0 +1,48 @@
+- !!com.cons3rt.dataaccess.entity.VirtualizationRealm
+  description: VMWare vCloud
+  name: Hanscom TestForge (vCloud)
+  virtualizationRealmType: VMWARE_VCLOUD_DRIVER
+  maximumVirtualMachines: 100
+  cloud: 
+    name: Hanscom TestForge Cloud
+  properties: !!set
+    ? idProperty: null
+      key: hostname
+      value: vcloud1.testforge.ceif.hpc.mil
+    : null
+    ? idProperty: null
+      key: protocol
+      value: https
+    : null
+    ? idProperty: null
+      key: password
+      value: vmwarepassword
+    : null
+    ? idProperty: null
+      key: username
+      value: esc_org_admin@ESC
+    : null
+    ? idProperty: null
+      key: port
+      value: '443'
+    : null
+    ? idProperty: null
+      key: organization
+      value: ESC
+    : null
+    ? idProperty: null
+      key: acceptSelfSignedCerts
+      value: true
+    : null
+    ? idProperty: null
+      key: organizationVdc
+      value: esc-orgvdc
+    : null
+    ? idProperty: null
+      key: network
+      value: esc-extorgnet
+    : null
+    ? idProperty: null
+      key: isolatedNetwork
+      value: esc-extorgnet-noroute
+    : null

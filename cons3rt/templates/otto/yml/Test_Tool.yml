@@ -1,0 +1,121 @@
+- !!com.cons3rt.dataaccess.entity.TestTool
+  description: soapUI test tool for Hanscom milCloud
+  name: soapUI
+  testToolType: SOAPUI
+  instanceLimit: 1
+  hostname: test-soapui1.testforge.ceif.hpc.mil
+  enabled: true
+  testToolAgentInstalled: true
+  properties: !!set
+    ? idProperty: null
+      key: majorVersion
+      value: 4
+    : null
+    ? idProperty: null
+      key: minorVersion
+      value: 5.1
+    : null
+    ? idProperty: null
+      key: functional-executable
+      value: /opt/soapui/bin/testrunner.sh
+    : null
+    ? idProperty: null
+      key: load-executable
+      value: /opt/soapui/bin/loadtestrunner.sh
+    : null
+
+- !!com.cons3rt.dataaccess.entity.TestTool
+  description: soapUI test tool for Hanscom milCloud
+  name: soapUI
+  testToolType: SOAPUI
+  instanceLimit: 1
+  hostname: test-soapui2.testforge.ceif.hpc.mil
+  enabled: true
+  testToolAgentInstalled: true
+  properties: !!set
+    ? idProperty: null
+      key: majorVersion
+      value: 4
+    : null
+    ? idProperty: null
+      key: minorVersion
+      value: 5.1
+    : null
+    ? idProperty: null
+      key: functional-executable
+      value: /opt/soapui/bin/testrunner.sh
+    : null
+    ? idProperty: null
+      key: load-executable
+      value: /opt/soapui/bin/loadtestrunner.sh
+    : null
+
+- !!com.cons3rt.dataaccess.entity.TestTool
+  description: Certify test tool for Hanscom milCloud
+  name: Certify
+  testToolType: CERTIFY
+  instanceLimit: 1
+  hostname: certify.testforge.ceif.hpc.mil
+  enabled: true
+  testToolAgentInstalled: true
+  properties: !!set
+    ? idProperty: null
+      key: majorVersion
+      value: 8
+    : null
+    ? idProperty: null
+      key: minorVersion
+      value: 70patch694
+    : null
+    ? idProperty: null
+      key: executable
+      value: c:\\Program Files (x86)\Worksoft\Certify\client\Certify.exe
+    : null
+
+- !!com.cons3rt.dataaccess.entity.TestTool
+  description: LISA Restful interface for Hanscom milCloud
+  name: Lisa
+  testToolType: LISA
+  instanceLimit: 1
+  hostname: test-lisa.testforge.ceif.hpc.mil
+  enabled: true
+  testToolAgentInstalled: false
+  properties: !!set
+    ? idProperty: null
+      key: majorVersion
+      value: 5
+    : null
+    ? idProperty: null
+      key: minorVersion
+      value: 0.23
+    : null
+    ? idProperty: null
+      key: protocol
+      value: http
+    : null
+    ? idProperty: null
+      key: port
+      value: 1505
+    : null
+
+- !!com.cons3rt.dataaccess.entity.TestTool
+  description: Retina interface for Hanscom milCloud
+  name: Retina
+  testToolType: RETINA
+  instanceLimit: 1
+  hostname: test-retina.testforge.ceif.hpc.mil
+  enabled: true
+  testToolAgentInstalled: false
+  properties: !!set
+    ? idProperty: null
+      key: majorVersion
+      value: 0
+    : null
+    ? idProperty: null
+      key: minorVersion
+      value: 0
+    : null
+    ? idProperty: null
+      key: username
+      value: admin
+    : null

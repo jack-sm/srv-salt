@@ -8,7 +8,7 @@
 | URL to the base installation.
 |
 */
-$config['base_url']	= 'https://www.testforge.ceif.hpc.mil/';
+$config['base_url']	= '{{pillar['cons3rt']['otto']['instance-ui-url']}}/';
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ $config['base_url']	= 'https://www.testforge.ceif.hpc.mil/';
 | Title of the site (displayed on the welcome page).
 |
 */
-$config['instance_name'] = 'Hanscom milCloud';
+$config['instance_name'] = '{{pillar['cons3rt']['otto']['instance-name']}}';
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ $config['instance_name'] = 'Hanscom milCloud';
 | Location of the site (displayed on the welcome page).
 |
 */
-$config['instance_location'] = 'Hanscom Air Force Base';
+$config['instance_location'] = '{{pillar['cons3rt']['otto']['instance-location']}}';
 
 /*
 |--------------------------------------------------------------------------
@@ -78,8 +78,8 @@ $config['show_banner'] = TRUE;
 | Properties of the installation for a given site.
 |
 */
-$config['clouds'] 					= array('Hanscom Cloud');
-$config['virtualization_services'] 	= array('VMWare vCloud');
+$config['clouds'] 					= array('{{pillar['cons3rt']['otto']['instance-cloud']}}');
+$config['virtualization_services'] 	= array('{{pillar['cons3rt']['otto']['instance-virtualization-service']}}');
 $config['provisioning_services'] 	= array('CONS3RT FAP');
 $config['build_services'] 			= array('maven');
 $config['test_services'] 			= array('iTKO Lisa', 'soapUI', 'Retina');

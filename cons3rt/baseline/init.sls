@@ -13,6 +13,7 @@ cons3rt-ntp:
     - running
     - enable: True
 
+# Create Cons3rt user and group
 cons3rt-user-and-group:
   group.present:
     - name: cons3rt
@@ -26,3 +27,30 @@ cons3rt-user-and-group:
       - cons3rt
     - require:
       - group: cons3rt
+
+drop-cons3rt.sh:
+  file.managed:
+    - name: /etc/profile.d/cons3rt.sh
+    - source: salt://cons3rt/files/cons3rt.sh
+    - wait:
+      - file: drop-jsvc-binary
+
+configure-cons3rt-nfs:
+  file.directory:
+    - name: /net/{{pillar.get('cons3rt:infrastructure:core-host:ip')}}/cons3rt
+    - mkdirs: True
+    - user: cons3rt
+    - group: cons3rt
+    - mode: 750
+    - recurse:
+      - user
+      - group
+  file.append:
+    - name: /etc/fstab
+    - text: 
+      - {{pillar.get('cons3rt:infrastructure:core-host:ip')}}:/cons3rt /net/{{pillar.get('cons3rt:infrastructure:core-host:ip')}}/cons3rt nfs defaults 0 0
+  service:
+    - name: netfs
+    - running
+    - enable: True
+

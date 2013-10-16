@@ -69,3 +69,7 @@ db-host-root-mysql-grants-{{cons3rt_domain}}:
     - grant: all privileges
     - database: *.*
     - host: {{cons3rt_domain}}
+
+# Install JRE
+include:
+  - java.install-jre-into-opt

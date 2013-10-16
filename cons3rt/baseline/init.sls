@@ -54,3 +54,12 @@ configure-cons3rt-nfs:
     - running
     - enable: True
 
+drop-jsvc-binary:
+  file.managed:
+    - name: /opt/commons-daemon/jsvc
+    - source: salt://java/files/jsvc
+    - mkdirs: True
+    - wait:
+      - file: drop-jre-java.sh
+
+

@@ -7,8 +7,7 @@
 
 drop-jre-tarball:
   file.managed:
-    #- source: salt://{{pillar.get('cons3rt:files:jre-location')}}
-    - source: salt://{{pillar['cons3rt']['files']['jre-location']}}
+    - source: salt://{{pillar.get('cons3rt:files:jre-location')}}
     - name: /opt/jre.tar.gz
 
 unpack-jre-tarball:
@@ -21,7 +20,6 @@ unpack-jre-tarball:
 update-jre-alternatives:
   cmd.wait:
     - name: "updatedb && update-alternatives --install /usr/bin/java java /opt/{{salt['pillar.get']('cons3rt:files:jre-version')}}/bin/java 1"
-    #- name: "updatedb && update-alternatives --install /usr/bin/java java /opt/{{pillar['cons3rt']['files']['jre-version']}}/bin/java 1"
     - wait:
       - cmd: unpack-jre-tarball
 
@@ -32,12 +30,4 @@ drop-jre-java.sh:
     - template: jinja
     - wait:
       - cmd: update-jre-alternatives
-
-drop-jsvc-binary:
-  file.managed:
-    - name: /opt/commons-daemon/jsvc
-    - source: salt://java/files/jsvc
-    - mkdirs: True
-    - wait:
-      - file: drop-jre-java.sh
 

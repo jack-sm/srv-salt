@@ -1,9 +1,13 @@
 # This file is managed by SaltStack
-# Manual customization of this will be overwritten
+# Manual customization of this file will be overwritten
 *filter
-:INPUT ACCEPT [0:0]
-:FORWARD ACCEPT [0:0]
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
 :OUTPUT ACCEPT [0:0]
+-A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+-A INPUT -f -j DROP
+-A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+-A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 -A INPUT -p icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT

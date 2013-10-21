@@ -33,9 +33,11 @@ rndc-key-creation:
   file:
     - managed
     - source: salt://oso_el6/bind/templates/forwarders.conf.jinja
+    - user: named
+    - group: named
     - mode: 640
     - template: jinja
-
+ 
 {% set oso_domain=salt['pillar.get']('oso_el6:domain','example.com') %}
 initiate-dns-db:
   cmd:
@@ -67,6 +69,8 @@ dnssec-key-install:
     - managed
     - source: salt://oso_el6/bind/templates/named.conf.jinja
     - template: jinja
+    - user: named
+    - group: named
 
 
 

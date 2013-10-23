@@ -1,6 +1,6 @@
 #!/bin/bash
 
-domain={{salt['pillar.get']('oso_el6:domain','example.com')}}
+domain={{salt['pillar.get']('oso_el6:network:domain')}}
 
 pushd /var/named
 rm K${domain}*

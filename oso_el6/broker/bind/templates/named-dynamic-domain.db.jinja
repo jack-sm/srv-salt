@@ -1,4 +1,4 @@
-{% set oso_domain=salt['pillar.get']('oso_el6:domain','example.com') %}
+{% set oso_domain=salt['pillar.get']('oso_el6:network:domain') %}
 $ORIGIN .
 $TTL 1 ; 1 seconds (for testing only)
 {{oso_domain}}       IN SOA  ns1.{{oso_domain}}. hostmaster.{{oso_domain}}. (

@@ -1,4 +1,4 @@
-{% set oso_domain=salt['pillar.get']('oso_el6:domain','example.com') %}
+{% set oso_domain=salt['pillar.get']('oso_el6:network:domain') %}
 // named.conf
 //
 // Provided by Red Hat bind package to configure the ISC BIND named(8) DNS

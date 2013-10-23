@@ -11,5 +11,5 @@ ruby193:
     - names:
       - /etc/profile.d/scl193.sh
       - /etc/sysconfig/mcollective
-    - source: salt://oso_el6/ruby193/files/scl193.sh
+    - source: salt://oso_el6/ruby193/scripts/scl193.sh
     - mode: '0644'

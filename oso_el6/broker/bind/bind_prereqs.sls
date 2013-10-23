@@ -11,7 +11,7 @@ dnssec-key-creation:
     - name: dnssec-key-creation.sh
     - mode: 755
     - user: root
-    - source: salt://oso_el6/bind/scripts/dnssec-key-creation.sh
+    - source: salt://oso_el6/broker/bind/scripts/dnssec-key-creation.sh
     - template: jinja
     - watch:
       - pkg: bind-packages
@@ -32,13 +32,13 @@ rndc-key-creation:
 /var/named/forwarders.conf:
   file:
     - managed
-    - source: salt://oso_el6/bind/templates/forwarders.conf.jinja
+    - source: salt://oso_el6/broker/bind/templates/forwarders.conf.jinja
     - user: named
     - group: named
     - mode: 640
     - template: jinja
  
-{% set oso_domain=salt['pillar.get']('oso_el6:domain','example.com') %}
+{% set oso_domain=salt['pillar.get']('oso_el6:network:domain') %}
 initiate-dns-db:
   cmd:
     - wait
@@ -48,7 +48,7 @@ initiate-dns-db:
   file:
     - managed
     - name: /var/named/dynamic/{{oso_domain}}.db
-    - source: salt://oso_el6/bind/templates/named-dynamic-domain.db.jinja
+    - source: salt://oso_el6/broker/bind/templates/named-dynamic-domain.db.jinja
     - template: jinja
     - user: named
     - group: named
@@ -59,7 +59,7 @@ dnssec-key-install:
     - name: dnssec-key-install.sh
     - mode: 755
     - user: root
-    - source: salt://oso_el6/bind/scripts/dnssec-key-install.sh
+    - source: salt://oso_el6/broker/bind/scripts/dnssec-key-install.sh
     - template: jinja
     - watch:
       - pkg: bind-packages
@@ -67,11 +67,8 @@ dnssec-key-install:
 /etc/named.conf:
   file:
     - managed
-    - source: salt://oso_el6/bind/templates/named.conf.jinja
+    - source: salt://oso_el6/broker/bind/templates/named.conf.jinja
     - template: jinja
     - user: named
     - group: named
-
-
-
 

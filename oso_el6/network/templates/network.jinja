@@ -1,0 +1,11 @@
+# This file is managed by SaltStack - DO NOT MODIFY LOCALLY
+{% set oso_domain=salt['pillar.get']('oso_el6:domain') %}
+{% set oso_broker_hostname=salt['pillar.get']('oso_el6:broker:hostname') %}
+{% set oso_network_gateway=salt['pillar.get']('oso_el6:network:gateway') %}
+NETWORKING=yes
+NETWORKING_IPV6=no
+IPV6INIT=no
+DOMAIN={{oso_domain}}
+HOSTNAME={{oso_broker_hostname}}
+GATEWAY={{oso_network_gateway}}
+

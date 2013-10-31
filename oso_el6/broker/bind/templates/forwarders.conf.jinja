@@ -1,3 +1,0 @@
-{% set dns1=salt['pillar.get']('oso_el6:network:dns_servers:dns1') %}
-{% set dns2=salt['pillar.get']('oso_el6:network:dns_servers:dns2') %}
-forwarders { {{dns1}}; {{dns2}}; } ;

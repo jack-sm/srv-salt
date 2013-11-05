@@ -1,7 +1,0 @@
-# File managed by saltstack - DO NOT MODIFY LOCALLY!
-{% set oso_domain=salt['pillar.get']('oso_el6:network:domain') -%}
-{% set oso_broker=salt['pillar.get']('oso_el6:broker:hostname') -%}
-{% set oso_broker_ip=salt['pillar.get']('oso_el6:broker:ip') -%}
-prepend domain-name-servers {{oso_broker_ip}};
-supersede host-name "{{oso_broker}}";
-supersede domain-name "{{oso_domain}}";

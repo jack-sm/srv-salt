@@ -1,0 +1,13 @@
+[openshift-origin-deps]
+{% set buildtype=salt['pillar.get']('oso_el6:buildtype','stable') %}
+{% if buildtype=='nightly' %}
+name=openshift-origin-deps
+baseurl=https://mirror.openshift.com/pub/openshift-origin/nightly/rhel-6/dependencies/x86_64/
+gpgcheck=0
+enabled=1
+{% elif buildtype=='stable' %}
+name=openshift-origin-deps
+baseurl=https://mirror.openshift.com/pub/openshift-origin/release/2/rhel-6/dependencies/x86_64/
+gpgcheck=0
+enabled=1
+{% endif %}

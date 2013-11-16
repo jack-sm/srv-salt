@@ -1,0 +1,20 @@
+# File managed by SaltStack - DO NOT MODIFY LOCALLY!
+{% set oso_broker_fqdn=salt['pillar.get']('oso_el6:broker:hostname')+'.'+salt['pillar.get']('oso_el6:network:domain') %}
+{% set oso_mclct_pswd=salt['pillar.get']('oso_el6:activemq_mclct_pswd') %}
+topicprefix = /topic/
+main_collective = mcollective
+collectives = mcollective
+libdir =/opt/rh/ruby193/root/usr/libexec/mcollective
+logfile = /var/log/mcollective-client.log
+loglevel = debug
+
+# Plugins
+securityprovider = psk
+plugin.psk = unset
+
+connector = activemq
+plugin.activemq.pool.size = 1
+plugin.activemq.pool.1.host = {{oso_broker_fqdn}}
+plugin.activemq.pool.1.port = 61613
+plugin.activemq.pool.1.user = mcollective
+plugin.activemq.pool.1.password = {{oso_mclct_pswd}}

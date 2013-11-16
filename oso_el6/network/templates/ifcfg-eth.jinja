@@ -1,0 +1,13 @@
+# This file is managed by SaltStack - DO NOT MODIFY LOCALLY!
+{% set oso_broker_eth_device=salt['pillar.get']('oso_el6:broker:eth_device','eth0') -%}
+{% set oso_broker_ip=salt['pillar.get']('oso_el6:broker:ip') -%}
+{% set oso_subnet=salt['pillar.get']('oso_el6:network:subnet') -%}
+DEVICE={{oso_broker_eth_device}}
+TYPE=Ethernet
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+PEERDNS=no
+IPADDR={{oso_broker_ip}}
+NETMASK={{oso_subnet}}
+DNS1={{oso_broker_ip}}

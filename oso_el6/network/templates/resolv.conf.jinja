@@ -1,4 +1,5 @@
 # File managed by SaltStack - DO NOT MODIFY LOCALLY!
 nameserver {{salt['pillar.get']('oso_el6:broker:ip')}}
+search {{salt['pillar.get']('oso_el6:network:domain')}}
 
 

@@ -17,8 +17,8 @@ named-dir-perms:
     - name: /var/named
     - user: named
     - group: named
-    - dir_mode: 750
-    - file_mode: 640
+    - dir_mode: '0750'
+    - file_mode: '0640'
     - recurse:
       - user
       - group
@@ -31,7 +31,7 @@ add-broker-to-dns:
     - wait_script
     - name: add-broker-to-dns.sh
     - user: root
-    - mode: 755
+    - mode: '0755'
     - source: salt://oso_el6/bind/scripts/add-broker-to-dns.sh
     - template: jinja
     - require:

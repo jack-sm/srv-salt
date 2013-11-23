@@ -1,6 +1,6 @@
 {% if grains['id']==salt['pillar.get']('oso_el6:broker:hostname') %}
 include:
-  - sls: oso_el6.bind
+  - oso_el6.bind
 {% endif %}
 {% set oso_broker_eth_device=salt['pillar.get']('oso_el6:broker:eth_device','eth0') %}
 /etc/resolv.conf:
@@ -10,7 +10,7 @@ include:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 {% if grains['id']==salt['pillar.get']('oso_el6:broker:hostname') %}
     - require:
       - sls: oso_el6.bind
@@ -30,7 +30,7 @@ include:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 
 /etc/sysconfig/network-scripts/ifcfg-{{oso_broker_eth_device}}:
   file:
@@ -39,11 +39,5 @@ include:
     - template: jinja
     - user: root
     - group: root
-    - mode: 644
+    - mode: '0644'
 
-restart-network:
-  cmd:
-    - wait
-    - name: /etc/init.d/network restart
-    - watch:
-      - file: /etc/sysconfig/network-scripts/ifcfg-{{oso_broker_eth_device}}

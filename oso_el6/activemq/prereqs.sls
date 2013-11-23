@@ -2,13 +2,6 @@ include:
   - oso_el6.yum_repositories
   - oso_el6.selinux.permissive
 
-activemq-group:
-  group:
-    - present
-    - name: activemq
-    - system: True
-    - unique: True
-
 activemq-user:
   user:
     - present
@@ -16,11 +9,6 @@ activemq-user:
     - shell: /bin/bash
     - home: /usr/share/activemq
     - system: True
-    - unique: True
-    - groups:
-      - activemq
-    - require:
-      - group: activemq-group
 
 activemq-broker-packages:
   pkg:

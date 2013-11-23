@@ -9,7 +9,6 @@ include:
   - oso_el6.yum_repositories
   - oso_el6.activemq
   - oso_el6.mcollective
-  - oso_el6.selinux
   - oso_el6.selinux.permissive
 
 oso-broker-packages:
@@ -71,5 +70,14 @@ broker-key-{{key}}:
     - template: jinja
     - require:
        - pkg: oso-broker-packages
+
+setup-selinux-context:
+  module:
+    - wait
+    - name: state.sls
+    - mods: oso_el6.selinux.enforcing
+    - watch:
+      - pkg: oso-broker-packages
+
 
 

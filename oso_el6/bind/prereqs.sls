@@ -1,13 +1,6 @@
 include:
   - oso_el6.selinux.permissive
 
-named-group:
-  group:
-    - present
-    - name: named
-    - gid: 25
-    - system: True
-
 named-user:
   user:
     - present
@@ -15,11 +8,7 @@ named-user:
     - fullname: Named
     - shell: /sbin/nologin
     - home: /var/named
-    - uid: 25
-    - gid: 25
     - system: True
-    - require:
-      - group: named-group
 
 bind-packages:
   pkg:
@@ -35,12 +24,12 @@ dnssec-key-creation:
   cmd:
     - wait_script
     - name: dnssec-key-creation.sh
-    - mode: 755
+    - mode: '0755'
     - user: root
     - source: salt://oso_el6/bind/scripts/dnssec-key-creation.sh
     - template: jinja
     - watch:
-      - file: /etc/named.conf
+      - pkg: bind-packages
 
 rndc-key-creation:
   cmd:
@@ -76,7 +65,7 @@ initiate-dns-db:
     - wait_script
     - name: create-initial-dns-db.sh
     - user: root
-    - mode: 755
+    - mode: '0755'
     - source: salt://oso_el6/bind/scripts/create-initial-dns-db.sh
     - template: jinja
     - watch:
@@ -95,7 +84,7 @@ dnssec-key-install:
   cmd:
     - wait_script
     - name: dnssec-key-install.sh
-    - mode: 755
+    - mode: '0755'
     - user: root
     - source: salt://oso_el6/bind/scripts/dnssec-key-install.sh
     - template: jinja

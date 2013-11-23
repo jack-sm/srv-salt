@@ -17,7 +17,7 @@ ntpd:
 run-ntpdate:
   cmd:
     - wait
-    - name: ntpdate clock.redhat.com
+    - name: ntpdate time-c.nist.gov
     - watch:
       - service: ntpd
     - require:

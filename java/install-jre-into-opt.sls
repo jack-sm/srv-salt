@@ -7,7 +7,7 @@
 
 drop-jre-tarball:
   file.managed:
-    - source: salt://{{pillar.get('cons3rt:files:jre-location')}}
+    - source: salt://{{salt['pillar.get']('cons3rt:files:jre-location')}}
     - name: /opt/jre.tar.gz
 
 unpack-jre-tarball:

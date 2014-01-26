@@ -1,0 +1,472 @@
+# =======================================================
+#       REDHAT
+# =======================================================
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 6.3 - Small
+ name: RHEL-6.3-x64-sm
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 6.2 x64
+ templateSize: SMALL
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 6.3 - Medium
+ name: RHEL-6.3-x64-m
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 6.2 x64
+ templateSize: MEDIUM
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 6.3 - Large
+ name: RHEL-6.3-x64-lg
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 6.2 x64
+ templateSize: LARGE
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 6.3 - Extra-Large
+ name: RHEL-6.3-x64-xl
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 6.2 x64
+ templateSize: EXTRA_LARGE
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 6.3 - Jumbo
+ name: RHEL-6.3-x64-j
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 6.2 x64
+ templateSize: UNKNOWN
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Red Hat Enterprise Linux 5.8 - Small
+  name: RHEL-5.8-x64-sm
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: RHEL 5.8 x64
+  templateSize: SMALL
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Red Hat Enterprise Linux 5.8 - Medium
+  name: RHEL-5.8-x64-m
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: RHEL 5.8 x64
+  templateSize: MEDIUM
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Red Hat Enterprise Linux 5.8 - Large
+  name: RHEL-5.8-x64-lg
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: RHEL 5.8 x64
+  templateSize: LARGE
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit Red Hat Enterprise Linux 5.8 - Extra-Large
+ name: RHEL-5.8-x64-xl
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: RHEL 5.8 x64
+ templateSize: EXTRA_LARGE
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Red Hat Enterprise Linux 5.4 - Jumbo
+  name: RHEL-5.4-x64-j
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: RHEL 5.4 x64
+  templateSize: UNKNOWN
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit RHEL 6.3 - 1/2 CPU, 2GB RAM, 30GB HDD
+  name: RHEL-6.3-x64-stig
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: RHEL 6.2 x64
+  templateSize: MEDIUM
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+
+# =======================================================
+#       CENT
+# =======================================================
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit CentOS 6.3 - Small
+  name: Cent-6.3-x64-sm
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Cent 6.2 x64
+  templateSize: SMALL
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit CentOS 6.3 - Medium
+ name: Cent-6.3-x64-m
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: Cent 6.2 x64
+ templateSize: MEDIUM
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit CentOS 6.3 - Large
+ name: Cent-6.3-x64-lg
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: Cent 6.2 x64
+ templateSize: LARGE
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+ description: 64-bit CentOS 6.3 - Extra-Large
+ name: Cent-6.3-x64-xl
+ cons3rtAgentInstalled: true
+ metadata:
+ os:
+   name: Cent 6.2 x64
+ templateSize: EXTRA_LARGE
+ virtualizationRealm:
+   name: Hanscom TestForge (vCloud)
+ remoteAccessTemplates: !!set
+    ? id: null
+      name: Root VNC Connection
+      password: milCloud123
+      remoteAccessPort: 5902
+      remoteAccessType: VNC
+    : null
+    ? id: null
+      name: My SSH Connection
+      remoteAccessPort: 22
+      remoteAccessType: SSH
+    : null
+
+
+
+# =======================================================
+#       WINDOWS
+# =======================================================
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 2003 Server R2 Standard Edition - Small
+  name: Win-2003-x64-sm
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 2003 R2 Server x64
+  templateSize: SMALL
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 2003 Server R2 Standard Edition - Medium
+  name: Win-2003-x64-m
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 2003 R2 Server x64
+  templateSize: MEDIUM
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 2008 Server R2 Standard Edition - Medium
+  name: Win-2008-x64-m
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 2008 R2 Server x64
+  templateSize: MEDIUM
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 2008 Server R2 Standard Edition - Large
+  name: Win-2008-x64-lg
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 2008 R2 Server x64
+  templateSize: LARGE
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 2008 Server R2 Standard Edition - Extra-Large
+  name: Win-2008-x64-xl
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 2008 R2 Server x64
+  templateSize: EXTRA_LARGE
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+
+- !!com.cons3rt.dataaccess.entity.Template
+  description: 64-bit Windows 7 SP1 - Medium
+  name: Win-7-x64-m
+  cons3rtAgentInstalled: true
+  metadata:
+  os:
+    name: Windows 7 Enterprise x64
+  templateSize: MEDIUM
+  virtualizationRealm:
+    name: Hanscom TestForge (vCloud)
+  remoteAccessTemplates: !!set
+    ? id: null
+      name: RDP Access
+      password: null
+      remoteAccessPort: 3389
+      remoteAccessType: RDP
+      username: .\Administrator
+    : null
+

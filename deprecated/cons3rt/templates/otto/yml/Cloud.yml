@@ -1,0 +1,11 @@
+- !!com.cons3rt.dataaccess.entity.Cloud
+  description: Hanscom TestForge Cloud
+  latitude: 42.5
+  localNetworkAddress: 10.220.102.0/24
+  longitude: 71.5
+  name: Hanscom TestForge Cloud
+  testManagementCapable: true
+  virtualServicesCapable: true
+  vpnHost: vpn.testforge.ceif.hpc.mil
+  vpnPort: 22
+  vpnType: SSH_VPN

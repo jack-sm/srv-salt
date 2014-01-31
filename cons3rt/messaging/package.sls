@@ -58,3 +58,13 @@ qpid-symlink-for-{{name}}:
     - target: {{apps_path}}/{{qpid|replace('.tar.gz','')}}/etc/{{target}}
 {% endfor %}
 
+{% if pillar['cons3rt']['qpid_use_sasl_auth']=='true' %}
+create-cons3rt-sasl-user:
+  cmd:
+    - wait
+    - name: echo "{{pillar['cons3rt']['qpid_sasl_password']}}" | saslpasswd2 -cf /var/lib/qpidd/qpidd.db -u QPID -p cons3rt
+    - watch:
+      - cmd: install-{{qpid}}
+{% endfor %}
+
+

@@ -1,12 +1,12 @@
 include:
-  - cons3rt.database.packages
+  - cons3rt.database.mysql.packages
 
 cons3rt-database:
   mysql_database:
     - present
     - name: cons3rt
     - require:
-      - sls: cons3rt.database.packages
+      - sls: cons3rt.database.mysql.packages
 
 {% set cons3rtdbpswdhash=pillar['cons3rt']['db-password-hashed'] %}
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:db-user','cons3rt') %}

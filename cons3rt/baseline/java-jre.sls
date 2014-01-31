@@ -4,22 +4,25 @@
 validate-java-jre-installed:
   file:
     - managed
-    - name: {{jrepath}}/.java-jre-version-{{jre}}-installed
+    - name: {{jrepath}}/.java-jre-version-{{jre}}-deployed
     - user: root
     - group: root
     - mode: '0644'
 
-java-jre-package:
-  file:
-    - managed
-    - source: salt://cons3rt/packages/{{jrepackage}}
-    - name: {{jrepath}}/{{jrepackage}}
+deploy-java-jre-package:
+  module:
+    - wait
+    - name: cp.get_file
+    - path: salt://cons3rt/packages/{{jrepackage}}
+    - dest: {{jrepath}}/{{jrepackage}}
+    - watch:
+      - file: validate-java-jre-installed
   cmd:
     - wait
     - cwd: {{jrepath}}/.
     - name: tar -zxf {{jrepath}}/{{jrepackage}}
     - watch:
-      - file: validate-java-jre-installed
+      - module: deploy-java-jre-package
   alternatives:
     - install
     - name: java
@@ -27,7 +30,15 @@ java-jre-package:
     - path: {{jrepath}}/jre{{jre}}/bin/java
     - priority: 1
     - require:
-      - cmd: java-jre-package
+      - cmd: deploy-java-jre-package
+
+remove-java-jre-archive:
+  module:
+    - wait
+    - name: file.remove
+    - path: {{jrepath}}/{{jrepackage}}
+    - watch:
+      - cmd: deploy-java-jre-package
 
 /etc/profile.d/java.sh:
   file:
@@ -38,5 +49,15 @@ java-jre-package:
     - group: root
     - mode: '0644'
     - require:
-      - cmd: java-jre-package
+      - cmd: deploy-java-jre-package
 
+{{jrepath}}/jre{{jre}}:
+  file:
+    - directory
+    - user: root
+    - group: root
+    - recurse:
+      - user
+      - group
+    - require:
+      - cmd: deploy-java-jre-package

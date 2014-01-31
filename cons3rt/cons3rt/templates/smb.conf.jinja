@@ -1,0 +1,53 @@
+[global]
+  workgroup = workgroup
+  server string = Samba Server
+  load printers = no
+  socket options = TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=49152 SO_SNDBUF=49152
+  max xmit = 65535
+  dead time = 15
+  preferred master = no
+  hosts allow = 10.220.101. 10.220.102. 127.
+  passdb backend = tdbsam
+  security = share
+  log file = /var/log/samba/systems/log.%m
+  max log size = 50
+
+
+#============================ Share Definitions ==============================
+[CONS3RT]
+  comment = CONS3RT share
+  path = /cons3rt
+  public = yes
+  browsable = no
+  writable = yes
+  force user = cons3rt
+  force group = cons3rt
+  kernel oplocks = yes
+  oplocks = yes
+  level2 oplocks = yes
+  hosts allow = 10.220.101. 127.
+
+[CONS3RT-RUN]
+  comment = CONS3RT run share
+  path = /cons3rt/run
+  public = yes
+  browsable = no
+  writable = yes
+  force user = cons3rt
+  force group = cons3rt
+  kernel oplocks = yes
+  oplocks = yes
+  level2 oplocks = yes
+
+[AGENT-SERVICE]
+  comment = Agent Service share
+  path = /cons3rt/agent-service
+  public = yes
+  browsable = no
+  writable = no
+  force user = cons3rt
+  force group = cons3rt
+  kernel oplocks = yes
+  oplocks = yes
+  level2 oplocks = yes
+

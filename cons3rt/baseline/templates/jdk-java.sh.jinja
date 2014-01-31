@@ -1,4 +1,4 @@
-{%- set jdkversion=salt['pillar.get']('oracle-java:java_jdk:version','') %}
-{%- set jdkpath=salt['pillar.get']('oracle-java:application_path','/opt') %}
+{%- set jdkversion=salt['pillar.get']('cons3rt-packages:java_jdk:version','') -%}
+{%- set jdkpath=salt['pillar.get']('cons3rt-packages:application_path','/opt') -%}
 export JAVA_HOME={{jdkpath}}/jdk{{jdkversion}}
 export PATH=${JAVA_HOME}/bin:${PATH}

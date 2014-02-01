@@ -2,7 +2,7 @@ commons-daemon:
   file:
     - managed
     - name: /opt/commons-daemon/jsvc
-    - source: salt://packages/commons-daemon/jsvc/rhel6-x64/jsvc
+    - source: salt://cons3rt/packages/commons-daemon/jsvc/rhel6-x64/jsvc
     - makedirs: True
     - user: root
     - group: root

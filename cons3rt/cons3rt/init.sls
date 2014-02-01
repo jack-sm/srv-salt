@@ -1,12 +1,7 @@
 include:
-  - cons3rt.baseline:
-    - commons-daemon
-    - cons3rt-profile
-    - cons3rt-share
-    - system-accounts
-    - iptables
-    - ntp
-    - java-jre
+{% for state in 'commons-daemon','commons-daemon','cons3rt-profile','cons3rt-share
+','system-accounts','iptables','ntp','java-jre' %}
+  - cons3rt.baseline.{{state}}{% endfor %}
   - cons3rt.cons3rt.nfs
   - cons3rt.cons3rt.samba
 

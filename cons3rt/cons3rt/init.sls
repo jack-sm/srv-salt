@@ -17,4 +17,21 @@ cons3rt-file-server-services:
       - sls: cons3rt.cons3rt.samba
       - sls: cons3rt.cons3rt.nfs
 
+restart-samba:
+  module:
+    - wait
+    - name: service.restart
+    - m_name: smb
+    - watch:
+      - sls: cons3rt.cons3rt.samba
+
+{% for service in 'nfs','rpcbind' %}
+restart-{{service}}: 
+  module:
+    - wait
+    - name: service.restart
+    - m_name: {{service}}
+    - watch:
+      - sls: cons3rt.cons3rt.nfs
+{% endfor %}
 

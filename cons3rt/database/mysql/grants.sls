@@ -4,7 +4,7 @@ include:
 cons3rt-database:
   mysql_database:
     - present
-    - name: cons3rt
+    - name: 'cons3rt'
     - require:
       - sls: cons3rt.database.mysql.packages
 

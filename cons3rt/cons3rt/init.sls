@@ -6,7 +6,7 @@ include:
   - cons3rt.cons3rt.samba
 
 {% for dir in '/cons3rt','/cons3rt/agent-service','/cons3rt/run' %}
-{{dir}}
+{{dir}}:
   file:
     - directory
     - user: cons3rt

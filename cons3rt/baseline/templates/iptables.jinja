@@ -19,16 +19,16 @@
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 138 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 111 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 111 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 662 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 662 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 662 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 875 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 875 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 875 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 892 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 892 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 892 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 2049 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 2049 -j ACCEPT
--A INPUT -m state --state NEW -m tcp -p udp --dport 32769 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 2049 -j ACCEPT
+-A INPUT -m state --state NEW -m udp -p udp --dport 32769 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 32803 -j ACCEPT{% endif %}
 {%- if grains['id'] == hosts.messaging.hostname %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport {{salt['pillar.get']('cons3rt:qpid_messaging_port', '4443')}} -j ACCEPT{% endif %}

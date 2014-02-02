@@ -23,6 +23,7 @@ iptables:
 reload-iptables:
   module:
     - wait
+    - name: service.restart
     - m_name: iptables
     - watch:
       - file: /etc/sysconfig/iptables

@@ -14,7 +14,7 @@ cons3rt-database:
 {% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager' %}
 {% set hostname=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':hostname','') %}
 {% if hostname != '' %}
-cons3rt-db-user-{{hostname}}:
+cons3rt-db-user-{{vm}}-fqdn:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
@@ -23,7 +23,7 @@ cons3rt-db-user-{{hostname}}:
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-user-{{hostname|replace('.'~domain,'')}}:
+cons3rt-db-user-{{vm}}-hostname:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
@@ -32,7 +32,7 @@ cons3rt-db-user-{{hostname|replace('.'~domain,'')}}:
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-grant-{{hostname}}:
+cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
@@ -41,9 +41,9 @@ cons3rt-db-grant-{{hostname}}:
     - database: cons3rt.*
     - host: {{hostname}}
     - require:
-      - mysql_user: cons3rt-db-user-{{hostname}}
+      - mysql_user: cons3rt-db-user-{{vm}}-fqdn
 
-cons3rt-db-grant-{{hostname|replace('.'~domain,'')}}:
+cons3rt-db-grant-{{vm}}-hostname:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
@@ -52,7 +52,7 @@ cons3rt-db-grant-{{hostname|replace('.'~domain,'')}}:
     - database: cons3rt.*
     - host: {{hostname|replace('.'~domain,'')}}
     - require:
-      - mysql_user: cons3rt-db-user-{{hostname|replace('.'~domain,'')}}
+      - mysql_user: cons3rt-db-user-{{vm}}-hostname
 {% endif %}
 {% endfor %}
 

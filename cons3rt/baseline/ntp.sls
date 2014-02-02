@@ -2,6 +2,15 @@ ntp:
   pkg:
     - installed
 
+/etc/ntp.conf:
+  file:
+    - managed
+    - source: salt://cons3rt/baseline/templates/ntp.conf.jinja
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: '0644'
+
 ntpd:
   service:
     - running
@@ -9,14 +18,5 @@ ntpd:
     - reload: True
     - watch:
       - file: /etc/ntp.conf
-
-ntpdate:
-  cmd:
-    - wait
-    - name: ntpdate time-c.nist.gov
-    - watch:
-      - service: ntpd
-    - require:
-      - service: ntpd
 
 

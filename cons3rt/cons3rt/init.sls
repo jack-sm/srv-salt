@@ -12,7 +12,8 @@ include:
     - user: cons3rt
     - group: cons3rt
 {% if dir == '/cons3rt' %}
-    - mode: g+rwxs,o+rx{% endif %}
+    - mode: 'g+rwxs,o+rx'
+{% endif %}
     - makdirs: true
 {% endfor %}
 

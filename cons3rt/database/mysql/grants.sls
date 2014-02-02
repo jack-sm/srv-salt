@@ -18,7 +18,7 @@ cons3rt-db-user-{{vm}}-fqdn:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
-    - password_hash: {{cons3rtdbpswdhash}}
+    - password_hash: "{{cons3rtdbpswdhash}}"
     - host: {{hostname}}
     - require:
       - mysql_database: cons3rt-database
@@ -27,7 +27,7 @@ cons3rt-db-user-{{vm}}-hostname:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
-    - password_hash: {{cons3rtdbpswdhash}}
+    - password_hash: "{{cons3rtdbpswdhash}}"
     - host: {{hostname|replace('.'~domain,'')}}
     - require:
       - mysql_database: cons3rt-database

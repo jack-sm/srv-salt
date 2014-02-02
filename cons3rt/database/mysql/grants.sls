@@ -11,48 +11,48 @@ cons3rt-database:
 {% set cons3rtdbpswdhash=pillar['cons3rt']['cons3rt_database_password'] %}
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
-{% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
+{% set infra=pillar['cons3rt-infrastructure']['hosts'] %}a
 {% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','retina' %}
-{% if vm.hostname %}
-cons3rt-db-user-{{vm.hostname}}:
+{% if infra.vm.hostname %}
+cons3rt-db-user-{{infra.vm.hostname}}:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
     - password_hash: {{cons3rtdbpswdhash}}
-    - host: {{vm.hostname}}
+    - host: {{infra.vm.hostname}}
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-user-{{vm.hostname|replace('.'~domain,'')}}:
+cons3rt-db-user-{{infra.vm.hostname|replace('.'~domain,'')}}:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
     - password_hash: {{cons3rtdbpswdhash}}
-    - host: {{vm.hostname|replace('.'~domain,'')}}
+    - host: {{infra.vm.hostname|replace('.'~domain,'')}}
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-grant-{{vm.hostname}}:
+cons3rt-db-grant-{{infra.vm.hostname}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
     - grant_option: True
     - database: cons3rt.*
-    - host: {{vm.hostname}}
+    - host: {{infra.vm.hostname}}
     - require:
-      - mysql_user: cons3rt-db-user-{{vm.hostname}}
+      - mysql_user: cons3rt-db-user-{{infra.vm.hostname}}
 
-cons3rt-db-grant-{{vm.hostname|replace('.'~domain,'')}}:
+cons3rt-db-grant-{{infra.vm.hostname|replace('.'~domain,'')}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
     - grant_option: True
     - database: cons3rt.*
-    - host: {{vm.hostname|replace('.'~domain,'')}}
+    - host: {{infra.vm.hostname|replace('.'~domain,'')}}
     - require:
-      - mysql_user: cons3rt-db-user-{{vm.hostname|replace('.'~domain,'')}}
+      - mysql_user: cons3rt-db-user-{{infra.vm.hostname|replace('.'~domain,'')}}
 {% endif %}
 {% endfor %}
 

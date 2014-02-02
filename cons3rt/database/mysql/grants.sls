@@ -13,7 +13,7 @@ cons3rt-database:
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {% set infra=pillar['cons3rt-infrastructure']['hosts'] %}
 {% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','retina' %}
-{% if infra.vm.hostname != null or == '' %}
+{% if infra.vm.hostname != '' %}
 cons3rt-db-user-{{infra.vm.hostname}}:
   mysql_user:
     - present

@@ -12,7 +12,7 @@ include:
     - user: cons3rt
     - group: cons3rt
 {% if dir == '/cons3rt' %}
-    - mode: 'g+rwxs,o+rx'
+    - mode: '2755'
 {% endif %}
     - makdirs: true
 {% endfor %}

@@ -1,3 +1,5 @@
+{%- set infranetwork=pillar['cons3rt']['infrastructure_network'] -%}
+{%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
 [global]
   workgroup = workgroup
   server string = Samba Server
@@ -6,7 +8,7 @@
   max xmit = 65535
   dead time = 15
   preferred master = no
-  hosts allow = 10.220.101. 10.220.102. 127.
+  hosts allow = {{infranetwork}} {%- for net in sutsnetwork -%}{{net-}}{%- endfor -%} 127.
   passdb backend = tdbsam
   security = share
   log file = /var/log/samba/systems/log.%m

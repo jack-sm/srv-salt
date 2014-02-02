@@ -12,47 +12,47 @@ cons3rt-database:
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
-{% for host in hosts.hostname %}
-{% if host %}
-cons3rt-db-user-{{host}}:
+{% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','retina' %}
+{% if vm.hostname %}
+cons3rt-db-user-{{vm.hostname}}:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
     - password_hash: {{cons3rtdbpswdhash}}
-    - host: {{host}}
+    - host: {{vm.hostname}}
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-user-{{host|replace('.'~domain,'')}}:
+cons3rt-db-user-{{vm.hostname|replace('.'~domain,'')}}:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
     - password_hash: {{cons3rtdbpswdhash}}
-    - host: {{host|replace('.'~domain,'')}}
+    - host: {{vm.hostname|replace('.'~domain,'')}}
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-grant-{{host}}:
+cons3rt-db-grant-{{vm.hostname}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
     - grant_option: True
     - database: cons3rt.*
-    - host: {{host}}
+    - host: {{vm.hostname}}
     - require:
-      - mysql_user: cons3rt-db-user-{{host}}
+      - mysql_user: cons3rt-db-user-{{vm.hostname}}
 
-cons3rt-db-grant-{{host|replace('.'~domain,'')}}:
+cons3rt-db-grant-{{vm.hostname|replace('.'~domain,'')}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
     - grant_option: True
     - database: cons3rt.*
-    - host: {{host}}
+    - host: {{vm.hostname|replace('.'~domain,'')}}
     - require:
-      - mysql_user: cons3rt-db-user-{{host|replace('.'~domain,'')}}
+      - mysql_user: cons3rt-db-user-{{vm.hostname|replace('.'~domain,'')}}
 {% endif %}
 {% endfor %}
 

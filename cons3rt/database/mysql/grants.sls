@@ -11,9 +11,9 @@ cons3rt-database:
 {% set cons3rtdbpswdhash=pillar['cons3rt']['cons3rt_database_password'] %}
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
-{% set infra=pillar['cons3rt-infrastructure']['hosts'] %}a
+{% set infra=pillar['cons3rt-infrastructure']['hosts'] %}
 {% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','retina' %}
-{% if infra.vm.hostname %}
+{% if infra.vm.hostname != null or == '' %}
 cons3rt-db-user-{{infra.vm.hostname}}:
   mysql_user:
     - present

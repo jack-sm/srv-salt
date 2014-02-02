@@ -6,3 +6,8 @@ mysql-packages:
       - mysql-server
       - mysql
 
+mysqld:
+  service:
+    - running
+    - enable: true
+

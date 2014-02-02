@@ -23,12 +23,12 @@ cons3rt-db-user-{{host}}:
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-user-{{host|replace '.'~domain, ''}}:
+cons3rt-db-user-{{host|replace('.'~domain,'')}}:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
     - password_hash: {{cons3rtdbpswdhash}}
-    - host: {{host|replace '.'~domain, ''}}
+    - host: {{host|replace('.'~domain,'')}}
     - require:
       - mysql_database: cons3rt-database
 
@@ -43,7 +43,7 @@ cons3rt-db-grant-{{host}}:
     - require:
       - mysql_user: cons3rt-db-user-{{host}}
 
-cons3rt-db-grant-{{host|replace '.'~domain, ''}}:
+cons3rt-db-grant-{{host|replace('.'~domain,'')}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
@@ -52,7 +52,7 @@ cons3rt-db-grant-{{host|replace '.'~domain, ''}}:
     - database: cons3rt.*
     - host: {{host}}
     - require:
-      - mysql_user: cons3rt-db-user-{{host|replace '.'~domain, ''}}
+      - mysql_user: cons3rt-db-user-{{host|replace('.'~domain,'')}}
 {% endif %}
 {% endfor %}
 

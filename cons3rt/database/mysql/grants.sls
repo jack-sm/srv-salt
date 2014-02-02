@@ -17,42 +17,66 @@ cons3rt-database:
 cons3rt-db-user-{{vm}}-fqdn:
   mysql_user:
     - present
-    - name: {{cons3rtdbuser}}
-    - password_hash: "{{cons3rtdbpswdhash}}"
-    - host: {{hostname}}
+    - name: '{{cons3rtdbuser}}'
+    - password_hash: '{{cons3rtdbpswdhash}}'
+    - host: '{{hostname}}'
     - require:
       - mysql_database: cons3rt-database
 
 cons3rt-db-user-{{vm}}-hostname:
   mysql_user:
     - present
-    - name: {{cons3rtdbuser}}
-    - password_hash: "{{cons3rtdbpswdhash}}"
-    - host: {{hostname|replace('.'~domain,'')}}
+    - name: '{{cons3rtdbuser}}'
+    - password_hash: '{{cons3rtdbpswdhash}}'
+    - host: '{{hostname|replace('.'~domain,'')}}'
     - require:
       - mysql_database: cons3rt-database
 
 cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present
-    - user: {{cons3rtdbuser}}
-    - grant: all privileges
+    - user: '{{cons3rtdbuser}}'
+    - grant: 'all privileges'
     - grant_option: True
-    - database: cons3rt.*
-    - host: {{hostname}}
+    - database: 'cons3rt.*'
+    - host: '{{hostname}}'
     - require:
       - mysql_user: cons3rt-db-user-{{vm}}-fqdn
 
 cons3rt-db-grant-{{vm}}-hostname:
   mysql_grants:
     - present
-    - user: {{cons3rtdbuser}}
+    - user: '{{cons3rtdbuser}}'
     - grant: all privileges
     - grant_option: True
-    - database: cons3rt.*
-    - host: {{hostname|replace('.'~domain,'')}}
+    - database: 'cons3rt.*'
+    - host: '{{hostname|replace('.'~domain,'')}}'
     - require:
       - mysql_user: cons3rt-db-user-{{vm}}-hostname
 {% endif %}
 {% endfor %}
+
+{% for host in '127.0.0.1','localhost' %}
+cons3rt-db-user-local-{{host}}:
+  mysql_user:
+    - present
+    - name: '{{cons3rtdbuser}}'
+    - password_hash: '{{cons3rtdbpswdhash}}'
+    - host: '{{host}}'
+    - require:
+      - mysql_database: cons3rt-database
+
+cons3rt-db-grant-local-{{host}}:
+  mysql_grants:
+    - present
+    - user: '{{cons3rtdbuser}}'
+    - grant: 'all privileges'
+    - grant_option: True
+    - database: 'cons3rt.*'
+    - host: '{{host}}'
+    - require:
+      - mysql_user: cons3rt-db-user-local-{{host}}
+{% endfor %}
+
+
 

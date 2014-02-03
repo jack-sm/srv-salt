@@ -17,10 +17,6 @@ cons3rt-account:
       - group: cons3rt-account
 
 {% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
-{% set webui=pillar['cons3rt-infrastructure']['hosts']['webinterface']['hostname'] %}
-{% set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['hostname'] %}
-{% set messaging=pillar['cons3rt-infrastructure']['hosts']['messaging']['hostname'] %}
-
 {% if grains['id'] == hosts.messaging.hostname %}
 jpmsg-account:
   group:
@@ -39,8 +35,9 @@ jpmsg-account:
     - require:
       - group: jpmsg-account
       - group: cons3rt-account
+{% endif %}
 
-{% elif grains['id'] == hosts.assetrepository.hostname or grains['id'] == hosts.webinterface.hostname %}
+{% if grains['id'] == hosts.assetrepository.hostname or grains['id'] == hosts.webinterface.hostname %}
 tomcat-account:
   group:
     - present
@@ -58,5 +55,4 @@ tomcat-account:
     - require:
       - group: tomcat-account
       - group: cons3rt-account
-
 {% endif %}

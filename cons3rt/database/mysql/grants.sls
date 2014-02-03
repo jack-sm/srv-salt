@@ -37,7 +37,6 @@ cons3rt-db-grant-{{vm}}-fqdn:
     - present
     - user: '{{cons3rtdbuser}}'
     - grant: 'ALL'
-    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{hostname}}'
     - require:
@@ -48,7 +47,6 @@ cons3rt-db-grant-{{vm}}-hostname:
     - present
     - user: '{{cons3rtdbuser}}'
     - grant: 'ALL'
-    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{hostname|replace('.'~domain,'')}}'
     - require:
@@ -71,7 +69,6 @@ cons3rt-db-grant-local-{{host}}:
     - present
     - user: '{{cons3rtdbuser}}'
     - grant: 'ALL'
-    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{host}}'
     - require:

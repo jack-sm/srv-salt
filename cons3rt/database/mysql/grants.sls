@@ -36,8 +36,8 @@ cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present
     - user: '{{cons3rtdbuser}}'
-    - grant: 'all privileges'
-    - grant_option: True
+    - grant: 'ALL'
+    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{hostname}}'
     - require:
@@ -47,8 +47,8 @@ cons3rt-db-grant-{{vm}}-hostname:
   mysql_grants:
     - present
     - user: '{{cons3rtdbuser}}'
-    - grant: all privileges
-    - grant_option: True
+    - grant: 'ALL'
+    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{hostname|replace('.'~domain,'')}}'
     - require:
@@ -70,8 +70,8 @@ cons3rt-db-grant-local-{{host}}:
   mysql_grants:
     - present
     - user: '{{cons3rtdbuser}}'
-    - grant: 'all privileges'
-    - grant_option: True
+    - grant: 'ALL'
+    - grant_option: true
     - database: 'cons3rt.*'
     - host: '{{host}}'
     - require:

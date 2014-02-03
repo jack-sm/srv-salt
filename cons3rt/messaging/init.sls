@@ -1,5 +1,5 @@
 {% set qpidsaslauth = pillar['cons3rt']['qpid_use_sasl_auth'] %}
-{% set qpidssl = pillar['cons3rt']['qpidd_use_ssl_encryption'] %}
+{% set qpidssl = pillar['cons3rt']['qpid_use_ssl_encryption'] %}
 include:
 {% for state in 'commons-daemon','commons-daemon','cons3rt-profile','cons3rt-share
 ','system-accounts','iptables','ntp','java-jre' %}

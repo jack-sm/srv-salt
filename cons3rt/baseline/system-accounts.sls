@@ -3,7 +3,7 @@
   file:
     - sed
     - before: 500
-    - after: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:gid',510) }}
+    - after: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:minimum_uid_gid',510) }}
 
 cons3rt-account:
   group:

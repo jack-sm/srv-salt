@@ -1,9 +1,17 @@
 # All system accounts needed for the cons3rt infrastructure are managed below
+/etc/login.defs:
+  file:
+    - sed
+    - before: 500
+    - after: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:gid',510) }}
+
 cons3rt-account:
   group:
     - present
     - name: cons3rt
     - gid: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:gid','500') }}
+    - require:
+      - file: /etc/login.defs
   user:
     - present
     - name: cons3rt
@@ -15,6 +23,7 @@ cons3rt-account:
       - cons3rt
     - require:
       - group: cons3rt-account
+      - file: /etc/login.defs
 
 {% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
 {% if grains['id'] == hosts.messaging.hostname %}
@@ -23,6 +32,8 @@ jpmsg-account:
     - present
     - name: jpmsg
     - gid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:gid','501') }}
+    - require:
+      - file: /etc/login.defs
   user:
     - present
     - name: jpmsg
@@ -35,6 +46,7 @@ jpmsg-account:
     - require:
       - group: jpmsg-account
       - group: cons3rt-account
+      - file: /etc/login.defs
 {% endif %}
 
 {% if grains['id'] == hosts.assetrepository.hostname or grains['id'] == hosts.webinterface.hostname %}
@@ -43,6 +55,8 @@ tomcat-account:
     - present
     - name: tomcat
     - gid: {{ salt['pillar.get']('cons3rt-system-users:tomcat:gid','502') }}
+    - require:
+      - file: /etc/login.defs
   user:
     - present
     - name: tomcat
@@ -55,4 +69,5 @@ tomcat-account:
     - require:
       - group: tomcat-account
       - group: cons3rt-account
+      - file: /etc/login.defs
 {% endif %}

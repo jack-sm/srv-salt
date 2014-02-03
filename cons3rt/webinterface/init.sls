@@ -10,7 +10,7 @@ include:
   file:
     - sed
     - before: ';date.timezone ='
-    - after: 'date.timezone = {{salt['pillar.get']('cons3rt:php_timezone','America/New_York'}}'
+    - after: 'date.timezone = {{salt['pillar.get']('cons3rt:php_timezone','America/New_York')}}'
     - require:
       - sls: cons3rt.webinterface.packages
 

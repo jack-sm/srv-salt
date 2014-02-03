@@ -5,9 +5,3 @@ mysql-packages:
       - MySQL-python
       - mysql-server
       - mysql
-
-mysqld:
-  service:
-    - running
-    - enable: true
-

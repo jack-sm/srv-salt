@@ -52,7 +52,7 @@ restart-guacamole:
     - m_name: guacd
     - watch:
       - sls: cons3rt.webinterface.guacamole
-      - module: restart-apache
+      - module: restart-httpd
       - module: restart-tomcat
 {% endif %}
 

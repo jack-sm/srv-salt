@@ -40,7 +40,7 @@
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT{% endif %}
 {%- if grains['id'] == hosts.webinterface.hostname %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-{%- if lower(guacamole) == 'true' %}
+{%- if guacamole|lower == 'true' %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4822 -j ACCEPT{% endif %}
 {%- endif %}
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited

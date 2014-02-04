@@ -4,6 +4,7 @@ include:
   - cons3rt.baseline.{{state}}{% endfor %}
   - cons3rt.tomcat.package
   - cons3rt.webinterface.packages
+  - cons3rt.webinterface.apache-configurations
 {% if salt['pillar.get']('cons3rt:guacamole_installed_with_ui','false') == 'true' %}
   - cons3rt.webinterface.guacamole{% endif %}
 

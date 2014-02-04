@@ -21,3 +21,14 @@ include:
     - require:
       - sls: cons3rt.webinterface.packages
 
+/etc/httpd/conf.d/cons3rt.conf:
+  file:
+    - managed
+    - source: salt://cons3rt/webinterface/templates/cons3rt.conf.jinja
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: '0644'
+    - require:
+      - sls: cons3rt.webinterface.packages
+

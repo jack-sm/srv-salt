@@ -36,6 +36,7 @@ restart-tomcat:
     - m_name: tomcat
     - watch:
       - sls: cons3rt.tomcat.package
+      - sls: cons3rt.webinterface.tomcat-configurations
 
 {% if salt['pillar.get']('cons3rt:guacamole_installed_with_ui','false')|lower == 'true' %}
 cons3rt-console-redirection-service:

@@ -28,13 +28,24 @@ cons3rt-share-client:
     - installed
     - name: nfs-utils
 
-enable-cons3rt-share-client-service:
+cons3rt-share-client-service:
   service:
     - name: netfs
     - running
     - enable: true
     - require:
       - pkg: cons3rt-share-client
+
+restart-cons3rt-share-client:
+  module:
+    - wait
+    - name: service.restart
+    - m_name: netfs
+    - watch:
+      - pkg: cons3rt-share-client
+      - file: cons3rt-share-fstab-addition
+      - file: /net/{{cons3rt}}/cons3rt
+      - service: cons3rt-share-client-service
 
 {% elif grains['id']==cons3rt %}
 cons3rt-share-symlink:

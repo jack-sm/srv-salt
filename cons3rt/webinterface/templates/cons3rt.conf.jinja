@@ -1,4 +1,4 @@
-{%- set webinterface = pillar['cons3rt-infrastructure']['hosts']['webinterface']['hostname'] -%}
+{%- set webinterface = pillar['cons3rt-infrastructure']['hosts']['webinterface']['fqdn'] -%}
 {%- set maintmode = salt['pillar.get']('cons3rt:enable_maint_mode','false') -%}
 {%- set banner = salt['pillar.get']('cons3rt:enable_dod_banner','true') -%}
 {%- set cacert = salt['pillar.get']('cons3rt:apache_ca_cert_path','/etc/pki/tls/certs/dod-root-certs.pem') -%}

@@ -6,7 +6,7 @@
     - user: cons3rt
     - group: cons3rt
     - mode: '0750'
-    - makedirs: True
+    - makedirs: true
 
 {% if grains['id']!=cons3rt %}
 /net/{{cons3rt}}/cons3rt:
@@ -15,7 +15,7 @@
     - user: cons3rt
     - group: cons3rt
     - mode: '0750'
-    - makedirs: True
+    - makedirs: true
 
 cons3rt-share-fstab-addition:
   file:
@@ -23,9 +23,18 @@ cons3rt-share-fstab-addition:
     - name: /etc/fstab
     - text: '{{cons3rtip}}:/cons3rt /net/{{cons3rt}}/cons3rt nfs defaults 0 0'
 
-netfs:
+cons3rt-share-client:
   pkg:
     - installed
+    - name: nfs-utils
+
+enable-cons3rt-share-client-service:
+  service:
+    - name: netfs
+    - running
+    - enable: true
+    - require:
+      - pkg: cons3rt-share-client
 
 {% elif grains['id']==cons3rt %}
 cons3rt-share-symlink:

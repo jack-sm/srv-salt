@@ -1,7 +1,7 @@
 guacamole-packages:
   pkg:
     - installed
-    - name:
+    - names:
       - guacd
       - libguac-client-vnc
       - libguac-client-ssh

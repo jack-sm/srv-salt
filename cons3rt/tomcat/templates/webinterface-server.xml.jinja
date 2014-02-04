@@ -1,4 +1,4 @@
-{%- set domain=pillar['cons3rt-infrastructure']['hosts']['domain'] %}
+{%- set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {%- set webinterface=pillar['cons3rt-infrastructure']['domain'] %}
 {%- set hostname=webinterface|replace('.'~domain,'') %}
 <?xml version='1.0' encoding='utf-8'?>

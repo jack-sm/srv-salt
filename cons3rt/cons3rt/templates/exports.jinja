@@ -6,7 +6,6 @@
 
 # Shared read-write to the SUTs
 /cons3rt/run \
-        {{infranetwork}}(fsid=1,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
 {%- for network in sutsnetwork %}
 {%- if not loop.last %}
 	{{network}}(fsid=1,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
@@ -15,11 +14,10 @@
 {%- endif %}{%- endfor %}
 # Shared read-only to the SUTs
 /cons3rt/agent-service \
-        {{infranetwork}}(fsid=2,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
 {%- for network in sutsnetwork %}
 {%- if not loop.last %}
 	{{network}}(fsid=2,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
 {%- else %}
-	{{network}}(fsid=2,ro,sync,no_subtree_check,all_squash,anongid=500,anonuid=500
+	{{network}}(fsid=2,ro,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
 {%- endif %}{%- endfor %}
 

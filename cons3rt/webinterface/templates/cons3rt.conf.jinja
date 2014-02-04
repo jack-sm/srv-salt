@@ -3,7 +3,7 @@
 {%- set banner = salt['pillar.get']('cons3rt:enable_dod_banner','true') -%}
 {%- set cacert = salt['pillar.get']('cons3rt:apache_ca_cert_path','/etc/pki/tls/certs/dod-root-certs.pem') -%}
 {%- set cert = salt['pillar.get']('cons3rt:apache_cert_path','/etc/pki/tls/certs/localhost.crt') -%}
-{%- set certkey = salt['pillar.get']('cons3rt:apache_cert_key_path','/etc/pki/tls/private/localhost.key' -%}
+{%- set certkey = salt['pillar.get']('cons3rt:apache_cert_key_path','/etc/pki/tls/private/localhost.key') -%}
 {%- set carevocation = salt['pillar.get']('cons3rt:apache_ca_revocation_path','/etc/cons3rt_sso/crls') -%}
 # Configuration file provided by CONS3RT to allow HTTPD to sit in front
 # of the container CONS3RT GUI runs in (JBoss or Tomcat)

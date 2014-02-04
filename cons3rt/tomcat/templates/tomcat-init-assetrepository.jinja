@@ -1,0 +1,122 @@
+{%- set assetrepo = pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] %}
+{%- set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
+{%- set jreversion = pillar['cons3rt-packages']['java_jre']['version'] %}
+#!/bin/sh
+# $Id: assetdb_service_linux.sh 5132 2012-09-26 14:49:36Z fitzpatrick $
+
+# chkconfig: 2345 85 15
+# description: CONS3RT JCR Startup
+#
+##############################################################################
+#
+# Script tested against Tomcat6 and Tomcat7 - use with other versions of
+# Tomcat may require minor modifications
+#
+##############################################################################
+#
+#   Copyright 2004 The Apache Software Foundation.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+##############################################################################
+
+
+# Adapt the following lines to your configuration
+JAVA_HOME={{apps_path}}/jre{{jreversion}}
+CATALINA_HOME={{apps_path}}/tomcat
+DAEMON_HOME={{apps_path}}/commons-daemon
+TOMCAT_USER=tomcat
+
+CATALINA_OPTS=""
+
+# for multi instances adapt those lines.
+TMP_DIR=/tmp
+PID_FILE=/var/run/jsvc-tomcat.pid
+CATALINA_BASE={{apps_path}}/tomcat
+
+# Add Tomcat runtime options
+CATALINA_OPTS=$CATALINA_OPTS" -Xms512m -Xmx1536m -XX:MaxPermSize=256m -Djava.awt.headless=true"
+
+# Add Jackrabbit options
+CATALINA_OPTS=$CATALINA_OPTS" -Dorg.apache.jackrabbit.rmi.port=3443 -Djava.rmi.server.hostname={{assetrepo}}"
+
+# Added to support JMX Monitoring/Profiling
+#CATALINA_OPTS=${CATALINA_OPTS}" -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8085 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
+
+# Define the classpath for jsvc to use when starting Tomcat
+CLASSPATH=\
+$JAVA_HOME/lib/tools.jar:\
+$CATALINA_HOME/bin/commons-daemon.jar:\
+$CATALINA_HOME/bin/bootstrap.jar
+
+# Tomcat7 requires a specific jar to be added to the classpath
+if [ -e $CATALINA_HOME/bin/tomcat-juli.jar ]
+then
+  CLASSPATH=${CLASSPATH}:$CATALINA_HOME/bin/tomcat-juli.jar
+fi
+
+case "$1" in
+  start)
+    #
+    # Start Tomcat
+    #
+    $DAEMON_HOME/jsvc \
+    -user $TOMCAT_USER \
+    -home $JAVA_HOME \
+    -Dcatalina.home=$CATALINA_HOME \
+    -Dcatalina.base=$CATALINA_BASE \
+    -Djava.io.tmpdir=$TMP_DIR \
+    -wait 10 \
+    -pidfile $PID_FILE \
+    -outfile $CATALINA_BASE/logs/catalina.out \
+    -errfile $CATALINA_BASE/logs/catalina.err \
+    $CATALINA_OPTS \
+    -cp $CLASSPATH \
+    org.apache.catalina.startup.Bootstrap
+    #
+    # To get a verbose JVM
+    #-verbose \
+    # To get a debug of jsvc.
+    #-debug \
+    exit $?
+    ;;
+
+  stop)
+    #
+    # Stop Tomcat
+    #
+    $DAEMON_HOME/jsvc \
+    -stop \
+    -pidfile $PID_FILE \
+    org.apache.catalina.startup.Bootstrap
+    exit $?
+    ;;
+
+  status)
+    if [ -e ${PID_FILE} ]
+    then
+        PID=`more ${PID_FILE}`
+        if [ `ps wwaux | grep -c ${PID}` > 1 ]
+        then
+            echo "Tomcat running with PID = ${PID}"
+        else
+            echo "Could not find process with ID = ${PID}"
+        fi
+    fi
+    ;;
+
+  *)
+    echo "Usage tomcat.sh [ start | stop | status ]"
+    exit 1
+    ;;
+esac
+

@@ -26,7 +26,7 @@ cons3rt-account:
       - file: /etc/login.defs
 
 {% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
-{% if grains['id'] == hosts.messaging.hostname %}
+{% if grains['id'] == hosts.messaging.fqdn %}
 jpmsg-account:
   group:
     - present
@@ -49,7 +49,7 @@ jpmsg-account:
       - file: /etc/login.defs
 {% endif %}
 
-{% if grains['id'] == hosts.assetrepository.hostname or grains['id'] == hosts.webinterface.hostname %}
+{% if grains['id'] == hosts.assetrepository.fqdn or grains['id'] == hosts.webinterface.fqdn %}
 tomcat-account:
   group:
     - present

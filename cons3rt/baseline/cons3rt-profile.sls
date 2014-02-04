@@ -6,7 +6,7 @@ create-cons3rt.sh:
     - group: root
     - mode: '0644'
 
-{% set cons3rthome=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['hostname'] %}
+{% set cons3rthome=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] %}
 /etc/profile.d/cons3rt.sh:
   file:
     - append

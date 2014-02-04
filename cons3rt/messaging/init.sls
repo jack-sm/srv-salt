@@ -5,7 +5,7 @@ include:
 ','system-accounts','iptables','ntp','java-jre' %}
   - cons3rt.baseline.{{state}}{% endfor %}
   - cons3rt.messaging.package
-{% if qpidsaslauth == 'true' %}
+{% if qpidsaslauth|lower == 'true' %}
   - cons3rt.messaging.sasl{% endif %}
 
 cons3rt-messaging-services:
@@ -15,9 +15,9 @@ cons3rt-messaging-services:
     - enable: true
     - require:
       - sls: cons3rt.messaging.package
-{% if qpidsaslauth == 'true' %}
+{% if qpidsaslauth|lower == 'true' %}
       - sls: cons3rt.messaging.sasl{% endif %}
-{% if qpidssl == 'true' %}
+{% if qpidssl|lower == 'true' %}
       - sls. cons3rt.messaging.ssl{% endif %}
 
 restart-qpid:
@@ -27,8 +27,8 @@ restart-qpid:
     - m_name: qpidd
     - watch:
       - sls: cons3rt.messaging.package
-{% if qpidsaslauth == 'true' %}
+{% if qpidsaslauth|lower == 'true' %}
       - sls: cons3rt.messaging.sasl{% endif %}
-{% if qpidssl == 'true' %}
+{% if qpidssl|lower == 'true' %}
       - sls. cons3rt.messaging.ssl{% endif %}
 

@@ -12,10 +12,10 @@
 -A INPUT -p icmp -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-{%- if grains['id'] == hosts.infrastructure.hostname and salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','aws')|lower == 'aws' %}
+{%- if grains['id'] == hosts.infrastructure.fqdn and salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','aws')|lower == 'aws' %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4505 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4506 -j ACCEPT{% endif %}
-{%- if grains['id'] == hosts.cons3rt.hostname %}
+{%- if grains['id'] == hosts.cons3rt.fqdn %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 137 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 138 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
@@ -31,14 +31,14 @@
 -A INPUT -m state --state NEW -m udp -p udp --dport 2049 -j ACCEPT
 -A INPUT -m state --state NEW -m udp -p udp --dport 32769 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 32803 -j ACCEPT{% endif %}
-{%- if grains['id'] == hosts.messaging.hostname %}
+{%- if grains['id'] == hosts.messaging.fqdn %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport {{salt['pillar.get']('cons3rt:qpid_messaging_port', '4443')}} -j ACCEPT{% endif %}
-{%- if grains['id'] == hosts.database.hostname %}
+{%- if grains['id'] == hosts.database.fqdn %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport {{salt['pillar.get']('cons3rt:mysql_communication_port','3306')}} -j ACCEPT{% endif %}
-{%- if grains['id'] == hosts.assetrepository.hostname %}
+{%- if grains['id'] == hosts.assetrepository.fqdn %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 3443 -j ACCEPT
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 8443 -j ACCEPT{% endif %}
-{%- if grains['id'] == hosts.webinterface.hostname %}
+{%- if grains['id'] == hosts.webinterface.fqdn %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
 {%- if guacamole|lower == 'true' %}
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4822 -j ACCEPT{% endif %}

@@ -1,5 +1,5 @@
 {% set cons3rtip=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['ip'] %}
-{% set cons3rt=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['hostname'] %}
+{% set cons3rt=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] %}
 /net/{{cons3rt}}:
   file:
     - directory

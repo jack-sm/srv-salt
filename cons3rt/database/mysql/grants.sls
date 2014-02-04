@@ -23,7 +23,7 @@ cons3rt-db-user-{{vm}}-fqdn:
     - require:
       - mysql_database: cons3rt-database
 
-cons3rt-db-user-{{vm}}-fqdn:
+cons3rt-db-user-{{vm}}-hostname:
   mysql_user:
     - present
     - name: {{cons3rtdbuser}}
@@ -43,7 +43,7 @@ cons3rt-db-grant-{{vm}}-fqdn:
     - require:
       - mysql_user: cons3rt-db-user-{{vm}}-fqdn
 
-cons3rt-db-grant-{{vm}}-fqdn:
+cons3rt-db-grant-{{vm}}-hostname:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}

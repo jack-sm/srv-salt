@@ -3,11 +3,11 @@ include:
   - cons3rt.baseline.system-accounts
   - cons3rt.tomcat.package
 
-webinterface-tomcat-server.xml:
+assetrepository-tomcat-server.xml:
   file:
     - managed
     - name: {{apps_path}}/tomcat/config/server.xml
-    - source: salt://cons3rt/tomcat/templates/webinterface-server.xml.jinja
+    - source: salt://cons3rt/tomcat/templates/assetrepository-server.xml.jinja
     - template: jinja
     - user: tomcat
     - group: tomcat
@@ -16,11 +16,24 @@ webinterface-tomcat-server.xml:
       - sls: cons3rt.baseline.system-accounts
       - sls: cons3rt.tomcat.package
 
-webinterface-tomcat-init:
+assetrepository-tomcat-users.xml:
+  file:
+    - managed
+    - name: {{apps_path}}/tomcat/config/tomcat-users.xml
+    - source: salt://cons3rt/tomcat/templates/assetrepository-tomcat-users.xml.jinja
+    - template: jinja
+    - user: tomcat
+    - group: tomcat
+    - mode: '0600'
+    - require:
+      - sls: cons3rt.baseline.system-accounts
+      - sls: cons3rt.tomcat.package
+
+asssetrepository-tomcat-init:
   file:
     - managed
     - name: /etc/init.d/tomcat
-    - source: salt://cons3rt/tomcat/templates/tomcat-init-webinterface.jinja
+    - source: salt://cons3rt/tomcat/templates/tomcat-init-assetrepository.jinja
     - template: jinja
     - user: root
     - group: root

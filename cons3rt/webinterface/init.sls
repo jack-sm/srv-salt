@@ -19,6 +19,7 @@ cons3rt-webinterface-services:
     - require:
       - sls: cons3rt.tomcat.package
       - sls: cons3rt.webinterface.packages
+      - sls: cons3rt.webinterface.tomcat-configurations
 
 restart-httpd:
   module:

@@ -31,12 +31,7 @@ cons3rt-db-user-{{vm}}-hostname:
     - host: {{fqdn|replace('.'~domain,'')}}
     - require:
       - mysql_database: cons3rt-database
-{% endif %}
-{% endfor %}
 
-{% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager' %}
-{% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':fqdn','') %}
-{% if fqdn != '' %}
 cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present

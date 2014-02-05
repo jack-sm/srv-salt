@@ -17,7 +17,7 @@ cons3rt-database-user:
     - name: {{cons3rtdbuser}}
     - password_hash: '{{cons3rtdbpswdhash}}'
     - require:
-      - mysql_database
+      - mysql_database: cons3rt-database
 
 {% for vm in 'infrastructure','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager' %}
 {% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':fqdn','') %}

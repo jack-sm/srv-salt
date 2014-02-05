@@ -25,11 +25,11 @@ cons3rt-database-user:
 cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present
-    - user: {{cons3rtdbuser}}
-    - grant: all privileges
-    - grant_option: true
+    - grant: ALL
     - database: cons3rt.*
+    - user: {{cons3rtdbuser}}
     - host: {{fqdn}}
+    - grant_option: true
     - require:
       - mysql_user: cons3rt-database-user
 

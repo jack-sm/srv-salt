@@ -6,7 +6,7 @@ include:
 assetrepository-tomcat-server.xml:
   file:
     - managed
-    - name: {{apps_path}}/tomcat/config/server.xml
+    - name: {{apps_path}}/tomcat/conf/server.xml
     - source: salt://cons3rt/tomcat/templates/assetrepository-server.xml.jinja
     - template: jinja
     - user: tomcat
@@ -19,7 +19,7 @@ assetrepository-tomcat-server.xml:
 assetrepository-tomcat-users.xml:
   file:
     - managed
-    - name: {{apps_path}}/tomcat/config/tomcat-users.xml
+    - name: {{apps_path}}/tomcat/conf/tomcat-users.xml
     - source: salt://cons3rt/tomcat/templates/assetrepository-tomcat-users.xml.jinja
     - template: jinja
     - user: tomcat

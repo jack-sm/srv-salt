@@ -1,5 +1,6 @@
 {% set jrversion=salt['pillar.get']('cons3rt-packages:jackrabbit:version','') %}
 {% set jackrabbit=salt['pillar.get']('cons3rt-packages:jackrabbit:package','') %}
+{% set jcr=salt['pillar.get']('cons3rt-packages:jcr:package','') %}
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 include:
   - cons3rt.baseline.system-accounts
@@ -58,11 +59,23 @@ remove-jackrabbit-archive:
     - require:
       - file: validate-jackrabbit-installed
 
+{{apps_path}}/tomcat/webapps/jackrabbit/WEB-INF/lib/{{jcr}}:
+  file:
+    - managed
+    - source: salt://cons3rt/packages/{{jcr}}
+    - user: tomcat
+    - group: tomcat
+    - require:
+      - file: validate-jackrabbit-installed
+
 {{apps_path}}/jackrabbit:
   file:
     - directory
     - user: tomcat
     - group: tomcat
+    - recurse:
+      - user
+      - group
     - require:
       - sls: cons3rt.baseline.system-accounts
       - sls: cons3rt.tomcat.package

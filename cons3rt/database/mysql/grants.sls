@@ -29,7 +29,6 @@ cons3rt-db-grant-{{vm}}-fqdn:
     - database: cons3rt.*
     - user: {{cons3rtdbuser}}
     - host: {{fqdn}}
-    - grant_option: true
     - require:
       - mysql_user: cons3rt-database-user
 
@@ -38,7 +37,6 @@ cons3rt-db-grant-{{vm}}-hostname:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
-    - grant_option: true
     - database: cons3rt.*
     - host: {{fqdn|replace('.'~domain,'')}}
     - require:

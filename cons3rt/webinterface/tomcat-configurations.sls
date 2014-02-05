@@ -6,7 +6,7 @@ include:
 webinterface-tomcat-server.xml:
   file:
     - managed
-    - name: {{apps_path}}/tomcat/config/server.xml
+    - name: {{apps_path}}/tomcat/conf/server.xml
     - source: salt://cons3rt/tomcat/templates/webinterface-server.xml.jinja
     - template: jinja
     - user: tomcat

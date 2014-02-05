@@ -83,6 +83,38 @@ then
 fi
 
 case "$1" in
+  restart)
+    #
+    # Stop Tomcat
+    #
+    $DAEMON_HOME/jsvc \
+    -stop \
+    -pidfile $PID_FILE \
+    org.apache.catalina.startup.Bootstrap
+    #
+    # Start Tomcat
+    #
+    $DAEMON_HOME/jsvc \
+    -user $TOMCAT_USER \
+    -home $JAVA_HOME \
+    -Dcatalina.home=$CATALINA_HOME \
+    -Dcatalina.base=$CATALINA_BASE \
+    -Djava.io.tmpdir=$TMP_DIR \
+    -wait 10 \
+    -pidfile $PID_FILE \
+    -outfile $CATALINA_BASE/logs/catalina.out \
+    -errfile $CATALINA_BASE/logs/catalina.err \
+    $CATALINA_OPTS \
+    -cp $CLASSPATH \
+    org.apache.catalina.startup.Bootstrap
+    #
+    # To get a verbose JVM
+    #-verbose \
+    # To get a debug of jsvc.
+    #-debug \
+    exit $?
+    ;;
+
   start)
     #
     # Start Tomcat
@@ -133,7 +165,7 @@ case "$1" in
         ;;
 
   *)
-    echo "Usage tomcat.sh [ start | stop | status ]"
+    echo "Usage tomcat.sh [restart|start|stop|status]"
     exit 1
     ;;
 esac

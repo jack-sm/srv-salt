@@ -1,4 +1,4 @@
-{%- set jreversion=salt['pillar.get']('cons3rt-packages:java-jre:version', '') -%}
+{%- set jreversion=salt['pillar.get']('cons3rt-packages:java_jre:version', '') -%}
 {%- set jrepath=salt['pillar.get']('cons3rt-packages::appliction_path','/opt') -%}
 export JAVA_HOME={{jrepath}}/jre{{jreversion}}
 export PATH=${JAVA_HOME}/bin:${PATH}

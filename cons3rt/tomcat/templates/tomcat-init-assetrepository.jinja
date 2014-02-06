@@ -1,6 +1,6 @@
-{%- set assetrepo = pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] %}
-{%- set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
-{%- set jreversion = pillar['cons3rt-packages']['java_jre']['version'] %}
+{%- set assetrepo = pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] -%}
+{%- set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') -%}
+{%- set jreversion = pillar['cons3rt-packages']['java_jre']['version'] -%}
 #!/bin/sh
 # $Id: assetdb_service_linux.sh 5132 2012-09-26 14:49:36Z fitzpatrick $
 

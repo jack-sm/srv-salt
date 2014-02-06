@@ -1,6 +1,6 @@
-{%- set cons3rt = pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] %}
-{%- set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
-{%- set jreversion = pillar['cons3rt-packages']['java_jre']['version'] %}
+{%- set cons3rt = pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] -%}
+{%- set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') -%}
+{%- set jreversion = pillar['cons3rt-packages']['java_jre']['version'] -%}
 #!/bin/sh
 # $Id: tomcat_service_linux.sh 10412 2013-11-08 18:48:55Z fitzpatrick $
 

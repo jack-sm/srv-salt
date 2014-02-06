@@ -68,6 +68,15 @@ remove-jackrabbit-archive:
     - require:
       - file: validate-jackrabbit-installed
 
+{{apps_path}}/jackrabbit/repository.xml:
+  file:
+    - managed
+    - source: salt://cons3rt/assetrepository/templates/repository.xml
+    - user: tomcat
+    - group: tomcat
+    - require:
+      - file: validate-jackrabbit-installed
+
 {{apps_path}}/jackrabbit:
   file:
     - directory

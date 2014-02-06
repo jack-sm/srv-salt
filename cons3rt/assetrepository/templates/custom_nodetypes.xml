@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Custom node types for CONS3RT Asset Repository
+   Hack, using "nt:" for the cons3rt node types
+   Needed to do it this way for Jackrabbit versions
+   at or above 2.4.1
+   Bob Shepherd
+   23 September 2013 (for searchable assets)   NOTE: update nodeTypesVersion when this changes
+ -->
+<nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0">
+
+ <!-- Root node for a cons3rt asset.  Contains a Data node and a Metadata node, plus UUID -->
+  <nodeType name="nt:asset" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:folder</supertype>
+      <supertype>mix:referenceable</supertype>
+    </supertypes>
+
+    <propertyDefinition name="nodeTypesVersion" autoCreated="true" mandatory="true" onParentVersion="COPY" requiredType="String" multiple="false" protected="false">
+           <defaultValues>
+                  <defaultValue>23September2013</defaultValue>
+           </defaultValues>
+    </propertyDefinition> 
+
+    <!-- Asset Name.  Copied from assetProperties.name.  Used for search -->
+    <propertyDefinition name="assetName" autoCreated="false" mandatory="false" onParentVersion="COPY" requiredType="String" multiple="false" protected="false">
+           <defaultValues>
+                  <defaultValue>Unknown</defaultValue>
+           </defaultValues>
+    </propertyDefinition> 
+
+    <!-- Asset Type.  Copied from assetProperties.name.  Used for search -->
+    <propertyDefinition name="assetType" autoCreated="false" mandatory="false" onParentVersion="COPY" requiredType="String" multiple="false" protected="false">
+           <defaultValues>
+                  <defaultValue>Unknown</defaultValue>
+           </defaultValues>
+    </propertyDefinition> 
+
+
+    <!-- Asset Description.  Copied from assetProperties.description.  Used for search -->
+    <propertyDefinition name="assetDescription" autoCreated="false" mandatory="false" onParentVersion="COPY" requiredType="String" multiple="false" protected="false">
+           <defaultValues>
+                  <defaultValue>Unknown</defaultValue>
+           </defaultValues>
+    </propertyDefinition> 
+
+     <!--  <propertyDefinition name="assetId" requiredType="Long" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false"/> -->
+     <!--  <childNodeDefinition name="data.zip" defaultPrimaryType="nt:assetBlob" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" sameNameSiblings="false" />  -->
+  </nodeType>
+
+   <!-- Data node for a cons3rt asset.  Contains the blob (zip file) -->
+  <nodeType name="nt:assetBlob" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+  </nodeType>
+
+   <!-- Data node for a cons3rt asset.  Contains the blob in multiple parts
+        Will have children of type nt:blobPart -->
+  <nodeType name="nt:multipartBlob" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:folder</supertype>
+    </supertypes>
+  </nodeType>
+
+   <!-- Blob part  -->
+  <nodeType name="nt:blobPart" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+  </nodeType>
+
+
+
+   <!-- Properties node for a cons3rt asset.  Contains the properties plus a child node with a readable form of the metadata -->
+  <nodeType name="nt:assetProperties" isMixin="false" hasOrderableChildNodes="false">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+    <propertyDefinition name="*" requiredType="undefined" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false" />
+  </nodeType>
+
+   <!-- Text Data node for a cons3rt asset.  Contains text as a property, plus a browsable file version -->
+  <nodeType name="nt:assetText" isMixin="false" hasOrderableChildNodes="false">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+    <propertyDefinition name="*" requiredType="undefined" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false" />
+    <propertyDefinition name="theText" requiredType="String" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false" />
+  </nodeType>
+
+   <!-- MultiText Data node for a cons3rt asset.  Contains multi-value text as a property, plus a browsable file version -->
+  <nodeType name="nt:assetMultiText" isMixin="false" hasOrderableChildNodes="false">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+    <propertyDefinition name="*" requiredType="undefined" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false" />
+    <propertyDefinition name="theMultiText" requiredType="String" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="true" />
+  </nodeType>
+
+   <!-- For caching.  This node will be at the root node of our Asset Repository
+        This is a timestamp that gets set whenever the repository changes.  
+        Contains the System.getTimeInMilliseconds() as a property, plus a pretty browsable file version.
+   --> 
+  <nodeType name="nt:assetAssetRepoTimestamp" isMixin="false" hasOrderableChildNodes="false">
+    <supertypes>
+      <supertype>nt:file</supertype>
+    </supertypes>
+    <propertyDefinition name="*" requiredType="undefined" autoCreated="false" mandatory="false" onParentVersion="COPY" protected="false" multiple="false" />
+    <propertyDefinition name="theTimestamp" requiredType="Long" autoCreated="true" mandatory="true" onParentVersion="COPY" protected="false" multiple="false" >
+           <defaultValues>
+                  <defaultValue>0</defaultValue>
+           </defaultValues>
+    </propertyDefinition> 
+  </nodeType>
+
+</nodeTypes>

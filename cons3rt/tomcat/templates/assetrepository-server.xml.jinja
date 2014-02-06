@@ -1,7 +1,7 @@
-{%- set domain=pillar['cons3rt-infrastructure']['domain'] %}
-{%- set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] %}
-{%- set hostname=assetrepo|replace('.'~domain,'') %}
-{%- set assetrepopassword=pillar['cons3rt']['assetrepository_jks_password'] %}
+{%- set domain=pillar['cons3rt-infrastructure']['domain'] -%}
+{%- set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] -%}
+{%- set hostname=assetrepo|replace('.'~domain,'') -%}
+{%- set assetrepopassword=pillar['cons3rt']['assetrepository_jks_password'] -%}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more

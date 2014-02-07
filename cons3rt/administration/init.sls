@@ -3,3 +3,8 @@ include:
 ','system-accounts','iptables','ntp','java-jre','packages' %}
   - cons3rt.baseline.{{state}}{% endfor %}
 
+nc:
+  pkg:
+    - installed
+    - latest
+

@@ -23,39 +23,39 @@ base:
   {{cons3rt}}:
     - cons3rt.cons3rt
 {%- if database and cons3rt == database -%}
-    - cons3rt.database{%- endif -%}
+    - cons3rt.database{% endif %}
 {%- if messaging and cons3rt == messaging -%}
     - cons3rt.messaging{% endif %}
 {%- if assetrepository and cons3rt == assetrepository -%}
-    - cons3rt.assetrepository{%- endif -%}
+    - cons3rt.assetrepository{% endif %}
 {%- if sourcebuilder and cons3rt == sourcebuilder -%}
-    - cons3rt.sourcebuilder{%- endif -%}
+    - cons3rt.sourcebuilder{% endif %}
 {%- if testmanager and cons3rt == testmanager -%}
-    - cons3rt.testmanager{%- endif -%}
+    - cons3rt.testmanager{% endif %}
 {%- if infrastructure and cons3rt == infrastructure -%}
-    - cons3rt.infrastructure{%- endif -%}
+    - cons3rt.infrastructure{% endif %}
 {%- if database and database != cons3rt -%}
   {{database}}:
-    - cons3rt.database{%- endif -%}
+    - cons3rt.database{% endif %}
 {%- if messaging and messaging != cons3rt -%}
   {{messaging}}:
     - cons3rt.messaging{% endif %}
 {%- if assetrepository and assetrepository != cons3rt -%}
   {{assetrepository}}:
-    - cons3rt.assetrepository{%- endif -%}
+    - cons3rt.assetrepository{% endif %}
 {%- if sourcebuilder and sourcebuilder != cons3rt -%}
   {{sourcebuilder}}:
-    - cons3rt.sourcebuilder{%- endif -%}
+    - cons3rt.sourcebuilder{% endif %}
 {%- if testmanager and testmanager != cons3rt -%}
   {{testmanager}}:
-    - cons3rt.testmanager{%- endif -%}
+    - cons3rt.testmanager{% endif %}
 {%- if webinterface -%}
   {{webinterface}}:
-    - cons3rt.webinterface{%- endif -%}
+    - cons3rt.webinterface{% endif %}
 {%- if retina -%}
   {{retina}}:
-    - cons3rt.retina{%- endif -%}
+    - cons3rt.retina{% endif %}
 {%- if administration -%}
   {{administration}}:
-    - cons3rt.administration{%- endif -%}
+    - cons3rt.administration{% endif %}
 

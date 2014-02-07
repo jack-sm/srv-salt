@@ -9,7 +9,8 @@ include:
 validate-jackrabbit-installed:
   file:
     - managed
-    - name: {{apps_path}}/.jackrabbit-version-{{jrversion}}-deployed
+    - name: {{apps_path}}/.saltstack-actions/jackrabbit-version-{{jrversion}}-deployed
+    - makedirs: true
     - user: root
     - group: root
     - mode: '0644'

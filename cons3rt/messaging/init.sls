@@ -16,7 +16,7 @@ cons3rt-messaging-services:
     - require:
       - sls: cons3rt.messaging.package
 {% if qpidsaslauth|lower == 'true' %}
-      - sls: cons3rt.messaging.sasl{% endif %}
+      - sls: cons3rt.messaging.sasl-user{% endif %}
 {% if qpidssl|lower == 'true' %}
       - sls. cons3rt.messaging.ssl{% endif %}
 
@@ -28,7 +28,7 @@ restart-qpid:
     - watch:
       - sls: cons3rt.messaging.package
 {% if qpidsaslauth|lower == 'true' %}
-      - sls: cons3rt.messaging.sasl{% endif %}
+      - sls: cons3rt.messaging.sasl-user{% endif %}
 {% if qpidssl|lower == 'true' %}
       - sls. cons3rt.messaging.ssl{% endif %}
 

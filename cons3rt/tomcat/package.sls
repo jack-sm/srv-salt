@@ -7,7 +7,8 @@ include:
 tomcat-deployment-verification:
   file:
     - managed
-    - name: {{apps_path}}/.tomcat-version-{{tomcat_version}}-deployed
+    - name: {{apps_path}}/.saltstack-actions/tomcat-version-{{tomcat_version}}-deployed
+    - makedirs: true
     - user: root
     - group: root
     - mode: '0644'

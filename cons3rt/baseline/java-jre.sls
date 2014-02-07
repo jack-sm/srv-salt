@@ -4,7 +4,8 @@
 validate-java-jre-installed:
   file:
     - managed
-    - name: {{jrepath}}/.java-jre-version-{{jre}}-deployed
+    - name: {{jrepath}}/.saltstack-actions/java-jre-version-{{jre}}-deployed
+    - makedirs: true
     - user: root
     - group: root
     - mode: '0644'

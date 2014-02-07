@@ -4,7 +4,8 @@
 validate-java-jdk-installed:
   file:
     - managed
-    - name: {{jdkpath}}/.java-jdk-version-{{jdk}}-deployed
+    - name: {{jdkpath}}/.salstack-actions/java-jdk-version-{{jdk}}-deployed
+    - makedirs: true
     - user: root
     - group: root
     - mode: '0644'

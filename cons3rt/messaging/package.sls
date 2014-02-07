@@ -4,7 +4,8 @@
 validate-qpid-server-installed:
   file:
     - managed
-    - name:  {{apps_path}}/.qpid-version-{{qpid_version}}-deployed
+    - name:  {{apps_path}}/.saltstack-actions/qpid-version-{{qpid_version}}-deployed
+    - makedirs: true
     - user: root
     - group: root
     - mode: '0644'

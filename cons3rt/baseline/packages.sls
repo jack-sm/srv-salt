@@ -3,6 +3,5 @@
 cons3rt-baseline-pkg-{{pkg}}:
   pkg:
     - installed
-    - lastest
     - name: {{pkg}}
 {% endfor %}

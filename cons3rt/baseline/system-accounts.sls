@@ -5,6 +5,14 @@
     - before: 500
     - after: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:minimum_uid_gid',510) }}
 
+{% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
+modify-ec2-user-gid:
+  group:
+    - present
+    - name: ec2-user
+    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user:gid','510') }}
+{% endif %}
+
 cons3rt-account:
   group:
     - present
@@ -12,6 +20,8 @@ cons3rt-account:
     - gid: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:gid','500') }}
     - require:
       - file: /etc/login.defs
+{% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
+      - group: modify-ec2-user-gid{% endif %}
   user:
     - present
     - name: cons3rt
@@ -34,6 +44,8 @@ jpmsg-account:
     - gid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:gid','501') }}
     - require:
       - file: /etc/login.defs
+{% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
+      - group: modify-ec2-user-gid{% endif %}
   user:
     - present
     - name: jpmsg
@@ -57,6 +69,8 @@ tomcat-account:
     - gid: {{ salt['pillar.get']('cons3rt-system-users:tomcat:gid','502') }}
     - require:
       - file: /etc/login.defs
+{% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
+      - group: modify-ec2-user-gid{% endif %}
   user:
     - present
     - name: tomcat

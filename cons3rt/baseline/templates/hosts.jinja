@@ -1,0 +1,22 @@
+{%- hosts = pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- domain = pillar['cons3rt-infrastructure']['domain'] -%}
+127.0.0.1   localhost localhost.localdomain
+{{ hosts.cons3rt.ip }}   {{ hosts.cons3rt.fqdn|lower }} {{ hosts.cons3rt.fqdn|replace('.'~domain,'') }}
+{%- if 'messaging' in hosts and hosts.messaging.ip != hosts.cons3rt.ip %}
+{{ hosts.messaging.ip }} {{ host.messaging.fqdn|lower }} {{ hosts.messaging.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'database' in hosts and hosts.database.ip != hosts.cons3rt.ip %}
+{{ hosts.database.ip }} {{ host.database.fqdn|lower }} {{ hosts.database.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'assetrepository' in hosts and hosts.assetrepository.ip != hosts.cons3rt.ip %}
+{{ hosts.assetrepository.ip }} {{ host.messaging.fqdn|lower }} {{ hosts.assetrepository.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'testmanager' in hosts and hosts.testmanager.ip != hosts.cons3rt.ip %}
+{{ hosts.testmanager.ip }} {{ host.testmanager.fqdn|lower }} {{ hosts.testmanager.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'sourcebuilder' in hosts and hosts.sourcebuilder.ip != hosts.cons3rt.ip %}
+{{ hosts.sourcebuilder.ip }} {{ host.sourcebuilder.fqdn|lower }} {{ hosts.sourcebuilder.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'administration' in hosts and hosts.administration.ip != hosts.cons3rt.ip %}
+{{ hosts.administration.ip }} {{ host.administration.fqdn|lower }} {{ hosts.administration.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'webinterface' in hosts %}
+{{ hosts.webinterface.ip }} {{ host.webinterface.fqdn|lower }} {{ hosts.webinterface.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'infrastructure' in hosts %}
+{{ hosts.infrastructure.ip }} {{ host.infrastructure.fqdn|lower }} {{ hosts.infrastructure.fqdn|replace('.'~domain,'') }}{%- endif %}
+{%- if 'retina' in hosts %}
+{{ hosts.retina.ip }} {{ host.retina.fqdn|lower }} {{ hosts.retina.fqdn|replace('.'~domain,'') }}{%- endif %}

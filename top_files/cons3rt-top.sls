@@ -1,41 +1,61 @@
-# Aquire pillar values in order to attach roles to minions
-{% set hosts = pillar['cons3rt-infrastructure']['hosts'] %}
-{% set cons3rt = hosts.cons3rt.hostname %}
-{% set database = hosts.database.hostname %}
-{% set messaging = hosts.messaging.hostname %}
-{% set assetrepository = hosts.assetrepository.hostname %}
-{% set webinterface = hosts.webinterface.hostname %}
-{% set sourcebuilder = hosts.sourcebuilder.hostname %}
-{% set testmanager = hosts.testmanager.hostname %}
-{% set retina = hosts.testmanager.hostname %}
-{% set infrastructure = hosts.infrastructure.hostname %}
+{%- set hosts = pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- if 'cons3rt' in hosts -%}
+{%- set cons3rt = hosts.cons3rt.fqdn -%}{%- endif -%}
+{%- if 'database' in hosts -%}
+{%- set database = hosts.database.fqdn -%}{%- endif -%}
+{%- if 'messaging' in hosts -%}
+{%- set messaging = hosts.messaging.fqdn -%}{%- endif -%}
+{%- if 'assetrepository' in hosts -%}
+{%- set assetrepository = hosts.assetrepository.fqdn -%}{%- endif -%}
+{%- if 'webinterface' in hosts -%}
+{%- set webinterface = hosts.webinterface.fqdn -%}{%- endif -%}
+{%- if 'sourcebuilder' in hosts -%}
+{%- set sourcebuilder = hosts.sourcebuilder.fqdn -%}{%- endif -%}
+{%- if 'testmanager' in hosts -%}
+{%- set testmanager = hosts.testmanager.fqdn -%}{%- endif -%}
+{%- if 'retina' in hosts -%}
+{%- set retina = hosts.testmanager.fqdn -%}{%- endif -%}
+{%- if 'infrastructure' in hosts -%}
+{%- set infrastructure = hosts.infrastructure.fqdn -%}{%- endif -%}
+{%- if 'administration' in hosts -%}
+{%- set administration = hosts.administration.fqdn -%}{%- endif -%}
 base:
   {{cons3rt}}:
     - cons3rt.cons3rt
-{% if cons3rt == database %}
+{%- if database and cons3rt == database %}
     - cons3rt.database{% endif %}
-{% if cons3rt == messaging %}
+{%- if messaging and cons3rt == messaging %}
     - cons3rt.messaging{% endif %}
-{% if cons3rt == assetrepository %}
+{%- if assetrepository and cons3rt == assetrepository %}
     - cons3rt.assetrepository{% endif %}
-{% if cons3rt == sourcebuilder %}
+{%- if sourcebuilder and cons3rt == sourcebuilder %}
     - cons3rt.sourcebuilder{% endif %}
-{% if cons3rt == testmanager %}
+{%- if testmanager and cons3rt == testmanager %}
     - cons3rt.testmanager{% endif %}
-{% if cons3rt == infrastructure %}
+{%- if infrastructure and cons3rt == infrastructure %}
     - cons3rt.infrastructure{% endif %}
-{% if database != cons3rt and not null %}
+{%- if database and database != cons3rt %}
   {{database}}:
     - cons3rt.database{% endif %}
-{% if messaging != cons3rt %}
+{%- if messaging and messaging != cons3rt %}
   {{messaging}}:
     - cons3rt.messaging{% endif %}
-{% if assetrepository != cons3rt and not null %}
+{%- if assetrepository and assetrepository != cons3rt %}
   {{assetrepository}}:
     - cons3rt.assetrepository{% endif %}
-{% if sourcebuilder != cons3rt and not null %}
+{%- if sourcebuilder and sourcebuilder != cons3rt %}
   {{sourcebuilder}}:
     - cons3rt.sourcebuilder{% endif %}
-{% if testmanager != cons3rt and not null %}
+{%- if testmanager and testmanager != cons3rt %}
   {{testmanager}}:
     - cons3rt.testmanager{% endif %}
+{%- if webinterface and webinterface != cons3rt %}
+  {{webinterface}}:
+    - cons3rt.webinterface{% endif %}
+{%- if retina and retina != cons3rt %}
+  {{retina}}:
+    - cons3rt.retina{% endif %}
+{%- if administration and administration != cons3rt %}
+  {{administration}}:
+    - cons3rt.administration{% endif %}
+

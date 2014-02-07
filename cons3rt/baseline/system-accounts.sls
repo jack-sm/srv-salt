@@ -2,15 +2,15 @@
 /etc/login.defs:
   file:
     - sed
-    - before: 500
-    - after: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:minimum_uid_gid',510) }}
+    - before: '500'
+    - after: {{ salt['pillar.get']('cons3rt-system-users:minimum_uid_gid','510') }}
 
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
 modify-ec2-user-gid:
   group:
     - present
     - name: ec2-user
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user:gid','510') }}
+    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510') }}
 {% endif %}
 
 cons3rt-account:
@@ -27,7 +27,7 @@ cons3rt-account:
     - name: cons3rt
     - home: /home/cons3rt
     - shell: /bin/bash
-    - createhome: True
+    - createhome: true
     - uid: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:uid','500') }}
     - groups:
       - cons3rt
@@ -50,7 +50,7 @@ jpmsg-account:
     - present
     - name: jpmsg
     - uid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:uid','501') }}
-    - createhome: True
+    - createhome: true
     - home: /cons3rt/jackpine-messaging
     - groups:
       - jpmsg
@@ -75,7 +75,7 @@ tomcat-account:
     - present
     - name: tomcat
     - uid: {{ salt['pillar.get']('cons3rt-system-users:tomcat:uid','502') }}
-    - createhome: True
+    - createhome: true
     - home: /home/tomcat
     - groups:
       - cons3rt

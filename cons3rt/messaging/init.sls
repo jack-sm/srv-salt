@@ -6,7 +6,7 @@ include:
   - cons3rt.baseline.{{state}}{% endfor %}
   - cons3rt.messaging.package
 {% if qpidsaslauth|lower == 'true' %}
-  - cons3rt.messaging.sasl{% endif %}
+  - cons3rt.messaging.sasl-user{% endif %}
 
 cons3rt-messaging-services:
   service:

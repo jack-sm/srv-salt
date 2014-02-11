@@ -1,6 +1,7 @@
 {%- set domain=pillar['cons3rt-infrastructure']['domain'] -%}
 {%- set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn']|replace('.'~domain,'') -%}
-{%- set assetrepopassword=pillar['cons3rt']['assetrepository_jks_password'] -%}
+{%- set assetrepojkspath=pillar['cons3rt']['assetrepository_jks_path'] -%}
+{%- set assetrepojkspassword=pillar['cons3rt']['assetrepository_jks_password'] -%}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
@@ -90,8 +91,8 @@
     <Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
                maxThreads="150" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS"
-               keystoreFile="/home/tomcat/assetrepository.jks"
-               keystorePass="{{assetrepopassword}}"
+               keystoreFile="{{assetrepojkspath"
+               keystorePass="{{assetrepojkspassword}}"
                ciphers="SSL_RSA_WITH_RC4_128_MD5, SSL_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA" />
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->

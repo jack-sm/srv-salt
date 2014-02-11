@@ -12,7 +12,15 @@ cons3rt-administrators-group:
     - require:
       - sls: cons3rt.baseline.system-accounts
 
-{% if adminusers != 'undefined' %}
+sudo-cons3rt-administrators:
+  file:
+    - append
+    - name: /etc/sudoers
+    - text: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    - require:
+      - group: cons3rt-administrators-group
+
+{% if admins != 'undefined' %}
 {% for user in admins %}
 cons3rt-admin-{{user}}:
   user:
@@ -23,12 +31,12 @@ cons3rt-admin-{{user}}:
       - wheel
     - require:
       - group: cons3rt-administrators-group
-      - sls: cons3rt.baseline.systems-accounts
+      - sls: cons3rt.baseline.system-accounts
 {% if salt['pillar.get']('cons3rt-administrators:administrators:'~user~':ssh_key','undefined') != 'undefined' %}
   ssh_auth:
     - present
     - user: {{user}}
-    - name: {{user.ssh_key}}
+    - name: {{salt['pillar.get']('cons3rt-administrators:administrators:'~user~':ssh_key','undefined')}}
     - require:
       - user: cons3rt-admin-{{user}}
 {% endif %}

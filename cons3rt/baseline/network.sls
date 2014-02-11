@@ -1,21 +1,14 @@
-{% set domain=pillar['cons3rt-infrastructure']['domain'] %}
-{% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
-{% set fqdn=grains['id']~'.'~domain %}
+{% set hosts=salt['pillar.get']('cons3rt-infrastructure:hosts') %}
 {% set gateway=pillar['cons3rt-infrastructure']['gateway'] %}
 {% set netmask=pillar['cons3rt-infrastructure']['netmask'] %}
 
-{% for assignment in ['cons3rt','assetrepository','administration','database','messaging','sourcebuilder','testmanager','webinterface'] %}
-    #{% if hosts[assignment]['fqdn'] is defined %} 
-        {% if grains['id'] == hosts[assignment]['fqdn']  %}
-            {% set ip=hosts[assignment]['ip'] %}{% endif %}
-    #{% endif %}
-{% endfor %}
-
+{% for host, value in hosts.iteritems() %}
+{% if value['fqdn']==grains['id'] %}
 system:
   network:
     - system
     - enabled: true
-    - hostname: {{fqdn}}
+    - hostname: {{value['fqdn']}}
     - gateway: {{gateway}}
     - gatewaydev: eth0
     - nozeroconf: true
@@ -27,5 +20,9 @@ eth0:
     - enabled: true
     - type: eth
     - proto: none
-    - ipaddr: {{ip}}
+    - ipaddr: {{value['ip']}}
     - netmask: {{netmask}}
+{% break %}
+{% endif %}
+{% endfor %}
+

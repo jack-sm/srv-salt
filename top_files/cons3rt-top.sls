@@ -14,9 +14,7 @@
 {%- if 'testmanager' in hosts -%}
 {%- set testmanager = hosts.testmanager.fqdn -%}{%- endif -%}
 {%- if 'retina' in hosts -%}
-{%- set retina = hosts.testmanager.fqdn -%}{%- endif -%}
-{%- if 'infrastructure' in hosts -%}
-{%- set infrastructure = hosts.infrastructure.fqdn -%}{%- endif -%}
+{%- set retina = hosts.retina.fqdn -%}{%- endif -%}
 {%- if 'administration' in hosts -%}
 {%- set administration = hosts.administration.fqdn -%}{%- endif -%}
 base:
@@ -32,8 +30,6 @@ base:
     - cons3rt.sourcebuilder{% endif %}
 {%- if testmanager and cons3rt == testmanager %}
     - cons3rt.testmanager{% endif %}
-{%- if infrastructure and cons3rt == infrastructure %}
-    - cons3rt.infrastructure{% endif %}
 {%- if database and database != cons3rt %}
   {{database}}:
     - cons3rt.database{% endif %}

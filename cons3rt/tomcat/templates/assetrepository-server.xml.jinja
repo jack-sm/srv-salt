@@ -1,6 +1,5 @@
 {%- set domain=pillar['cons3rt-infrastructure']['domain'] -%}
-{%- set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] -%}
-{%- set hostname=assetrepo|replace('.'~domain,'') -%}
+{%- set assetrepo=pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn']|replace('.'~domain,'') -%}
 {%- set assetrepopassword=pillar['cons3rt']['assetrepository_jks_password'] -%}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
@@ -142,7 +141,7 @@
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-               prefix="{{hostname}}_access_log." suffix=".txt"
+               prefix="{{assetrepo}}_access_log." suffix=".txt"
                pattern="%a %A %h %H %l %m %s %t %u %U" />
 
       </Host>

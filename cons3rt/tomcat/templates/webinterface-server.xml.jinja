@@ -1,6 +1,5 @@
 {%- set domain=pillar['cons3rt-infrastructure']['domain'] -%}
-{%- set webinterface=pillar['cons3rt-infrastructure']['domain'] -%}
-{%- set hostname=webinterface|replace('.'~domain,'') -%}
+{%- set webinterface=pillar['cons3rt-infrastructure']['hosts']['webinterface']['fqdn']|replace('.'~domain,'') -%}
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
@@ -137,7 +136,7 @@
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-               prefix="{{hostname}}_access_log." suffix=".txt"
+               prefix="{{webinterface}}_access_log." suffix=".txt"
                pattern="%a %A %h %H %l %m %s %t %u %U" />
 
       </Host>

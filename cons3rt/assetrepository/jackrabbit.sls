@@ -26,7 +26,7 @@ deploy-jackrabbit-package:
   cmd:
     - wait
     - cwd: {{apps_path}}/.
-    - name: unzip {{apps_path}}/{{jackrabbit}} -d {{apps_path}}/tomcat/webapps/jackrabbit
+    - name: unzip {{apps_path}}/{{jackrabbit}} -o -d {{apps_path}}/tomcat/webapps/jackrabbit
     - watch:
       - module: deploy-jackrabbit-package
     - require:

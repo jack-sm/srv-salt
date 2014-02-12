@@ -12,7 +12,6 @@ system:
     - gateway: {{gateway}}
     - gatewaydev: eth0
     - nozeroconf: true
-    - require_reboot: true
 
 eth0:
   network:
@@ -25,4 +24,21 @@ eth0:
 {% break %}
 {% endif %}
 {% endfor %}
+
+restart-network:
+  module:
+    - wait
+    - name: service.restart
+    - m_name: network
+    - order: last
+    - watch:
+      - network: eth0
+
+restart-system:
+  module:
+    - wait
+    - name: system.reboot
+    - order: last
+    - watch:
+      - network: system
 

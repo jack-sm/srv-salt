@@ -5,8 +5,10 @@ configuring it, and using it to build the virtual machines that will host
 the Cons3rt application. 
 
 ## Build the Salt Master
-The Salt Master consists of two parts: A vm in AWS, and a bootstrap script
-to configure it.
+The Salt Master consists of two parts: 
+
+- A vm in AWS
+- a bootstrap script to configure it.
 
 ### Salt Master vm Details
 In Govcloud, the Salt Master uses the following image ID and size:
@@ -42,12 +44,14 @@ rm salt-cloud-config.tar
 
 This unpacks the config files required for `salt-cloud`.
 
+The Salt Master is now fully configured.
+
 
 ## Create the vms that Will Host Cons3rt
 The salt-cloud configs include a map file that describes the vms that will host Cons3rt. We will use this map file and the `-P` parameter to launch the vms in parallel. As root, issue the following command and answer `yes` to the prompt:
 
-```bash
-[root@ip-172-31-22-27 ~]# salt-cloud -m /etc/salt/cons3rt.map -P
+```
+salt-cloud -m /etc/salt/cons3rt.map -P
 [INFO    ] salt-cloud starting
 [INFO    ] Applying map from '/etc/salt/cons3rt.map'.
 The following virtual machines are set to be created:
@@ -62,8 +66,8 @@ The following virtual machines are set to be created:
 
 Once the process has completed, you can verify that the vms were created and have connected to the Salt Master with `salt-key`:
 
-```bash
-[root@ip-172-31-22-27 ~]# salt-key 
+```
+salt-key 
 Accepted Keys:
 cons3rt.aws.cons3rt.com
 database.aws.cons3rt.com
@@ -82,4 +86,17 @@ Rejected Keys:
 
 ```
 salt-key -d www.aws.cons3rt.com
+```
+
+## Run the Highstate
+The `highstate` is the collection of all Salt automation to configure the vms. Running a highstate requires a topfile (named `top.sls`). Issue the following command to fetch the topfile from Github:
+
+```
+wget https://raw2.github.com/jack-sm/srv-salt/master/top_files/cons3rt-grains-top.sls -O /srv/salt/top.sls
+```
+
+Once the topfile has been downloaded, run the highstate with:
+
+```
+salt '*cons3rt*' state.highstate
 ```

@@ -3,14 +3,14 @@
   file:
     - sed
     - before: '500'
-    - after: {{ salt['pillar.get']('cons3rt-system-users:minimum_uid_gid','520') }}
+    - after: {{ salt['pillar.get']('cons3rt-system-users:minimum_uid_gid','510') }}
 
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
 modify-ec2-user-gid:
   group:
     - present
     - name: ec2-user
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user_gid','520') }}
+    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510') }}
 {% endif %}
 
 cons3rt-account:

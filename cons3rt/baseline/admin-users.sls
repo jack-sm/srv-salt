@@ -1,6 +1,6 @@
 {% set admins = salt['pillar.get']('cons3rt-administrators:administrators','undefined') %}
 {% set admingroup = salt['pillar.get']('cons3rt-administrators:cons3rt_admin_group','cons3rt-administrators') %}
-{% set admingid = salt['pillar.get']('cons3rt-administrators:cons3rt_admin_gid','520') %}
+{% set admingid = salt['pillar.get']('cons3rt-administrators:cons3rt_admin_gid','510') %}
 include:
   - cons3rt.baseline.system-accounts
 

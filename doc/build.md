@@ -63,6 +63,18 @@ The following virtual machines are set to be created:
 Once the process has completed, you can verify that the vms were created and have connected to the Salt Master with `salt-key`:
 
 ```bash
+[root@ip-172-31-22-27 ~]# salt-key 
+Accepted Keys:
+cons3rt.aws.cons3rt.com
+database.aws.cons3rt.com
+library.aws.cons3rt.com
+master
+sourcebuilder.aws.cons3rt.com
+test-soapui.aws.cons3rt.com
+toolbox.aws.cons3rt.com
+www.aws.cons3rt.com
+Unaccepted Keys:
+Rejected Keys:
 
 ```
 

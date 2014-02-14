@@ -3,5 +3,4 @@ include:
 nc:
   pkg:
     - installed
-    - latest
 

@@ -1,5 +1,5 @@
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
-{$- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path') -%}
+{$- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
 {%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
 {%- set iplist=[] -%}
 {%- for host, value in hosts.iteritems() -%}

@@ -62,7 +62,7 @@ restart-cons3rt-share-client:
       - file: /net/{{cons3rt}}/cons3rt
       - service: cons3rt-share-client
     - require:
-      - file: cons3rt-share-client
+      - service: cons3rt-share-client
       - cmd: cons3rt-share-client
 
 {% elif grains['id']==cons3rt %}

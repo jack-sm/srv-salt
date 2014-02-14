@@ -1,4 +1,4 @@
-{% set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt' %}
+{% set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') %}
 include:
   - cons3rt.baseline
   - cons3rt.cons3rt.nfs

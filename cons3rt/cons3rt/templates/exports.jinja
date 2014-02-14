@@ -9,9 +9,9 @@
 {{salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt')}} \
 {%- for ip in iplist%}
 {%- if not loop.last %}
-	{{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
+	{{ip}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
 {%- else %}
-        {{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
+        {{ip}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
 {%- endif %}{%- endfor %}
 # Shared read-write to the SUTs
 {{salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt')}}/run \

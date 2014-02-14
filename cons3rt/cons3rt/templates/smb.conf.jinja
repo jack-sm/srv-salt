@@ -1,4 +1,5 @@
 {%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
 {%- set iplist=[] -%}
 {%- for host, value in hosts.itermitems() -%}
@@ -23,7 +24,7 @@
 #============================ Share Definitions ==============================
 [CONS3RT]
   comment = CONS3RT share
-  path = /cons3rt
+  path = {{cons3rthome}}
   public = yes
   browsable = no
   writable = yes
@@ -36,7 +37,7 @@
 
 [CONS3RT-RUN]
   comment = CONS3RT run share
-  path = /cons3rt/run
+  path = {{cons3rthome}}/run
   public = yes
   browsable = no
   writable = yes
@@ -48,7 +49,7 @@
 
 [AGENT-SERVICE]
   comment = Agent Service share
-  path = /cons3rt/agent-service
+  path = {{cons3rthome}}/agent-service
   public = yes
   browsable = no
   writable = no

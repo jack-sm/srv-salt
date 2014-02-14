@@ -1,4 +1,5 @@
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
+{$- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path') -%}
 {%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
 {%- set iplist=[] -%}
 {%- for host, value in hosts.itermitems() -%}
@@ -6,7 +7,7 @@
 {%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
 {%- endfor -%}
 # Share to infrastructure hosts only
-/cons3rt \
+{{cons3rthome}} \
 {%- for ip in iplist%}
 {%- if not loop.last %}
 	{{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
@@ -14,7 +15,7 @@
         {{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
 {%- endif %}{%- endif %}{%- endfor %}
 # Shared read-write to the SUTs
-/cons3rt/run \
+{{cons3rthome}}/run \
 {%- for network in sutsnetwork %}
 {%- if not loop.last %}
 	{{network}}(fsid=1,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
@@ -22,7 +23,7 @@
 	{{network}}(fsid=1,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
 {%- endif %}{%- endfor %}
 # Shared read-only to the SUTs
-/cons3rt/agent-service \
+{{cons3rthome}}/agent-service \
 {%- for network in sutsnetwork %}
 {%- if not loop.last %}
 	{{network}}(fsid=2,ro,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \

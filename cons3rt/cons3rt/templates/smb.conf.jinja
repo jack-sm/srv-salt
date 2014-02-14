@@ -1,5 +1,10 @@
-{%- set infranetwork=pillar['cons3rt']['infrastructure_network'] -%}
+{%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
+{%- set iplist=[] -%}
+{%- for host, value in hosts.itermitems() -%}
+{%- if value['ip'] is defined %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
+{%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
+{%- endfor -%}
 [global]
   workgroup = workgroup
   server string = Samba Server
@@ -8,7 +13,7 @@
   max xmit = 65535
   dead time = 15
   preferred master = no
-  hosts allow = {{infranetwork}} {% for net in sutsnetwork -%} {{net}} {% endfor -%} 127.
+  hosts allow = {% for ip in iplist -%} {{ip}} {% endfor -%}{% for net in sutsnetwork -%} {{net}} {% endfor -%} 127.
   passdb backend = tdbsam
   security = share
   log file = /var/log/samba/systems/log.%m
@@ -27,7 +32,7 @@
   kernel oplocks = yes
   oplocks = yes
   level2 oplocks = yes
-  hosts allow = {{infranetwork}} 127.
+  hosts allow = {% for ip in iplist -%} {{ip}} {% endfor -%} 127.
 
 [CONS3RT-RUN]
   comment = CONS3RT run share

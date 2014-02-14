@@ -1,9 +1,18 @@
-{%- set infranetwork=pillar['cons3rt']['infrastructure_network'] -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
+{%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- set iplist=[] -%}
+{%- for host, value in hosts.itermitems() -%}
+{%- if value['ip'] is defined %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
+{%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
+{%- endfor -%}
 # Share to infrastructure hosts only
 /cons3rt \
-	{{infranetwork}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
-
+{%- for ip in iplist%}
+{%- if not loop.last %}
+	{{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
+{%- else %}
+        {{value['ip']}}(fsid=0,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
+{%- endif %}{%- endif %}{%- endfor %}
 # Shared read-write to the SUTs
 /cons3rt/run \
 {%- for network in sutsnetwork %}
@@ -16,7 +25,7 @@
 /cons3rt/agent-service \
 {%- for network in sutsnetwork %}
 {%- if not loop.last %}
-	{{network}}(fsid=2,rw,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
+	{{network}}(fsid=2,ro,sync,no_subtree_check,all_squash,anongid=500,anonuid=500) \
 {%- else %}
 	{{network}}(fsid=2,ro,sync,no_subtree_check,all_squash,anongid=500,anonuid=500)
 {%- endif %}{%- endfor %}

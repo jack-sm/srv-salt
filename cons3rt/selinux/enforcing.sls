@@ -26,7 +26,7 @@ set-filesystem-relabel:
 
 selinux-enforcing:
   selinux:
-    - mode:
+    - mode
     - name: enforcing
 
 set-selinux-config:

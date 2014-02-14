@@ -42,7 +42,7 @@ cons3rt-share-client:
     - running
     - enable: true
     - require:
-      - pkg: cons3rt-share-client
+      - pkg: cons3rt-share-client-dependencies
   cmd:
     - wait
     - name: mount -a

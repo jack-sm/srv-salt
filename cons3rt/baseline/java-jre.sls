@@ -6,6 +6,7 @@ validate-java-jre-installed:
     - managed
     - name: {{jrepath}}/.saltstack-actions/java-jre-version-{{jre}}-deployed
     - makedirs: true
+    - contents: 'SALTSTACK LOCK FILE/nIf the contents or permissions of this file are changed in any way,/noracle-java-jre verion {{jre}} will be re-installed./n'
     - user: root
     - group: root
     - mode: '0644'

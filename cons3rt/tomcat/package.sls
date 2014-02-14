@@ -9,6 +9,7 @@ tomcat-deployment-verification:
     - managed
     - name: {{apps_path}}/.saltstack-actions/tomcat-version-{{tomcat_version}}-deployed
     - makedirs: true
+    - contents: 'SALTSTACK LOCK FILE/nIf the contents or permissions of this file are changed in anyway,/napache tomcat version {{tomcat_version}} will be re-installed./n'
     - user: root
     - group: root
     - mode: '0644'

@@ -6,6 +6,7 @@ validate-qpid-server-installed:
     - managed
     - name:  {{apps_path}}/.saltstack-actions/qpid-version-{{qpid_version}}-deployed
     - makedirs: true
+    - contents: 'SALTSTACK LOCK FILE/nIf the contents or permissions of this file are changed in any way,/napache qpid {{qpid_version}} will be re-installed./n'
     - user: root
     - group: root
     - mode: '0644'

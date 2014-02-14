@@ -10,7 +10,7 @@ validate-selinux-initial-setup:
     - managed
     - name:  {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled
     - makedirs: true
-    - contents: 'SALTSTACK - LOCK FILE/nIf removed or modified in anyway, the filesystem will be relabled for selinux./n'
+    - contents: "SALTSTACK - LOCK FILE\nIf removed or modified in anyway, the filesystem will be relabled for selinux.\n"
     - user: root
     - group: root
     - mode: '0644'

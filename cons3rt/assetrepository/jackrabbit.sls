@@ -11,7 +11,7 @@ validate-jackrabbit-installed:
     - managed
     - name: {{apps_path}}/.saltstack-actions/jackrabbit-version-{{jrversion}}-deployed
     - makedirs: true
-    - contents: 'SALTSTACK LOCK FILE/nIf the contents or permissions of this file are changed in any way,/napache jackrabbit will be re-installed./n'
+    - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\napache jackrabbit version {{jrversion}} will be re-installed.\n"
     - user: root
     - group: root
     - mode: '0644'

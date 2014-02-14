@@ -2,7 +2,7 @@
 {%- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
 {%- set iplist=[] -%}
-{%- for host, value in hosts.itermitems() -%}
+{%- for host, value in hosts.iteritems() -%}
 {%- if value['ip'] is defined %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
 {%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
 {%- endfor -%}

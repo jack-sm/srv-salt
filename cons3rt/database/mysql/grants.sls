@@ -13,7 +13,7 @@ cons3rt-database:
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {% for vm in 'administration','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','remoteaccessgateway' %}
 {% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':fqdn','') %}
-{% if fqdn != '' %}
+{% if fqdn is defined and fqdn|lower!='none' %}
 cons3rt-db-user-{{vm}}-fqdn:
   mysql_user:
     - present

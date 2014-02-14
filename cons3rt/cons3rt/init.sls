@@ -4,15 +4,19 @@ include:
   - cons3rt.cons3rt.nfs
   - cons3rt.cons3rt.samba
 
-{% for dir in '{{cons3rthome}}','{{cons3rthome}}/agent-service','{{cons3rthome}}/run' %}
-{{dir}}:
+{{cons3rthome}}:
   file:
     - directory
     - user: cons3rt
     - group: cons3rt
-{% if dir == '{{cons3rthome}}' %}
-    - mode: '2755'
-{% endif %}
+    - makedirs: true
+
+{% for dir in 'agent-service','run' %}
+{{cons3rthome}}/{{dir}}:
+  file:
+    - directory
+    - user: cons3rt
+    - group: cons3rt
     - makdirs: true
 {% endfor %}
 
@@ -21,7 +25,7 @@ cons3rt-directory-default-acls:
     - wait
     - name: setfacl -m d:u::rwx,d:g::rwx,d:m:rwx,d:o:r-x {{cons3rthome}}
     - watch:
-      - file: /cons3rt
+      - file: {{cons3rthome}}
 
 cons3rt-file-server-services:
   service:
@@ -44,7 +48,7 @@ restart-samba:
       - sls: cons3rt.cons3rt.samba
 
 {% for service in 'nfs','rpcbind' %}
-restart-{{service}}: 
+restart-{{service}}:
   module:
     - wait
     - name: service.restart

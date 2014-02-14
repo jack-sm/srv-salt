@@ -2,8 +2,8 @@
 {$- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path') -%}
 {%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
 {%- set iplist=[] -%}
-{%- for host, value in hosts.itermitems() -%}
-{%- if value['ip'] is defined %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
+{%- for host, value in hosts.iteritems() -%}
+{%- if value['ip'] is defined and value['ip']|lower!='none' %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
 {%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
 {%- endfor -%}
 # Share to infrastructure hosts only

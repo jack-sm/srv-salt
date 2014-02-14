@@ -3,7 +3,7 @@
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
 {%- set iplist=[] -%}
 {%- for host, value in hosts.iteritems() -%}
-{%- if value['ip'] is defined %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
+{%- if value['ip'] is defined and value['ip']|lower!='none' %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
 {%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
 {%- endfor -%}
 [global]

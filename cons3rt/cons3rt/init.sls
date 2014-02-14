@@ -1,15 +1,16 @@
+{% set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt' %}
 include:
   - cons3rt.baseline
   - cons3rt.cons3rt.nfs
   - cons3rt.cons3rt.samba
 
-{% for dir in '/cons3rt','/cons3rt/agent-service','/cons3rt/run' %}
+{% for dir in '{{cons3rthome}}','{{cons3rthome}}/agent-service','{{cons3rthome}}/run' %}
 {{dir}}:
   file:
     - directory
     - user: cons3rt
     - group: cons3rt
-{% if dir == '/cons3rt' %}
+{% if dir == '{{cons3rthome}}' %}
     - mode: '2755'
 {% endif %}
     - makdirs: true
@@ -18,7 +19,7 @@ include:
 cons3rt-directory-default-acls:
   cmd:
     - wait
-    - name: setfacl -m d:u::rwx,d:g::rwx,d:m:rwx,d:o:r-x /cons3rt
+    - name: setfacl -m d:u::rwx,d:g::rwx,d:m:rwx,d:o:r-x {{cons3rthome}}
     - watch:
       - file: /cons3rt
 

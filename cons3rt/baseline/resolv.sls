@@ -6,3 +6,4 @@
     - mode: '0644'
     - source: salt://cons3rt/baseline/templates/resolv.conf.jinja
     - template: jinja
+    - order: 1

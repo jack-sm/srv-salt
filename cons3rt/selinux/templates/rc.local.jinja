@@ -1,0 +1,37 @@
+{%- set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') -%}
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ];
+then
+   printf '\nInitial relabeling of filesystem for SELinux not complete - Exiting.'
+   exit 0
+fi
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ];
+then
+   printf '\nStopping salt-minion: '
+   /etc/init.d/salt-minion stop 2&>1
+   printf 'Done.\n'
+
+   printf 'Restoring default SELinux security context for entire filesystem: '
+   /sbin/restorecon -R /
+   printf 'Done.\n'
+
+   printf 'Creating lock file: '
+   /bin/touch {{appps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/echo "SALTSTACK - LOCKFILE\nDo not remove or modify this file in anyway.\nRemoving this file will initiate a restorecon -R / at next reboot."
+   /bin/chown root:root {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/chmod 0644 {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   printf 'Done.\n'
+
+   printf 'Initiating system restart...'
+   /sbin/shutdown -r now 2&>1
+fi
+exit 0
+

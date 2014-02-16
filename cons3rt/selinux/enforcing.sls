@@ -16,14 +16,14 @@ validate-selinux-initial-setup:
     - mode: '0644'
     - order: 1
 
-/etc/rc.local:
+/etc/rc.d/rc.local:
   file:
     - managed
     - source: salt://cons3rt/selinux/templates/rc.local.jinja
     - template: jinja
     - user: root
     - group: root
-    - mode: '0777'
+    - mode: '0755'
     - order: 1
 
 set-filesystem-relabel:
@@ -54,7 +54,6 @@ system-reboot-selinux-relabel:
     - wait
     - name: system.reboot
     - order: 1
-    - failhard: true
     - watch:
       - cmd: set-filesystem-relabel
 
@@ -64,7 +63,7 @@ selinux-enforcing:
     - name: enforcing
     - require:
       - file: validate-selinux-initial-setup
-      - file: /etc/rc.local
+      - file: /etc/rc.d/rc.local
 
 set-selinux-config:
   augeas:

@@ -24,7 +24,7 @@ then
    printf 'Done.\n'
 
    printf 'Creating lock file: '
-   /bin/touch {{appps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/touch {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
    /bin/echo "SALTSTACK - LOCKFILE\nDo not remove or modify this file in anyway.\nRemoving this file will initiate a restorecon -R / at next reboot."
    /bin/chown root:root {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
    /bin/chmod 0644 {{apps_path}}/.saltstack-actions/selinux-restorecon-complete

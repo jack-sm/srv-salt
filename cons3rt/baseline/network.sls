@@ -12,7 +12,7 @@ system:
     - gateway: {{gateway}}
     - gatewaydev: eth0
     - nozeroconf: true
-    - order: 1
+    - order: 2
 
 eth0:
   network:
@@ -22,7 +22,7 @@ eth0:
     - proto: none
     - ipaddr: {{value['ip']}}
     - netmask: {{netmask}}
-    - order: 1
+    - order: 2
 {% break %}
 {% endif %}
 {% endfor %}

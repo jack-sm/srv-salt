@@ -6,5 +6,5 @@
     - user: root
     - group: root
     - mode: '0644'
-    - order: 1
+    - order: 2
 

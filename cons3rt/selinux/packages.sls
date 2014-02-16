@@ -9,4 +9,5 @@ selinux-packages:
       - selinux-policy-targeted
       - policycoreutils
       - policycoreutils-python
-
+      - setroubleshoot-server
+      - setroubleshoot-plugins

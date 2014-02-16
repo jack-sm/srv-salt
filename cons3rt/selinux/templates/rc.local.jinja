@@ -7,17 +7,18 @@
 
 touch /var/lock/subsys/local
 
-if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ];
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ]
 then
    printf '\nInitial relabeling of filesystem for SELinux not complete - Exiting.'
    exit 0
 fi
 
-if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ];
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]
 then
    printf 'Restoring default SELinux security context for entire filesystem: '
-   /sbin/restorecon -R /
-   printf 'Done.\n'
+   /sbin/restorecon -p -R /
+   printf '\nComplete.\n'
 
    printf 'Creating lock file: '
    /bin/touch {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
@@ -26,11 +27,26 @@ then
    /bin/chmod 0644 {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
    printf 'Done.\n'
 
-   printf 'Re-enabling salt-minion: '
-   /sbin/chkconfig salt-minion on
-   printd 'Done.\n'
    printf 'Initiating system restart...'
    /sbin/shutdown -r now 2&>1
 fi
-exit 0
 
+if [[ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled && -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]]
+then
+   if [ `/usr/sbin/getenforce|awk '{print tolower($0)}'` == 'enforcing' ]; then
+      exit 0
+   else
+      printf '\nEnabling SELinux: '  
+      /bin/sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
+      /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
+      printf 'Done.\n'
+
+      printf 'Re-enabling salt-minion: '
+      /sbin/chkconfig salt-minion on
+      printf 'Done.\n'
+      
+      printf 'Initiating system restart...'
+      /sbin/shutdown -r now 2&>1
+   fi
+fi 
+exit 0

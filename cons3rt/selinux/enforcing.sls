@@ -36,6 +36,14 @@ set-filesystem-relabel:
     - require:
       - sls: cons3rt.selinux.packages
 
+disable-salt-minion:
+  cmd:
+    - wait
+    - name: '/sbin/chkconfig salt-minion off'
+    - order: 1
+    - watch:
+      - file: /etc/rc.d/rc.local
+
 ensure-selinux-permissive:
   module:
     - wait

@@ -1,4 +1,5 @@
 {% set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') %}
+{% set selinux = salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 include:
   - cons3rt.baseline
   - cons3rt.cons3rt.nfs
@@ -38,6 +39,18 @@ cons3rt-file-server-services:
     - require:
       - sls: cons3rt.cons3rt.samba
       - sls: cons3rt.cons3rt.nfs
+
+{% if selinux|lower == 'true' %}
+samba-selinux:
+  cmd:
+    - run
+    - name: /usr/bin/chcon -R -t samba_share_t {{cons3rthome}}
+
+nfs-selinux:
+  cmd:
+    - run
+    - name: /usr/sbin/setsebool -P rsync_use_nfs 1
+{% endif %}
 
 restart-samba:
   module:

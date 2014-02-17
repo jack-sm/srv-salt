@@ -1,3 +1,4 @@
+{% set selinux = salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 include:
   - cons3rt.baseline
   - cons3rt.tomcat.package
@@ -16,6 +17,13 @@ cons3rt-webinterface-services:
       - sls: cons3rt.tomcat.package
       - sls: cons3rt.webinterface.packages
       - sls: cons3rt.webinterface.tomcat-configurations
+
+{% if selinux|lower == 'true' %}
+httpd-selinux:
+  cmd:
+    - run
+    - name: /usr/sbin/setsebool -P httpd_can_network_relay=1
+{% endif %}
 
 restart-httpd:
   module:

@@ -46,6 +46,7 @@ set-filesystem-relabel:
     - require:
       - sls: cons3rt.selinux.packages
       - sls: cons3rt.baseline.packages
+      - file: /etc/rc.d/rc.local
 
 disable-salt-minion:
   cmd:

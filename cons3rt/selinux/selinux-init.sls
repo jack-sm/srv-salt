@@ -18,9 +18,9 @@ setroubleshoot-enabled:
 validate-selinux-initial-setup:
   file:
     - managed
-    - name:  {{apps_path}}/.saltstack-actions/selinux-init-complete
+    - name:  {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled
     - makedirs: true
-    - contents: "SALTSTACK - LOCK FILE\nIf removed or modified in anyway, the initial configuration of selinux\nwill restart."
+    - contents: "SALTSTACK - LOCK FILE\nIf removed or modified in anyway, the file system will be relabeled for selinux\nand the system will restart."
     - user: root
     - group: root
     - mode: '0644'

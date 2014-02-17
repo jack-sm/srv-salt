@@ -31,19 +31,17 @@ if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]; then
    /sbin/shutdown -r now 2&>1
 fi
 
-if [[ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled && -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]]; then
-   if [ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ]; then
-      printf '\nEnabling SELinux: '  
-      /bin/sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
-      /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
-      printf 'Done.\n'
+if [ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ] && [ -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ] && [ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ]; then
+   printf '\nEnabling SELinux: '  
+   /bin/sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
+   /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
+   printf 'Done.\n'
 
-      printf 'Re-enabling salt-minion: '
-      /sbin/chkconfig salt-minion on
-      printf 'Done.\n'
+   printf 'Re-enabling salt-minion: '
+   /sbin/chkconfig salt-minion on
+   printf 'Done.\n'
       
-      printf 'Initiating system restart...'
-      /sbin/shutdown -r now 2&>1
-   fi
-fi 
+   printf 'Initiating system restart...'
+   /sbin/shutdown -r now 2&>1
+fi
 exit 0

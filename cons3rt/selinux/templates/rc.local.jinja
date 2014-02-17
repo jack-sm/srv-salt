@@ -16,6 +16,9 @@ fi
 
 
 if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]; then
+   /bin/sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+   /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
+
    printf 'Restoring default SELinux security context for entire filesystem: '
    /sbin/restorecon -p -R /
    printf '\nComplete.\n'
@@ -31,16 +34,22 @@ if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]; then
    /sbin/shutdown -r now 2&>1
 fi
 
-if [ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ] && [ -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ] && [ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ]; then
+if [ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ] && [ -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ] && [ ! -f {{apps_path}}/.saltstack-actions/selinux-enabled ]; then 
+#[ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ] <- May reuse
    printf '\nEnabling SELinux: '  
-   /bin/sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
+   /bin/sed -i 's/SELINUX=permissive/SELINUX=enforcing/g' /etc/selinux/config
    /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
    printf 'Done.\n'
 
    printf 'Re-enabling salt-minion: '
    /sbin/chkconfig salt-minion on
    printf 'Done.\n'
-      
+
+   /bin/touch {{apps_path}}/.saltstack-actions/selinux-enabled
+   /bin/echo -e "SALTSTACK - LOCKFILE\nDo not remove or modify this file in anyway.\nRemoving this file will initiate a multi-restart process for selinux." >> {{apps_path}}/.saltstack-actions/selinux-enabled
+   /bin/chown root:root {{apps_path}}/.saltstack-actions/selinux-enabled
+   /bin/chmod 0644 {{apps_path}}/.saltstack-actions/selinux-enabled
+     
    printf 'Initiating system restart...'
    /sbin/shutdown -r now 2&>1
 fi

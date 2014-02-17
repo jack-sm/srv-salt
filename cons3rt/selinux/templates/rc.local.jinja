@@ -7,15 +7,15 @@
 
 touch /var/lock/subsys/local
 
-if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ]
-then
+# Script inserted by SALTSTACK
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ]; then
    printf '\nInitial relabeling of filesystem for SELinux not complete - Exiting.'
    exit 0
 fi
 
 
-if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]
-then
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]; then
    printf 'Restoring default SELinux security context for entire filesystem: '
    /sbin/restorecon -p -R /
    printf '\nComplete.\n'
@@ -31,11 +31,8 @@ then
    /sbin/shutdown -r now 2&>1
 fi
 
-if [[ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled && -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]]
-then
-   if [ `/usr/sbin/getenforce|awk '{print tolower($0)}'` == 'enforcing' ]; then
-      exit 0
-   else
+if [[ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled && -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]]; then
+   if [ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ]; then
       printf '\nEnabling SELinux: '  
       /bin/sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
       /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config

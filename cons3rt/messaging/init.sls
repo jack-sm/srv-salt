@@ -29,7 +29,7 @@ restart-qpid:
     - m_name: qpidd
     - watch:
       - sls: cons3rt.messaging.package
-      - sls: cons3rt.messaging.qpid-configutation
+      - sls: cons3rt.messaging.qpid-configuration
 {% if qpidsaslauth|lower == 'true' %}
       - sls: cons3rt.messaging.sasl-user{% endif %}
 {% if qpidssl|lower == 'true' %}

@@ -1,7 +1,7 @@
 {% set jre=salt['pillar.get']('cons3rt-packages:java_jre:version','') %}
 {% set jrepackage=salt['pillar.get']('cons3rt-packages:java_jre:package','') %}
 {% set jrepath=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
-{% set selinux = salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
+{% set selinux=salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 validate-java-jre-installed:
   file:
     - managed
@@ -50,7 +50,7 @@ remove-java-jre-archive:
     - template: jinja
     - user: root
     - group: root
-    - mode: '0644'
+    - mode: '0755'
     - require:
       - cmd: deploy-java-jre-package
 

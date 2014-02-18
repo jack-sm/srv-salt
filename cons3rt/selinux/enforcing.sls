@@ -32,6 +32,7 @@ selinux-salt-minion:
     - names:
       - chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-minion
       - chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-call
+      - semodule -i mypol.pp
     - watch:
       - augeas: set-selinux-config
 

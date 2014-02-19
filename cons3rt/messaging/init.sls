@@ -6,9 +6,11 @@ include:
   - cons3rt.messaging.messaging-profile
   - cons3rt.messaging.qpid-configuration
 {% if qpidsaslauth|lower == 'true' %}
-  - cons3rt.messaging.sasl-user{% endif %}
+  - cons3rt.messaging.sasl-user
+{% endif %}
 {% if qpidssl|lower == 'true' %}
-  - cons3rt.messaging.ssl{% endif %}
+  - cons3rt.messaging.ssl
+{% endif %}
 
 cons3rt-messaging-services:
   service:
@@ -20,9 +22,11 @@ cons3rt-messaging-services:
       - sls: cons3rt.messaging.qpid-configuration
       - sls: cons3rt.messaging.messaging-profile
 {% if qpidsaslauth|lower == 'true' %}
-      - sls: cons3rt.messaging.sasl-user{% endif %}
+      - sls: cons3rt.messaging.sasl-user
+{% endif %}
 {% if qpidssl|lower == 'true' %}
-      - sls. cons3rt.messaging.ssl{% endif %}
+      - sls. cons3rt.messaging.ssl
+{% endif %}
 
 restart-qpid:
   module:
@@ -33,7 +37,9 @@ restart-qpid:
       - sls: cons3rt.messaging.package
       - sls: cons3rt.messaging.qpid-configuration
 {% if qpidsaslauth|lower == 'true' %}
-      - sls: cons3rt.messaging.sasl-user{% endif %}
+      - sls: cons3rt.messaging.sasl-user
+{% endif %}
 {% if qpidssl|lower == 'true' %}
-      - sls. cons3rt.messaging.ssl{% endif %}
+      - sls. cons3rt.messaging.ssl
+{% endif %}
 

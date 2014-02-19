@@ -1,6 +1,6 @@
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 {% set sasl_password=pillar['cons3rt']['qpid_sasl_password'] %}
-{% set qpid_sasldb=salt['pillar.get']('cons3rt:qpid_sasldb_path','/var/lib/qpidd/qpidd.sasldb') %}
+{% set qpid_sasldb=salt['pillar.get']('cons3rt:qpid_sasldb','/var/lib/qpidd/qpidd.sasldb') %}
 include:
   - cons3rt.messaging.package
 

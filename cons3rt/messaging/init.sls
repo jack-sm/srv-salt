@@ -7,6 +7,8 @@ include:
   - cons3rt.messaging.qpid-configuration
 {% if qpidsaslauth|lower == 'true' %}
   - cons3rt.messaging.sasl-user{% endif %}
+{% if qpidssl|lower == 'true' %}
+  - cons3rt.messaging.ssl{% endif %}
 
 cons3rt-messaging-services:
   service:

@@ -11,7 +11,7 @@ include:
 validate-qpid-ssl-certificate-database-creation:
   file:
     - managed
-    - file: {{apps_path}}/.saltstack_actions/qpid-{{qpid_version}}-ssl-certificate-database-created
+    - name: {{apps_path}}/.saltstack_actions/qpid-{{qpid_version}}-ssl-certdb-created
     - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\nthe qpidd ssl certificate database will be re-created.\n"
     - user: root
     - group: root

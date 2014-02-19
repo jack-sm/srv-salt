@@ -1,5 +1,5 @@
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
-{% set qpidssldb=salt['pillar.get']('cons3rt:qpid_ssldb','/var/lib/qpidd/keys/server_db' %}
+{% set qpidssldb=salt['pillar.get']('cons3rt:qpid_ssldb','/var/lib/qpidd/keys/server_db') %}
 {% set qpidssldbpswd=pillar['cons3rt']['qpid_ssldb_password'] %}
 {% set qpid_version=pillar['cons3rt-packages']['qpid']['version'] %}
 {% set messaging=pillar['cons3rt-infrastructure']['hosts']['messaging']['fqdn'] %}

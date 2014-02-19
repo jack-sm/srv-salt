@@ -3,7 +3,7 @@
 {% set qpidssldbpswd=pillar['cons3rt']['qpid_ssldb_password'] %}
 {% set qpid_version=pillar['cons3rt-packages']['qpid']['version'] %}
 {% set messaging=pillar['cons3rt-infrastructure']['hosts']['messaging']['fqdn'] %}
-{% set cacert=pillar['cons3rt']['ca_certificate_name'] %}
+{% set cacert=pillar['cons3rt']['ca_certificate_filename'] %}
 {% set canickname=pillar['cons3rt']['ca_certificate_alias'] %}
 include:
   - cons3rt.messaging.package

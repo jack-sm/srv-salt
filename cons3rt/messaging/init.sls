@@ -25,7 +25,7 @@ cons3rt-messaging-services:
       - sls: cons3rt.messaging.sasl-user
 {% endif %}
 {% if qpidssl|lower == 'true' %}
-      - sls. cons3rt.messaging.ssl
+      - sls: cons3rt.messaging.ssl
 {% endif %}
 
 restart-qpid:
@@ -40,6 +40,6 @@ restart-qpid:
       - sls: cons3rt.messaging.sasl-user
 {% endif %}
 {% if qpidssl|lower == 'true' %}
-      - sls. cons3rt.messaging.ssl
+      - sls: cons3rt.messaging.ssl
 {% endif %}
 

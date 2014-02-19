@@ -62,7 +62,7 @@ qpid-ssl-certificate-database-password-file:
     - user: qpidd
     - group: qpidd
     - require:
-      - file: qpid-ssl-certificate-database
+      - file: qpid-ssl-certificate-database-directory
 
 qpid-ssl-certificate-database-creation:
   cmd:
@@ -70,9 +70,6 @@ qpid-ssl-certificate-database-creation:
     - name: /usr/bin/certutil -N -d {{qpidssldb}} -f {{qpidssldb}}/pfile
     - watch:
       - cmd: remove-qpid-ssl-certificate-database
-    - require:
-      - file: qpid-ssl-certificate-database-directory
-      - file: qpid-ssl-certificate-database-password-file
 
 inject-certificate-qpid-ssl-database:
   cmd:

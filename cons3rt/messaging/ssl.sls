@@ -83,7 +83,7 @@ inject-certificate-qpid-ssl-database:
 inject-cacertificate-qpid-ssl-database:
   cmd:
     - wait
-    - name: /usr/bin/certutil -A -d {{qpidssldb}} -n {{canickname}} -t"TC,," -a -i {{cacert}} -f {{qpidssldb}}/pfile
+    - name: /usr/bin/certutil -A -d {{qpidssldb}} -n {{canickname}} -t"TC,," -a -i /etc/pki/tls/certs/{{cacert}} -f {{qpidssldb}}/pfile
     - watch:
       - cmd: inject-certificate-qpid-ssl-database
     - require:

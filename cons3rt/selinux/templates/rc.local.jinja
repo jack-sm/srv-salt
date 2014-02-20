@@ -41,6 +41,11 @@ if [ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ] && [ -f 
    /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
    printf 'Done.\n'
 
+   printf 'Ensuring selinux allows saltstack operations: '
+   /usr/bin/chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-minion 2&>1
+   /usr/bin/chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-call 2&>1
+   printf 'Done.\n'
+
    printf 'Re-enabling salt-minion: '
    /sbin/chkconfig salt-minion on
    printf 'Done.\n'

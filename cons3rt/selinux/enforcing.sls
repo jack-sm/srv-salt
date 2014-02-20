@@ -26,13 +26,3 @@ set-selinux-config:
       - sls: cons3rt.baseline.packages
       - sls: cons3rt.selinux.selinux-init
 
-selinux-salt-minion:
-  cmd:
-    - wait
-    - names:
-      - chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-minion
-      - chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-call
-      - semodule -i mypol.pp
-    - watch:
-      - augeas: set-selinux-config
-

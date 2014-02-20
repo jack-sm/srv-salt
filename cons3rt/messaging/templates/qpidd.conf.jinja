@@ -12,13 +12,15 @@ auth=no
 {%- endif %}
 realm=QPID
 {%- if sslencrypt|lower=='true' %}
+
 # ssl setup
-ssl-cert-db={{qpidssldb}}
+ssl-cert-db={{qpidssldb}}/
 ssl-cert-password-file={{qpidssldb}}/pfile
 ssl-cert-name={{messaging}}
 ssl-port={{sslport}}
 require-encryption=yes
 {%- endif %}
+
 # logging setup
 log-to-syslog=no
 log-to-stderr=yes

@@ -89,4 +89,9 @@ inject-cacertificate-qpid-ssl-database:
     - require:
       - file: /etc/pki/tls/certs/{{cacert}}
 
-
+initial-qpidd-ssl-certdatabase-ownership:
+  cmd:
+    - wait
+    - name: /bin/chown -R qpidd:qpidd {{qpidssldb}}
+    - watch:
+      - cmd: inject-cacertificate-qpid-ssl-database

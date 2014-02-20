@@ -1,6 +1,10 @@
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 {% set qpid=pillar['cons3rt-packages']['qpid']['package'] %}
 {% set qpid_version=pillar['cons3rt-packages']['qpid']['version'] %}
+cyrus-sasl-plain:
+  pkg:
+    - installed
+
 validate-qpid-server-installed:
   file:
     - managed

@@ -47,7 +47,6 @@ qpid-ssl-certificate-database-directory:
     - makedirs: true
     - user: qpidd
     - group: qpidd
-    - mode: '0644'
     - recurse:
       - user
       - group
@@ -58,7 +57,7 @@ qpid-ssl-certificate-database-password-file:
   file:
     - managed
     - name: {{qpidssldb}}/pfile
-    - contents: "{{qpidssldbpswd}}"
+    - contents: "{{qpidssldbpswd}}\n"
     - user: qpidd
     - group: qpidd
     - require:

@@ -2,21 +2,25 @@
 
 This document walks through the process of building a Salt master in AWS,
 configuring it, and using it to build the virtual machines that will host
-the Cons3rt application. 
+the Cons3rt application.
 
-## Build the Salt Master
+## The Salt Master
 The Salt Master consists of two parts: 
 
 - A vm in AWS
 - a bootstrap script to configure it.
 
 ### Salt Master vm Details
-In Govcloud, the Salt Master uses the following image ID and size:
+In Govcloud, the Salt Master uses the following details:
 
 ```
   image: ami-97fb9fb4  #Amazon Linux, x86_64
   size: m1.medium
+  security group: salt-master
+  ip: 96.127.46.30
 ```
+
+**NOTE**: The IP is very important. This is the IP that salt-cloud uses as the master for the Salt minions to connect to.
 
 ### Salt Master Bootstrap Script
 The bootstrap script installs Salt and configures it to use the `jack-sm` project in Github for states and use S3 for the fileserver backend.
@@ -28,24 +32,10 @@ navigate to the `configs` bucket in S3, and download the script titled `bootstra
 
 Pass this script as a user-data script when creating the VM or simply log into the Salt Master and run it as root. 
 
-## Configure Salt-Cloud
+## Salt-Cloud
+The configuration of salt-cloud is handled by the bootstrap script. This explanation is here for the reader's edification.
+
 Salt-cloud is a cloud controller that is installed with Salt. It allows creation of single, simple VMs or deployment of multiple VMs, each with specific Salt Minion configurations. This deployment uses a [cloud map](http://salt-cloud.readthedocs.org/en/latest/topics/map.html) file to deploy the vms, assign them a role (via [salt grains](http://docs.saltstack.com/topics/targeting/grains.html)), and prepare them to run a `highstate`, which configures the Cons3rt prereqs.
-
-
-Since `salt-cloud` is installed with Salt, the only task is to configure it.
-
-The configurations are also stored in the `configs` bucket in S3. Navigate to the bucket and download the tarball titled `salt-cloud-config.tar`. Place the file on the Salt Master and unpack it, as follows.
-
-```bash
-mv salt-cloud-config.tar /etc/salt/.
-tar -xvf salt-cloud-config.tar
-rm salt-cloud-config.tar
-```
-
-This unpacks the config files required for `salt-cloud`.
-
-The Salt Master is now fully configured.
-
 
 ## Create the vms that Will Host Cons3rt
 The salt-cloud configs include a map file that describes the vms that will host Cons3rt. We will use this map file and the `-P` parameter to launch the vms in parallel. As root, issue the following command and answer `yes` to the prompt:
@@ -63,6 +53,14 @@ The following virtual machines are set to be created:
   test-soapui.aws.cons3rt.com
   library.aws.cons3rt.com
 ```
+
+**NOTE** You may see the following warning when issuing `salt` and `salt-cloud` commands. 
+
+```
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec...
+```
+
+These warnings are a known issue and will be corrected in future versions.
 
 Once the process has completed, you can verify that the vms were created and have connected to the Salt Master with `salt-key`:
 

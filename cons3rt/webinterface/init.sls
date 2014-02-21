@@ -58,5 +58,5 @@ restart-tomcat:
       - sls: cons3rt.tomcat.package
       - sls: cons3rt.webinterface.tomcat-configurations
 {% if selinux|lower == 'true' %}
-      - cmd: httpd-selinux-setsebool{% end %}
+      - cmd: httpd-selinux-setsebool{% endif %}
 

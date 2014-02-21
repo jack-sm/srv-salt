@@ -1,6 +1,7 @@
 {% set jdk=salt['pillar.get']('cons3rt-packages:java_jdk:version','') %}
 {% set jdkpackage=salt['pillar.get']('cons3rt-packages:java_jdk:package','') %}
 {% set jdkpath=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
+{% set selinux=salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 validate-java-jdk-installed:
   file:
     - managed

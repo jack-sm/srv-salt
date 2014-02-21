@@ -1,0 +1,4 @@
+{%- set rag=pillar['cons3rt-infrastructure']['hosts']['remoteaccessgateway']['fqdn'] -%}
+{%- set port=salt['pillar.get']('cons3rt:remoteaccessgateway_tcp_port','9443') -%}
+OPTS="-l {{port}} -C /etc/pki/tls/certs/{{rag}}.crt -K /etc/pki/tls/private/{{rag}}.key"
+

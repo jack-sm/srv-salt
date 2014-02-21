@@ -1,23 +1,24 @@
 # All system accounts needed for the cons3rt infrastructure are managed below
+{% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 /etc/login.defs:
   file:
     - sed
     - before: '500'
-    - after: {{ salt['pillar.get']('cons3rt-system-users:minimum_uid_gid','510') }}
+    - after: {{salt['pillar.get']('cons3rt-system-users:minimum_uid_gid','510')}}
 
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
 modify-ec2-user-gid:
   group:
     - present
     - name: ec2-user
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510') }}
+    - gid: {{salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510')}}
 {% endif %}
 
 cons3rt-account:
   group:
     - present
     - name: cons3rt
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:gid','500') }}
+    - gid: {{salt['pillar.get']('cons3rt-system-users:cons3rt:gid','500')}}
     - require:
       - file: /etc/login.defs
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
@@ -28,7 +29,7 @@ cons3rt-account:
     - home: /home/cons3rt
     - shell: /bin/bash
     - createhome: true
-    - uid: {{ salt['pillar.get']('cons3rt-system-users:cons3rt:uid','500') }}
+    - uid: {{salt['pillar.get']('cons3rt-system-users:cons3rt:uid','500')}}
     - groups:
       - cons3rt
     - require:
@@ -41,7 +42,7 @@ jpmsg-account:
   group:
     - present
     - name: jpmsg
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:gid','501') }}
+    - gid: {{salt['pillar.get']('cons3rt-system-users:jpmsg:gid','501')}}
     - require:
       - file: /etc/login.defs
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
@@ -49,9 +50,9 @@ jpmsg-account:
   user:
     - present
     - name: jpmsg
-    - uid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:uid','501') }}
+    - uid: {{salt['pillar.get']('cons3rt-system-users:jpmsg:uid','501')}}
     - createhome: true
-    - home: {{ salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') }}/jackpine-messaging
+    - home: {{apps_path}}/jackpine-messaging
     - groups:
       - jpmsg
       - cons3rt
@@ -66,7 +67,7 @@ tomcat-account:
   group:
     - present
     - name: tomcat
-    - gid: {{ salt['pillar.get']('cons3rt-system-users:tomcat:gid','502') }}
+    - gid: {{salt['pillar.get']('cons3rt-system-users:tomcat:gid','502')}}
     - require:
       - file: /etc/login.defs
 {% if pillar['cons3rt-infrastructure']['infrastructure_type']|lower == 'aws' %}
@@ -74,7 +75,7 @@ tomcat-account:
   user:
     - present
     - name: tomcat
-    - uid: {{ salt['pillar.get']('cons3rt-system-users:tomcat:uid','502') }}
+    - uid: {{salt['pillar.get']('cons3rt-system-users:tomcat:uid','502')}}
     - createhome: true
     - home: /home/tomcat
     - groups:

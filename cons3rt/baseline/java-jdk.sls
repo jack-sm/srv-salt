@@ -63,3 +63,10 @@ remove-java-jdk-archive:
       - group
     - require:
       - cmd: deploy-java-jdk-package
+
+{% if selinux|lower == 'true' %}
+java-jdk-selinux:
+  cmd:
+    - run
+    - name: /usr/bin/chcon -t textrel_shlib_t {{jdkpath}}/jdk{{jdk}}/jre/lib/amd64/server/libjvm.so
+{% endif %}

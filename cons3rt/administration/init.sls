@@ -1,8 +1,9 @@
 include:
   - cons3rt.baseline
 
-nc:
+administration-packages:
   pkg:
     - installed
-    - latest
-
+    - names:
+      - nc
+      - mysql

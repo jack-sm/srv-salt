@@ -1,11 +1,10 @@
+{% set selinux = salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 include:
   - cons3rt.baseline
   - cons3rt.tomcat.package
   - cons3rt.webinterface.tomcat-configurations
   - cons3rt.webinterface.packages
   - cons3rt.webinterface.apache-configurations
-{% if salt['pillar.get']('cons3rt:guacamole_installed_with_ui','false')|lower == 'true' %}
-  - cons3rt.webinterface.guacamole{% endif %}
 
 cons3rt-webinterface-services:
   service:
@@ -18,6 +17,13 @@ cons3rt-webinterface-services:
       - sls: cons3rt.tomcat.package
       - sls: cons3rt.webinterface.packages
       - sls: cons3rt.webinterface.tomcat-configurations
+
+{% if selinux|lower == 'true' %}
+httpd-selinux:
+  cmd:
+    - run
+    - name: /usr/sbin/setsebool -P httpd_can_network_relay=1
+{% endif %}
 
 restart-httpd:
   module:
@@ -36,24 +42,4 @@ restart-tomcat:
     - watch:
       - sls: cons3rt.tomcat.package
       - sls: cons3rt.webinterface.tomcat-configurations
-
-{% if salt['pillar.get']('cons3rt:guacamole_installed_with_ui','false')|lower == 'true' %}
-cons3rt-console-redirection-service:
-  service:
-    - name: guacd
-    - running
-    - enable: true
-    - require:
-      - sls: cons3rt.webinterface.guacamole
-
-restart-guacamole:
-  module:
-    - wait
-    - name: service.restart
-    - m_name: guacd
-    - watch:
-      - sls: cons3rt.webinterface.guacamole
-      - module: restart-httpd
-      - module: restart-tomcat
-{% endif %}
 

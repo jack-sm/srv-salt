@@ -1,0 +1,29 @@
+{%- set saslauth=salt['pillar.get']('cons3rt:qpid_use_sasl_auth','false') -%}
+{%- set sasldbpath=salt['pillar.get']('cons3rt:qpid_sasldb','/var/lib/qpidd/qpidd.sasldb') -%}
+{%- set qpidssldb=salt['pillar.get']('cons3rt:qpid_ssldb','/var/lib/qpidd/keys/server_db') -%}
+{%- set sslencrypt=salt['pillar.get']('cons3rt:qpid_use_ssl_encryption','false') -%}
+{%- set sslport=salt['pillar.get']('cons3rt:qpid_messaging_port','5671') -%}
+{%- set messaging=pillar['cons3rt-infrastructure']['hosts']['messaging']['fqdn'] -%}
+# SASL authentication
+{%- if saslauth|lower=='true' %}
+auth=yes
+{%- else %}
+auth=no
+{%- endif %}
+realm=QPID
+{%- if sslencrypt|lower=='true' %}
+
+# ssl setup
+ssl-cert-db={{qpidssldb}}/
+ssl-cert-password-file={{qpidssldb}}/pfile
+ssl-cert-name={{messaging}}
+ssl-port={{sslport}}
+require-encryption=yes
+{%- endif %}
+
+# logging setup
+log-to-syslog=no
+log-to-stderr=yes
+log-level=yes
+# for windows systems
+max-negotiate-time=10000

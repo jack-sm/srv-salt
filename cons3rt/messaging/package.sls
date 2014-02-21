@@ -1,11 +1,16 @@
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 {% set qpid=pillar['cons3rt-packages']['qpid']['package'] %}
 {% set qpid_version=pillar['cons3rt-packages']['qpid']['version'] %}
+cyrus-sasl-plain:
+  pkg:
+    - installed
+
 validate-qpid-server-installed:
   file:
     - managed
     - name:  {{apps_path}}/.saltstack-actions/qpid-version-{{qpid_version}}-deployed
     - makedirs: true
+    - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\napache qpid {{qpid_version}} will be re-installed.\n"
     - user: root
     - group: root
     - mode: '0644'

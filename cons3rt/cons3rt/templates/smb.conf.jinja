@@ -1,5 +1,11 @@
-{%- set infranetwork=pillar['cons3rt']['infrastructure_network'] -%}
+{%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
+{%- set iplist=[] -%}
+{%- for host, value in hosts.iteritems() -%}
+{%- if value['ip'] is defined and value['ip']|lower!='none' %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
+{%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
+{%- endfor -%}
 [global]
   workgroup = workgroup
   server string = Samba Server
@@ -8,7 +14,7 @@
   max xmit = 65535
   dead time = 15
   preferred master = no
-  hosts allow = {{infranetwork}} {% for net in sutsnetwork -%} {{net}} {% endfor -%} 127.
+  hosts allow = {% for ip in iplist -%} {{ip}} {% endfor -%}{% for net in sutsnetwork -%} {{net}} {% endfor -%} 127.
   passdb backend = tdbsam
   security = share
   log file = /var/log/samba/systems/log.%m
@@ -18,7 +24,7 @@
 #============================ Share Definitions ==============================
 [CONS3RT]
   comment = CONS3RT share
-  path = /cons3rt
+  path = {{cons3rthome}}
   public = yes
   browsable = no
   writable = yes
@@ -27,11 +33,11 @@
   kernel oplocks = yes
   oplocks = yes
   level2 oplocks = yes
-  hosts allow = {{infranetwork}} 127.
+  hosts allow = {% for ip in iplist -%} {{ip}} {% endfor -%} 127.
 
 [CONS3RT-RUN]
   comment = CONS3RT run share
-  path = /cons3rt/run
+  path = {{cons3rthome}}/run
   public = yes
   browsable = no
   writable = yes
@@ -43,7 +49,7 @@
 
 [AGENT-SERVICE]
   comment = Agent Service share
-  path = /cons3rt/agent-service
+  path = {{cons3rthome}}/agent-service
   public = yes
   browsable = no
   writable = no

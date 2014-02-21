@@ -11,9 +11,11 @@ cons3rt-database:
 {% set cons3rtdbpswdhash=pillar['cons3rt']['cons3rt_database_password'] %}
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
-{% for vm in 'administration','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager' %}
+{% for vm in 'administration','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','remoteaccessgateway' %}
 {% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':fqdn','') %}
-{% if fqdn != '' %}
+{% set ip=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':ip','') %}
+# Test if fqdn is actually defined in the pillar file
+{% if fqdn is defined and fqdn|lower!='none' %}
 cons3rt-db-user-{{vm}}-fqdn:
   mysql_user:
     - present
@@ -37,7 +39,6 @@ cons3rt-db-grant-{{vm}}-fqdn:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
-    - grant_option: true
     - database: cons3rt.*
     - host: {{fqdn}}
     - require:
@@ -48,14 +49,34 @@ cons3rt-db-grant-{{vm}}-hostname:
     - present
     - user: {{cons3rtdbuser}}
     - grant: all privileges
-    - grant_option: true
     - database: cons3rt.*
     - host: {{fqdn|replace('.'~domain,'')}}
     - require:
-      - mysql_user: cons3rt-db-user-{{vm}}-fqdn
+      - mysql_user: cons3rt-db-user-{{vm}}-hostname
+{% endif %}
+# Test if ip is actually defined in the pillar file
+{% if ip is defined and ip|lower!='none' %}
+cons3rt-db-user-{{vm}}-ip:
+  mysql_user:
+    - present
+    - name: {{cons3rtdbuser}}
+    - password_hash: '{{cons3rtdbpswdhash}}'
+    - host: {{ip}}
+    - require:
+      - mysql_database: cons3rt-database
+
+cons3rt-db-grant-{{vm}}-ip:
+  mysql_grants:
+    - present
+    - user: {{cons3rtdbuser}}
+    - grant: all privileges
+    - database: cons3rt.*
+    - host: {{ip}}
+    - require:
+      - mysql_user: cons3rt-db-user-{{vm}}-ip
 {% endif %}
 {% endfor %}
-
+# Ensure the cons3rt db user can access the database from the localhost
 {% for host in '127.0.0.1','localhost' %}
 cons3rt-db-user-local-{{host}}:
   mysql_user:
@@ -76,6 +97,4 @@ cons3rt-db-grant-local-{{host}}:
     - require:
       - mysql_user: cons3rt-db-user-local-{{host}}
 {% endfor %}
-
-
 

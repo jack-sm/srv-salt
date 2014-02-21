@@ -51,7 +51,7 @@ jpmsg-account:
     - name: jpmsg
     - uid: {{ salt['pillar.get']('cons3rt-system-users:jpmsg:uid','501') }}
     - createhome: true
-    - home: /cons3rt/jackpine-messaging
+    - home: {{ salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') }}/jackpine-messaging
     - groups:
       - jpmsg
       - cons3rt

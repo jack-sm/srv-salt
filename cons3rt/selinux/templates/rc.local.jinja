@@ -1,0 +1,57 @@
+{%- set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') -%}
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+
+# Script inserted by SALTSTACK
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ]; then
+   printf '\n\nInitial relabeling of filesystem for SELinux not complete - Exiting.'
+   exit 0
+fi
+
+
+if [ ! -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ]; then
+   /bin/sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+   /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
+
+   printf '\n\nRestoring default SELinux security context for entire filesystem: '
+   /sbin/restorecon -p -R /
+   printf '\nComplete.\n'
+
+   printf 'Creating lock file: '
+   /bin/touch {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/echo -e "SALTSTACK - LOCKFILE\nDo not remove or modify this file in anyway.\nRemoving this file will initiate a restorecon -R / at next reboot." >> {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/chown root:root {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   /bin/chmod 0644 {{apps_path}}/.saltstack-actions/selinux-restorecon-complete
+   printf 'Done.\n'
+
+   printf 'Initiating system restart...'
+   /sbin/shutdown -r now 2&>1
+   exit 0
+fi
+
+if [ -f {{apps_path}}/.saltstack-actions/selinux-filesystem-relabeled ] && [ -f {{apps_path}}/.saltstack-actions/selinux-restorecon-complete ] && [ ! -f {{apps_path}}/.saltstack-actions/selinux-enabled ] && [ `awk -F= -v x="SELINUX" '$1==x{print $2}' /etc/selinux/config|awk '{print tolower($0)}'` != 'enforcing' ]; then
+   printf '\n\nEnabling SELinux: '  
+   /bin/sed -i 's/SELINUX=permissive/SELINUX=enforcing/g' /etc/selinux/config
+   /bin/sed -i 's/SELINUXTYPE=mls/SELINUX=targeted/g' /etc/selinux/config
+   printf 'Done.\n'
+
+   printf 'Ensuring selinux allows saltstack operations: '
+   /usr/bin/chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-minion 2&>1
+   /usr/bin/chcon system_u:object_r:rpm_exec_t:s0 /usr/bin/salt-call 2&>1
+   printf 'Done.\n'
+
+   printf 'Re-enabling salt-minion: '
+   /sbin/chkconfig salt-minion on
+   printf 'Done.\n'
+    
+   printf 'Initiating system restart...'
+   /sbin/shutdown -r now 2&>1
+   exit 0
+fi
+exit 0

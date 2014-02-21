@@ -1,11 +1,13 @@
 {% set jre=salt['pillar.get']('cons3rt-packages:java_jre:version','') %}
 {% set jrepackage=salt['pillar.get']('cons3rt-packages:java_jre:package','') %}
 {% set jrepath=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
+{% set selinux=salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 validate-java-jre-installed:
   file:
     - managed
     - name: {{jrepath}}/.saltstack-actions/java-jre-version-{{jre}}-deployed
     - makedirs: true
+    - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\noracle-java-jre verion {{jre}} will be re-installed.\n"
     - user: root
     - group: root
     - mode: '0644'
@@ -48,7 +50,7 @@ remove-java-jre-archive:
     - template: jinja
     - user: root
     - group: root
-    - mode: '0644'
+    - mode: '0755'
     - require:
       - cmd: deploy-java-jre-package
 
@@ -62,3 +64,12 @@ remove-java-jre-archive:
       - group
     - require:
       - cmd: deploy-java-jre-package
+
+{% if selinux|lower == 'true' %}
+java-jre-selinux:
+  cmd:
+    - run
+    - name: /usr/bin/chcon -t textrel_shlib_t {{jrepath}}/jre{{jre}}/lib/amd64/server/libjvm.so
+{% endif %}
+
+

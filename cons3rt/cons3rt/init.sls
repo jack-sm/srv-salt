@@ -84,6 +84,6 @@ restart-{{service}}:
     - watch:
       - sls: cons3rt.cons3rt.nfs
 {% if selinux|lower == 'true' %}
-      - cmd: nfs-setsebool-selinux{% endfor %}
+      - cmd: nfs-setsebool-selinux{% endif %}
 {% endfor %}
 

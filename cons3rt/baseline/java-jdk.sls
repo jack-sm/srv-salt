@@ -5,7 +5,7 @@
 validate-java-jdk-installed:
   file:
     - managed
-    - name: {{jdkpath}}/.salstack-actions/java-jdk-version-{{jdk}}-deployed
+    - name: {{jdkpath}}/.saltstack-actions/java-jdk-version-{{jdk}}-deployed
     - makedirs: true
     - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\noracle-java-jdk verion {{jdk}} will be re-installed.\n"
     - user: root

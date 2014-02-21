@@ -47,7 +47,7 @@ restart-httpd:
       - sls: cons3rt.webinterface.packages
       - sls: cons3rt.webinterface.apache-configurations
 {% if selinux|lower == 'true' %}
-      - cmd: httpd-selinux-setsebool{% end %}
+      - cmd: httpd-selinux-setsebool{% endif %}
 
 restart-tomcat:
   module:

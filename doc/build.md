@@ -87,14 +87,10 @@ salt-key -d www.aws.cons3rt.com
 ```
 
 ## Run the Highstate
-The `highstate` is the collection of all Salt automation to configure the vms. Running a highstate requires a topfile (named `top.sls`). Issue the following command to fetch the topfile from Github:
-
-```
-wget https://raw2.github.com/jack-sm/srv-salt/master/top_files/cons3rt-grains-top.sls -O /srv/salt/top.sls
-```
-
-Once the topfile has been downloaded, run the highstate with:
+The `highstate` is the collection of all Salt automation to configure the vms. As root, run the following command:
 
 ```
 salt '*cons3rt*' state.highstate
 ```
+
+After some time (usually under five minutes), the command will return with the output of the highstate and the VMs will have been successfully configured.

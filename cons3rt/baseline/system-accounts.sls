@@ -1,6 +1,6 @@
 # All system accounts needed for the cons3rt infrastructure are managed below
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
-{% set rootpswd=salt['pillar.get']('cons3rt-administrators:root_user_password_hash','undefined' %}
+{% set rootpswd=salt['pillar.get']('cons3rt-administrators:root_user_password_hash','undefined') %}
 {% if rootpswd!='undefined' %}
 root-user-password:
   user:

@@ -19,6 +19,5 @@ restart-guacamole:
     - name: service.restart
     - m_name: guacd
     - watch:
-      - sls: cons3rt.remoteaccessgateway.package
       - sls: cons3rt.remoteaccessgateway.guacamole-configurations
 

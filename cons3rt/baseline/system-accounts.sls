@@ -6,8 +6,7 @@ root-user-password:
   user:
     - present
     - name: root
-    - password: {{rootpswd}}
-{% endif}
+    - password: {{rootpswd}}{% endif %}
 
 /etc/login.defs:
   file:
@@ -20,8 +19,7 @@ modify-ec2-user-gid:
   group:
     - present
     - name: ec2-user
-    - gid: {{salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510')}}
-{% endif %}
+    - gid: {{salt['pillar.get']('cons3rt-system-users:ec2-user_gid','510')}}{% endif %}
 
 cons3rt-account:
   group:

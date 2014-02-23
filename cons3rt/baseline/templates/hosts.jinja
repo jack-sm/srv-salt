@@ -7,7 +7,7 @@
 {% if infratype|lower=='aws' or infratype|lower=='openstack' %}
 {% for role, value in hosts.iteritems() -%}
 {% if value['fqdn'] is defined and value['fqdn']|lower!='none' -%}{% if iplist is defined -%}
-{% if salt['mine.get'](value['fqdn'],'network.ip_addrs') is iterable -%}
+{% if salt['mine.get'](value['fqdn'],'network.ip_addrs')!={} -%}
 {% set privateip=((salt['mine.get'](value['fqdn'],'network.ip_addrs'))[value['fqdn']]|first) -%}{% if privateip not in iplist -%}
 {{privateip}}   {{value['fqdn']}} {{value['fqdn']|replace('.'~domain,'')}}{% do iplist.append(privateip) %}
 {% endif -%}{% endif -%}{% endif -%}{% endif -%}{% endfor -%}

@@ -4,11 +4,11 @@
 {%- set saltmineips=salt['mine.get']('*'~domain,'network.ip_addrs') -%}
 {%- set iplist=[] -%}
 127.0.0.1   localhost localhost.localdomain
-{% if infratype|lower=='aws' or infratype|lower=='openstack' %}
+{% if infratype|lower=='aws' or infratype|lower=='openstack' -%}
 {% for role, value in hosts.iteritems() -%}
 {% if value['fqdn'] is defined and value['fqdn']|lower!='none' -%}{% if iplist is defined -%}
-{% if saltmineips(value['fqdn'],'network.ip_addrs')!={} -%}
-{% set privateip=((saltmineips(value['fqdn'],'network.ip_addrs'))[value['fqdn']]|first) -%}{% if privateip not in iplist -%}
+{% if saltmineips[value['fqdn']] is not callable -%}
+{% set privateip=saltmineips[value['fqdn']][0] -%}{% if privateip not in iplist -%}
 {{privateip}}   {{value['fqdn']}} {{value['fqdn']|replace('.'~domain,'')}}{% do iplist.append(privateip) %}
 {% endif -%}{% endif -%}{% endif -%}{% endif -%}{% endfor -%}
 {% else -%}

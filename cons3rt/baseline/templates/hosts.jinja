@@ -5,7 +5,7 @@
 {%- set iplist=[] -%}
 127.0.0.1   localhost localhost.localdomain
 {% if infratype|lower=='aws' or infratype|lower=='openstack' %}
-{% for role, value in host.iteritems() -%}
+{% for role, value in hosts.iteritems() -%}
 {% if value['fqdn'] is defined and value['fqdn']|lower!='none' -%}{% if iplist is defined -%}
 {% if ((salt['mine.get'](value['fqdn'],'network.ip_addrs'))[value['fqdn']]|first) is defined -%}
 {% set privateip=((salt['mine.get'](value['fqdn'],'network.ip_addrs'))[value['fqdn']]|first) -%}{% if privateip not in iplist -%}

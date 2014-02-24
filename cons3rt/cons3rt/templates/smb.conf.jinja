@@ -1,11 +1,61 @@
-{%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
-{%- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
+{#-
+
+Gather the data needed from pillar and salt-mine
+
+-#}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
+{%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
+{%- set infratype = salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') -%}
+{%- set domain=pillar['cons3rt-infrastructure']['domain'] -%}
+{%- set saltmineips=salt['mine.get']('*'~domain,'network.ip_addrs') -%}
 {%- set iplist=[] -%}
+{#-
+
+Decide if the infrastructure is deployed in aws or openstack
+
+-#}
+{%- if infratype|lower=='aws' or infratype|lower=='openstack' -%}
+{#-
+
+Parse through a list of hosts/roles defined in pillar
+
+-#}
 {%- for host, value in hosts.iteritems() -%}
+{%- if value['fqdn'] is defined and value['fqdn']|lower!='none' -%}{% if iplist is defined -%}
+{#-
+
+Determine if the host/role defined in pillar is actually defined in salt-mine
+
+-#}
+{%- if saltmineips[value['fqdn']] is not callable -%}
+{#-
+
+If the data exists in salt-mine, add the ip to 'iplist' if it is not a duplicate
+
+-#}
+{%- set privateip=saltmineips[value['fqdn']][0] -%}{%- if privateip not in iplist -%}
+{%- do iplist.append(privateip) -%}{%- endif -%}{%- endif -%}{%- endif -%}{%- endif -%}{% endfor -%}
+{#-
+
+For managed infrastructures such as vmware or kvm, rely on information stored in pillar
+
+-#}
+{%- else -%}
+{#-
+
+Gather fqdn and ip addresses from pillar for parsing
+
+-#}
+{%- for host, value in hosts.iteritems() -%}
+{#-
+
+Validate that the ip address is actually defined in pillar and that it is unique or first instance
+
+-#}
 {%- if value['ip'] is defined and value['ip']|lower!='none' %}{%- if iplist is defined -%}{%- if value['ip'] not in iplist -%}
 {%- do iplist.append(value['ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
 {%- endfor -%}
+{%- endif -%}
 [global]
   workgroup = workgroup
   server string = Samba Server

@@ -3,6 +3,7 @@
 Gather the data needed from pillar and salt-mine
 
 -#}
+{%- set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') -%}
 {%- set sutsnetwork=pillar['cons3rt']['suts_network'] -%}
 {%- set hosts=pillar['cons3rt-infrastructure']['hosts'] -%}
 {%- set infratype = salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') -%}

@@ -31,7 +31,6 @@ eth0:
     - ipaddr: {{value['ip']}}
     - netmask: {{netmask}}
     - order: 2
-{% endif %}{% break %}{% endif %}{% endfor %}
 
 restart-network:
   module:
@@ -41,6 +40,7 @@ restart-network:
     - order: last
     - watch:
       - network: eth0
+{% endif %}{% break %}{% endif %}{% endfor %}
 
 restart-system:
   module:

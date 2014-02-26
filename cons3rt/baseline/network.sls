@@ -1,3 +1,4 @@
+{% set infratype = salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') %}
 {% set hosts=salt['pillar.get']('cons3rt-infrastructure:hosts') %}
 {% set gateway=pillar['cons3rt-infrastructure']['gateway'] %}
 {% set netmask=pillar['cons3rt-infrastructure']['netmask'] %}
@@ -9,11 +10,18 @@ system:
     - system
     - enabled: true
     - hostname: {{value['fqdn']}}
+{% if infratype|lower == 'kvm' or infratype|lower == 'vmware' %}
     - gateway: {{gateway}}
     - gatewaydev: eth0
-    - nozeroconf: true
+    - nozeroconf: true{% endif %}
     - order: 2
 
+{#-
+
+Validating from pillar if system deployed into a managed infrastructure
+
+-#}
+{% if infratype|lower == 'kvm' or infratype|lower == 'vmware' %}
 eth0:
   network:
     - managed
@@ -23,9 +31,7 @@ eth0:
     - ipaddr: {{value['ip']}}
     - netmask: {{netmask}}
     - order: 2
-{% break %}
-{% endif %}
-{% endfor %}
+{% endif %}{% break %}{% endif %}{% endfor %}
 
 restart-network:
   module:

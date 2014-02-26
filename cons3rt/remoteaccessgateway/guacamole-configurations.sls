@@ -2,7 +2,7 @@
 include:
   - cons3rt.remoteaccessgateway.package
 
-/etc/pki/tls/certs/{{rag}}.crt
+/etc/pki/tls/certs/{{rag}}.crt:
   file:
     - managed
     - source: salt://cons3rt/tls/{{rag}}.crt
@@ -10,7 +10,7 @@ include:
     - group: root
     - mode: '0644'
 
-/etc/pki/tls/private/{{rag}}.key
+/etc/pki/tls/private/{{rag}}.key:
   file:
     - managed
     - source: salt://cons3rt/tls/{{rag}}.key

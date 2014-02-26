@@ -27,7 +27,7 @@ OPTS="$OPTS -p $pid"
 [ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
 
 # Ensure $HOME is set properly, even if environment is clear
-USER=`guacd`
+USER='guacd'
 export HOME=`sh -c "echo ~$USER"`
 
 lockfile=/var/lock/subsys/$prog

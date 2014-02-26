@@ -1,7 +1,18 @@
 {% set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
+{% set webinterface = pillar['cons3rt-infrastructure']['hosts']['webinterface']['fqdn'] %}
 include:
   - cons3rt.baseline.system-accounts
   - cons3rt.tomcat.package
+
+webinterface-keystore:
+  file:
+    - managed
+    - name: /home/tomcat/{{webinterface}}.jks
+    - user: tomcat
+    - group: tomcat
+    - mode: '0644'
+    - require:
+      - sls: cons3rt.baseline.system-accounts
 
 webinterface-tomcat-server.xml:
   file:

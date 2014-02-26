@@ -1,7 +1,18 @@
 {% set apps_path = salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
+{% set assetrepository = pillar['cons3rt-infrastructure']['hosts']['assetrepository']['fqdn'] %}
 include:
   - cons3rt.baseline.system-accounts
   - cons3rt.tomcat.package
+
+assetrepository-keystore:
+  file:
+    - managed
+    - name: /home/tomcat/{{assetrepository}}.jks
+    - user: tomcat
+    - group: tomcat
+    - mode: '0644'
+    - require:
+      - sls: cons3rt.baseline.system-accounts
 
 assetrepository-tomcat-server.xml:
   file:

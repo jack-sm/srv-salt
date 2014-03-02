@@ -1,9 +1,14 @@
 {% set apps_path=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 {% set qpid=pillar['cons3rt-packages']['qpid']['package'] %}
 {% set qpid_version=pillar['cons3rt-packages']['qpid']['version'] %}
-cyrus-sasl-plain:
+qpid-dependencies:
   pkg:
     - installed
+    - names:
+      - boost
+      - cyrus-sasl-plain
+      - nss
+      - nspr
 
 validate-qpid-server-installed:
   file:
@@ -40,19 +45,6 @@ remove-qpid-archive:
     - watch:
       - cmd: unpack-qpid-archive
 
-install-qpid-cpp-server-ssl:
-  cmd:
-    - wait
-    - name: yum install -y qpid-cpp-server-ssl
-    - watch:
-      - module: remove-qpid-archive 
-
-remove-qpid-cpp-server-ssl:
-  cmd:
-    - wait
-    - name: yum erase -y qpid-cpp-server-ssl
-    - watch:
-      - cmd: install-qpid-cpp-server-ssl
 
 {% for file in '/etc/qpidd.conf','/etc/init.d/qpidd' %}
 remove-qpid-configurations-{{file}}:
@@ -73,16 +65,4 @@ qpid-symlink-for-{{name}}:
     - name: {{name}}
     - target: {{apps_path}}/qpidd-{{qpid_version}}/etc/{{target}}
 {% endfor %}
-
-{{apps_path}}/qpidd-{{qpid_version}}:
-  file:
-    - directory
-    - user: qpidd
-    - group: qpidd
-    - recurse:
-      - user
-      - group
-    - require:
-      - cmd: install-qpid-cpp-server-ssl
-
 

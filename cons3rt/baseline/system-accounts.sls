@@ -67,6 +67,23 @@ jpmsg-account:
       - group: jpmsg-account
       - group: cons3rt-account
       - file: /etc/login.defs
+
+qpidd-system-account:
+  group:
+    - present
+    - name: qpidd
+    - system: true
+  user:
+    - present
+    - name: qpidd
+    - shell: /sbin/nologin
+    - system: true
+    - createhome: true
+    - home: /var/lib/qpidd
+    - groups:
+      - qpidd
+    - require:
+      - group: qpidd-system-account
 {% endif %}
 
 {% if grains['id'] == hosts.assetrepository.fqdn or grains['id'] == hosts.webinterface.fqdn %}

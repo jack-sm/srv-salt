@@ -1,5 +1,15 @@
+{#-
+
+Test to see if we are using aws as the infrastructure provider from pillar
+
+-#}
 {% set infratype=pillar['cons3rt-infrastructure']['infrastructure_type'] %}
 {% if infratype|lower=='aws' %}
+{#-
+
+Setup all needed variables for the transaction
+
+-#}
 {% set hosts=pillar['cons3rt-infrastructure']['hosts'] %}
 {% set keyname=pillar['aws-credentials']['key_name'] %}
 {% set launched=[] %}
@@ -8,16 +18,37 @@
 {% set saltminionpub=() %}
 {% set saltminionpem=() %}
 {% set saltminion=() %}
+{#-
+
+Loop through the list of defined hosts from pillar
+
+-#}
 {% for host, value in hosts.iteritems() %}
-{% if value['fqdn'] is defined and value['fqdn']|lower!='none' %}{% if launched is defined %}{% if value['fqdn'] not in launched %}
+{% if value['fqdn'] is defined and value['fqdn']|lower!='none' %}{% if launched is defined %}
+{#-
+
+Validate we are trying to attempt to build the same instance twice
+
+-#}
+{% if value['fqdn'] not in launched %}
+{#-
+
+Add the hostname to the 'launched' list
+
+-#}
 {% do launched.append(value['fqdn']) %}
-/root/launched-aws-instances/{{value['fqdn']}}:
+{#-
+
+If the fqdn named file already exists, do not attempt to repeat the process
+
+-#}
+{% if salt['file.file_exists']('/root/launched-aws-instances/'~value['fqdn']) is false %}
+/root/launched-aws-instances:
   file:
-    - managed
+    - directory
     - makedirs: true
     - user: root
     - group: root
-    - mode: '0644'
 
 create-salt-minion-keys-{{value['fqdn']}}:
   cmd:
@@ -41,17 +72,16 @@ move-public-key-{{value['fqdn']}}:
     - template: jinja
     - user: root
     - group: root
-    - mode: '0644'
+    - mode: '0775'
     - context:
       minionid: {{value['fqdn']}}
 
 aws-run-instance-{{value['fqdn']}}:
   cmd:
     - wait
-    - name: "aws ec2 run-instances --image-id {{value['image_id']}} --count 1 --instance-type {{value['instance_type']}} --key-name {{keyname}} --user-data file://root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh --security-group-ids {{secgroup}} --subnet-id {{subnet}} --private-ip-address {{value['private_ip']}} >> /root/launched-aws-instances/{{value['fqdn']}}"
+    - name: "aws ec2 run-instances --image-id {{value['image_id']}} --count 1 --instance-type {{value['instance_type']}} --key-name {{keyname}} --user-data file:///root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh --security-group-ids {{secgroup}} --subnet-id {{subnet}} --private-ip-address {{value['private_ip']}} > /root/launched-aws-instances/{{value['fqdn']}}"
     - watch:
-      - cmd: /root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh
-{% endif %}{% endif %}{% endif %}{% endfor %}
+      - file: /root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh
+{% endif %}{% endif %}{% endif %}{% endif %}{% endfor %}
 {% endif %}
-
 

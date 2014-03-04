@@ -48,7 +48,7 @@ move-public-key-{{value['fqdn']}}:
 aws-run-instance-{{value['fqdn']}}:
   cmd:
     - wait
-    - name: "aws ec2 run-instances --image-id {{value['image_id']}} --count 1 --instance-type {{value['instance_type']}} --key-name {{keyname}} --user-data '`cat /root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh`' --security-group-ids {{secgroup}} --subnet-id {{subnet}} --private-ip-address {{value['private_ip']}} >> /root/launched-aws-instances/{{value['fqdn']}}"
+    - name: "aws ec2 run-instances --image-id {{value['image_id']}} --count 1 --instance-type {{value['instance_type']}} --key-name {{keyname}} --user-data file://root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh --security-group-ids {{secgroup}} --subnet-id {{subnet}} --private-ip-address {{value['private_ip']}} >> /root/launched-aws-instances/{{value['fqdn']}}"
     - watch:
       - cmd: /root/launched-aws-instances/bootstrap-{{value['fqdn']}}.sh
 {% endif %}{% endif %}{% endif %}{% endfor %}

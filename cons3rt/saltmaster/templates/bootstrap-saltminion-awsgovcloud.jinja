@@ -1,0 +1,52 @@
+{%- set masterip=salt['cmd.run']("/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{print $1}'") -%}
+#!/bin/bash
+#
+# AWS Govcloud Salt-Minion Bootstrap
+# ==================================
+#
+# This script will be created from a salt-master building instances within 
+# AWS Govcloud. The purpose of this script is to overcome the limitations 
+# of salt-cloud not properly utilizing VPC capabilities at this time.
+
+# Validate if script has been executed
+if [ -f /home/ec2-user/.userdata-lock ]; then
+  exit 0
+fi
+
+# Enable the EPEL yum repository
+/usr/bin/sudo yum-config-manager --enable epel 
+
+# Retrieve and execute the latest saltstack bootstrap
+/usr/bin/sudo curl -L http://bootstrap.saltstack.org | sudo sh -s -- -D -U -X 
+
+# Inject the salt-minion's preseeded authorization key
+/usr/bin/sudo mkdir -p /etc/salt/pki
+/usr/bin/sudo echo '{{minionpem}}' > /etc/salt/pki/minion.pem
+/usr/bin/sudo echo '{{minionpub}}' > /etc/salt/pki/minion.pub
+
+# Query meta-data service for salt-minion grains
+INSTANCEID=`/usr/bin/sudo curl --silent http://169.254.169.254/2012-01-12/meta-data/instance-id`
+AMIID=`/usr/bin/sudo curl --silent http://169.254.169.254/2012-01-12/meta-data/ami-id`
+
+# Inject salt-minion configurations
+/usr/bin/sudo rm -i /etc/salt/minion
+/usr/bin/sudo cat > /etc/salt/minion <<EOF
+master: {{master}}
+id: {{minionid}}
+state_output: mixed
+grains:
+  instance-id: $INSTANCEID
+  ami-id: $AMIID
+mine_functions:
+  network.ip_addrs: []
+mine_interval: 60
+EOF
+
+# Enable and start the salt-minion daemon
+/usr/bin/sudo chkconfig salt-minion on
+/usr/bin/sudo service salt-minion start
+
+# Place a lockfile to disable this script on next reboot
+/usr/bin/sudo echo -e "Lockfile for user-data script\nDo not remove\n" > /home/ec2-user/.userdata-lock
+
+exit 0

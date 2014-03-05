@@ -11,8 +11,8 @@ EOF
 cat > /etc/salt/pki/minion.pub <<EOF
 {{minionpub}}
 EOF
-INSTANCEID=`/usr/bin/sudo curl --silent http://169.254.169.254/latest/meta-data/instance-id`
-AMIID=`/usr/bin/sudo curl --silent http://169.254.169.254/latest/meta-data/ami-id`
+INSTANCEID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+AMIID=`curl --silent http://169.254.169.254/latest/meta-data/ami-id`
 rm -rf /etc/salt/minion
 cat > /etc/salt/minion <<EOF
 master: {{masterip}}

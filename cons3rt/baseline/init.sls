@@ -3,7 +3,7 @@
 {% set selinux = salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
 include:
 {% if salt['grains.get']('os')|lower=='amazon' %}
-  - cons3rt.baseline.yum-repositories
+  - cons3rt.baseline.el6-repository
 {% endif %}
 {% if selinux|lower == 'true' %}
   - cons3rt.selinux.enforcing

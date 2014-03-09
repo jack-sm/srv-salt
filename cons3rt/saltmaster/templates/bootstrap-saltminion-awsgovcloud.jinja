@@ -2,7 +2,6 @@
 {%- set minionpub=salt['cmd.run']('cat /root/launched-aws-instances/'~minionid~'.pub') -%}
 {%- set minionpem=salt['cmd.run']('cat /root/launched-aws-instances/'~minionid~'.pem') -%}
 #!/bin/bash
-yum-config-manager --enable epel
 curl -L http://bootstrap.saltstack.org | sh -s -- -D -U -X 
 mkdir -p /etc/salt/pki
 cat > /etc/salt/pki/minion.pem <<EOF
@@ -25,6 +24,7 @@ mine_functions:
   network.ip_addrs: []
 mine_interval: 60
 EOF
+yum-config-manager --enable epel
 chkconfig salt-minion on
 service salt-minion start
 

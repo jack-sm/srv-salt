@@ -89,6 +89,5 @@ tag-instance-{{value['fqdn']}}:
     - watch:
       - cmd: attach-public-ip-{{value['fqdn']}}
 
-{% endif %}{% endif %}{% endif %}{% endif %}{% endfor %}
-{% endif %}
+{% endif %}{% endif %}{% endif %}{% endfor %}
 

@@ -25,5 +25,15 @@ reload-iptables:
     - wait
     - name: service.restart
     - m_name: iptables
+    - order: last
     - watch:
       - file: /etc/sysconfig/iptables
+
+reload-salt-minion-iptables:
+  cmd:
+    - wait
+    - name: "/usr/bin/at now + 1 minute <<< '/sbin/service salt-minion restart'"
+    - order: last
+    - watch:
+      - module: reload-iptables
+

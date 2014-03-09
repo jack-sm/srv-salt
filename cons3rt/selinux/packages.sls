@@ -1,3 +1,8 @@
+{% if salt['grains.get']('os')|lower=='amazon' %}
+include:
+  - cons3rt.baseline.yum-repositories
+{% endif %}
+
 selinux-packages:
   pkg:
     - installed
@@ -11,3 +16,7 @@ selinux-packages:
       - policycoreutils-python
       - setroubleshoot-server
       - setroubleshoot-plugins
+{% if salt['grains.get']('os')|lower=='amazon' %}
+    - require:
+      - sls: cons3rt.baseline.yum-repositories
+{% endif %}

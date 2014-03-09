@@ -1,9 +1,3 @@
-retrieve-centos-gpg-key:
-  cmd:
-    - run
-    - name: /usr/bin/wget -N http://mirror.centos.org/centos/6/os/x86_64/RPM-GPG-KEY-CentOS-6
-    - cwd: /etc/pki/rpm-gpg
-
 /etc/yum.repos.d/el6.repo:
   file:
     - managed
@@ -12,3 +6,10 @@ retrieve-centos-gpg-key:
     - group: root
     - mode: '0644'
 
+retrieve-centos-gpg-key:
+  cmd:
+    - wait
+    - name: /usr/bin/wget -N http://mirror.centos.org/centos/6/os/x86_64/RPM-GPG-KEY-CentOS-6
+    - cwd: /etc/pki/rpm-gpg
+    - watch:
+      - file: /etc/yum.repos.d/el6.repo

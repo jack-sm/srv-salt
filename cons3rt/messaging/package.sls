@@ -9,6 +9,8 @@ qpid-dependencies:
       - cyrus-sasl-plain
       - nss
       - nspr
+      - compat-boost-filesystem
+      - compat-boost-program-options
 
 validate-qpid-server-installed:
   file:

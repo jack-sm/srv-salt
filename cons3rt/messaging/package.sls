@@ -55,7 +55,7 @@ remove-qpid-configurations-{{file}}:
     - name: file.remove
     - path: {{file}}
     - watch:
-      - cmd: remove-qpid-cpp-server-ssl
+      - module: remove-qpid-archive
 {% endfor %}
 
 # Set up symlinks for Qpid

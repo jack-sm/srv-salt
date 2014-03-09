@@ -1,6 +1,6 @@
 {% if salt['grains.get']('os')|lower=='amazon' %}
 include:
-  - cons3rt.baseline.yum-repositories
+  - cons3rt.baseline.el6-repository
 {% endif %}
 
 selinux-packages:
@@ -18,5 +18,5 @@ selinux-packages:
       - setroubleshoot-plugins
 {% if salt['grains.get']('os')|lower=='amazon' %}
     - require:
-      - sls: cons3rt.baseline.yum-repositories
+      - sls: cons3rt.baseline.el6-repository
 {% endif %}

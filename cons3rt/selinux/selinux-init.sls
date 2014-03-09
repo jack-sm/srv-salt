@@ -3,6 +3,38 @@ include:
   - cons3rt.selinux.packages
   - cons3rt.baseline.packages
 
+{% if salt['grains.get']('os')|lower=='amazon' %}
+{% if salt['file.file_exists'](apps_path~'/.saltstack-actions/selinux-initrd-configured')==false %}
+validate-selinux-initrd:
+  file:
+    - managed
+    - name:  {{apps_path}}/.saltstack-actions/selinux-initrd-configured
+    - makedirs: true
+    - contents: "SALTSTACK - LOCK FILE\nIf removed or modified in anyway, the grub configuration and initrd will be rebuilt for selinux\nrequiring a system restart."
+    - user: root
+    - group: root
+    - mode: '0644'
+    - order: 1
+
+/etc/grub.conf:
+  file:
+    - managed
+    - source: salt://cons3rt/selinux/templates/grub.conf.jinja
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: '0644'
+    - order: 1
+
+rebuild-initrd-image:
+  cmd:
+    - wait
+    - name: KERNEL=`/bin/uname -r`;/sbin/new-kernel-pkg --package kernel --mkinitrd --make-default --dracut --depmod --install $KERNEL
+    - order: 1
+    - watch:
+      - file: validate-selinux-initrd
+{% endif %}{% endif %}
+
 setroubleshoot-enabled:
   service:
     - running

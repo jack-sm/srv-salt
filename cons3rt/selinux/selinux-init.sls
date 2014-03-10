@@ -33,6 +33,10 @@ rebuild-initrd-image:
     - order: 1
     - watch:
       - file: validate-selinux-initrd
+    - require:
+      - sls: cons3rt.selinux.packages
+      - sls: cons3rt.baseline.packages
+      - file: /etc/grub.conf
 {% endif %}{% endif %}
 
 setroubleshoot-enabled:

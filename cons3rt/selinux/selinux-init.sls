@@ -16,7 +16,7 @@ validate-selinux-initrd:
     - mode: '0644'
     - order: 1
 
-/etc/grub.conf:
+/boot/grub/menu.lst:
   file:
     - managed
     - source: salt://cons3rt/selinux/templates/grub.conf.jinja
@@ -36,7 +36,7 @@ rebuild-initrd-image:
     - require:
       - sls: cons3rt.selinux.packages
       - sls: cons3rt.baseline.packages
-      - file: /etc/grub.conf
+      - file: /boot/grub/menu.lst
 {% endif %}{% endif %}
 
 setroubleshoot-enabled:

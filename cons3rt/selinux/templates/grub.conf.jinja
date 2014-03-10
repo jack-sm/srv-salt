@@ -1,5 +1,5 @@
-{%- kernel=salt['cmd.run']('/bin/uname -r') -%}
-{%- awsversion=salt['cmd.run']("cat /etc/system-release | awk '{print $5}'") -%}
+{%- set kernel=salt['cmd.run']('/bin/uname -r') -%}
+{%- set awsversion=salt['cmd.run']("cat /etc/system-release | awk '{print $5}'") -%}
 default=0
 timeout=1
 hiddenmenu

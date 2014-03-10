@@ -26,5 +26,4 @@ mine_interval: 60
 EOF
 yum-config-manager --enable epel
 chkconfig salt-minion on
-service salt-minion start
-
+shutdown -r now

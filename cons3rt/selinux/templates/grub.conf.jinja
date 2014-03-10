@@ -6,5 +6,5 @@ hiddenmenu
 
 title Amazon Linux {{awsversion}} ({{kernel}})
 root (hd0)
-kernel /boot/vmlinuz-{{kernel}} root=LABEL=/ console=hvc0 selinux=1 security=selinux LANG=en_US.UTF-8 KEYTABLE=us
+kernel /boot/vmlinuz-{{kernel}} root=LABEL=/ console=hvc0 selinux=1 security=selinux enforcing=1 LANG=en_US.UTF-8 KEYTABLE=us
 initrd /boot/initramfs-{{kernel}}.img

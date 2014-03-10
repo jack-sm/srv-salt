@@ -29,7 +29,7 @@ validate-selinux-initrd:
 rebuild-initrd-image:
   cmd:
     - wait
-    - name: KERNEL=`/bin/uname -r`;/sbin/new-kernel-pkg --package kernel --mkinitrd --make-default --dracut --depmod --install $KERNEL
+    - name: "KERNEL=`/bin/uname -r`;/sbin/new-kernel-pkg --package kernel --mkinitrd --make-default --dracut --depmod --install $KERNEL || exit $?"
     - order: 1
     - watch:
       - file: validate-selinux-initrd

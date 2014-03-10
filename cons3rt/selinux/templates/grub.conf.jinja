@@ -1,0 +1,10 @@
+{%- kernel=salt['cmd.run']('/bin/uname -r') -%}
+{%- awsversion=salt['cmd.run']("cat /etc/system-release | awk '{print $5}'") -%}
+default=0
+timeout=1
+hiddenmenu
+
+title Amazon Linux {{awsversion}} ({{kernel}})
+root (hd0)
+kernel /boot/vmlinuz-{{kernel}} root=LABEL=/ console=hvc0 selinux=1 security=selinux enforcing=1 LANG=en_US.UTF-8 KEYTABLE=us
+initrd /boot/initramfs-{{kernel}}.img

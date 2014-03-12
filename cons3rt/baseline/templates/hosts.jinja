@@ -13,7 +13,7 @@
 {% endif -%}{% endif -%}{% endif -%}{% endif -%}{% endfor -%}
 {% elif infratype|lower == 'aws' -%}
 {% for role, value in hosts.iteritems() -%}
-{% if value['private_ip'] is defined and value['privat_ip']|lower!='none' -%}{% if iplist is defined -%}{% if value['private_ip'] not in iplist -%}
+{% if value['private_ip'] is defined and value['private_ip']|lower!='none' -%}{% if iplist is defined -%}{% if value['private_ip'] not in iplist -%}
 {{value['private_ip']}}   {{value['fqdn']}} {{value['fqdn']|replace('.'~domain,'')}}{% do iplist.append(value['private_ip']) %}
 {% endif -%}{% endif -%}{% endif -%}{% endfor -%}
 {% else -%}

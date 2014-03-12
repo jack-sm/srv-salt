@@ -2,14 +2,6 @@
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {% set infratype = salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') %}
-{% if salt['pkg.version']('mysql-server')[2]|int < 5 %}
-  {% set grantvalue='all privileges' %}
-{% else %}
-  {% set grantvalue='all' %}
-{% endif %}
-{% if infratype|lower=='openstack' %}
-  {% set saltmineips=salt['mine.get']('*'~domain,'network.ip_addrs') %}
-{% endif %}
 include:
   - cons3rt.database.mysql.packages
 
@@ -19,6 +11,15 @@ cons3rt-database:
     - name: cons3rt
     - require:
       - sls: cons3rt.database.mysql.packages
+
+{% if salt['pkg.version']('mysql-server')[2]|int < 5 %}
+  {% set grantvalue='all privileges' %}
+{% else %}
+  {% set grantvalue='all' %}
+{% endif %}
+{% if infratype|lower=='openstack' %}
+  {% set saltmineips=salt['mine.get']('*'~domain,'network.ip_addrs') %}
+{% endif %}
 
 {% for vm in 'administration','cons3rt','database','messaging','assetrepository','webinterface','sourcebuilder','testmanager','remoteaccessgateway' %}
   {% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~vm~':fqdn','') %}

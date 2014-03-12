@@ -15,7 +15,7 @@ Gather the data needed from pillar and salt-mine
 Decide if the infrastructure is deployed in aws or openstack
 
 -#}
-{%- if infratype|lower=='aws' or infratype|lower=='openstack' -%}
+{%- if infratype|lower=='openstack' -%}
 {#-
 
 Parse through a list of hosts/roles defined in pillar
@@ -41,6 +41,21 @@ If the data exists in salt-mine, add the ip to 'iplist' if it is not a duplicate
 For managed infrastructures such as vmware or kvm, rely on information stored in pillar
 
 -#}
+{%- elif infratype|lower=='aws' -%}
+{#-
+
+Gather fqdn and private_ip addresses from pillar for parsing
+
+-#}
+{%- for host, value in hosts.iteritems() -%}
+{#-
+
+Validate that the private_ip address is actually defined in pillar and that it is unique or first instance
+
+-#}
+{%- if value['private_ip'] is defined and value['private_ip']|lower!='none' %}{%- if iplist is defined -%}{%- if value['private_ip'] not in iplist -%}
+{%- do iplist.append(value['private_ip']) -%}{%- endif -%}{%- endif -%}{%- endif -%}
+{%- endfor -%}
 {%- else -%}
 {#-
 

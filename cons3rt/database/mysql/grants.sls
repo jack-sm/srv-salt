@@ -12,11 +12,6 @@ cons3rt-database:
     - require:
       - sls: cons3rt.database.mysql.packages
 
-{% if salt['pkg.version']('mysql-server')[2]|int < 5 %}
-  {% set grantvalue='all privileges' %}
-{% else %}
-  {% set grantvalue='all' %}
-{% endif %}
 {% if infratype|lower=='openstack' %}
   {% set saltmineips=salt['mine.get']('*'~domain,'network.ip_addrs') %}
 {% endif %}
@@ -57,7 +52,7 @@ cons3rt-db-grant-{{vm}}-fqdn:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
-    - grant: all privileges
+    - grant: all
     - database: cons3rt.*
     - host: {{fqdn}}
     - require:
@@ -67,7 +62,7 @@ cons3rt-db-grant-{{vm}}-hostname:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
-    - grant: {{grantvalue}}
+    - grant: all
     - database: cons3rt.*
     - host: {{fqdn|replace('.'~domain,'')}}
     - require:
@@ -88,7 +83,7 @@ cons3rt-db-grant-{{vm}}-ip:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
-    - grant: {{grantvalue}}
+    - grant: all
     - database: cons3rt.*
     - host: {{ip}}
     - require:
@@ -110,7 +105,7 @@ cons3rt-db-grant-local-{{host}}:
   mysql_grants:
     - present
     - user: {{cons3rtdbuser}}
-    - grant: {{grantvalue}}
+    - grant: all
     - database: cons3rt.*
     - host: {{host}}
     - require:

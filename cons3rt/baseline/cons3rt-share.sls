@@ -1,10 +1,13 @@
 {% set infratype=salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') %}
 {% set cons3rt=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] %}
 {% set cons3rtip=() %}
-{% if infratype|lower=='aws' or infratype|lower=='openstack' %}
-{% set cons3rtip=(salt['mine.get'](cons3rt,'network.ip_addrs'))[cons3rt]|first %}
+{% if infratype|lower=='aws' %}
+  {% set cons3rtip=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['private_ip'] %}
+{% elif infratype|lower=='openstack' %}
+  {% set cons3rtip=(salt['mine.get'](cons3rt,'network.ip_addrs'))[cons3rt]|first %}
 {% else %}
-{% set cons3rtip=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['ip'] %}{% endif %}
+  {% set cons3rtip=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['ip'] %}
+{% endif %}
 {% set cons3rt=pillar['cons3rt-infrastructure']['hosts']['cons3rt']['fqdn'] %}
 {% set cons3rthome=salt['pillar.get']('cons3rt:cons3rt_path','/cons3rt') %}
 include:

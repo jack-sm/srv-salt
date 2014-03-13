@@ -1,7 +1,9 @@
-{%- set rag=pillar['cons3rt-infrastructure']['hosts']['remoteaccessgateway']['fqdn'] -%}
+{% set rag=pillar['cons3rt-infrastructure']['hosts']['remoteaccessgateway']['fqdn'] %}
+{% set webinterface=pillar['cons3rt-infrastructure']['hosts']['webinterface']['fqdn'] %}
 include:
   - cons3rt.remoteaccessgateway.package
 
+{% if rag!=webinterface %}
 /etc/pki/tls/certs/{{rag}}.crt:
   file:
     - managed
@@ -17,6 +19,7 @@ include:
     - user: root
     - group: root
     - mode: '0644'
+{% endif %}
 
 /var/run/guacd:
   file:

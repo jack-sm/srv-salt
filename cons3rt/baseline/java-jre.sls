@@ -1,7 +1,17 @@
+{% set cacert=salt['pillar.get']('cons3rt:ca_certificate_filename') %}
+{% set cacertalias=salt['pillar.get']('cons3rt:ca_certificate_alias') %}
 {% set jre=salt['pillar.get']('cons3rt-packages:java_jre:version','') %}
 {% set jrepackage=salt['pillar.get']('cons3rt-packages:java_jre:package','') %}
 {% set jrepath=salt['pillar.get']('cons3rt-packages:application_path','/opt') %}
 {% set selinux=salt['pillar.get']('cons3rt-infrastructure:enable_selinux','false') %}
+/etc/pki/tls/certs/{{cacert}}:
+  file:
+    - managed
+    - source: salt://cons3rt/tls/{{cacert}}
+    - user: root
+    - group: root
+    - mode: '0644'
+
 validate-java-jre-installed:
   file:
     - managed
@@ -65,6 +75,27 @@ remove-java-jre-archive:
     - require:
       - cmd: deploy-java-jre-package
 
+{% if salt['file.file_exits']({{jrepath}}~'/jre'~{{jre}}~'/lib/security/cacerts') == true %}
+validate-cacert-injected-java-keystore:
+  file:
+    - managed
+    - name: {{jrepath}}/.saltstack-actions/java-jre-version-{{jre}}-cacert-injected
+    - makedirs: true
+    - contents: "SALTSTACK LOCK FILE\nIf the contents or permissions of this file are changed in any way,\nsaltstack will attempt to inject the cacert into the default\njava keystore.\n"
+    - user: root
+    - group: root
+    - mode: '0644'
+
+inject-cacert-java-keystore:
+  cmd:
+    - wait
+    - name: {{jrepath}}/jre{{jre}}/bin/keytool -import -noprompt -file /etc/pki/tls/certs/{{cacert}} -alias {{cacertalias}} -keystore {{jrepath}}/jre{{jre}}/lib/security/cacerts -storepass changeit
+    - watch:
+      - file: validate-cacert-injected-java-keystore
+    - require:
+      - file: /etc/pki/tls/certs/{{cacert}}
+{% endif %}
+  
 {% if selinux|lower == 'true' %}
 java-jre-selinux:
   cmd:

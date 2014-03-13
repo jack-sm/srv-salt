@@ -1,7 +1,7 @@
 {%- set webinterface = pillar['cons3rt-infrastructure']['hosts']['webinterface']['fqdn'] -%}
 {%- set maintmode = salt['pillar.get']('cons3rt:enable_maint_mode','false') -%}
-{%- set cacert = salt['pillar.get']('cons3rt:ca_certificate_filename','undefined') -%}
-{%- set crl = salt['pillar.get']('cons3rt:webinterface_ca_revocation_path','undefined') -%}
+{%- set cacert = pillar['cons3rt']['ca_certificate_filename'] -%}
+{%- set crl = salt['pillar.get']('cons3rt:webinterface_ca_revocation_path') -%}
 # Configuration file provided by CONS3RT to allow HTTPD to sit in front
 # of the container CONS3RT GUI runs in (JBoss or Tomcat)
 
@@ -21,7 +21,7 @@
   SSLCACertificateFile /etc/pki/tls/certs/{{cacert}}
   SSLCertificateFile /etc/pki/tls/certs/{{webinterface}}.crt
   SSLCertificateKeyFile /etc/pki/tls/private/{{webinterface}}.key
-{%- if crl|lower != 'undefined' %}
+{%- if crl|lower != 'none' %}
   SSLCARevocationPath {{crl}}{% endif %}
   SSLInsecureRenegotiation On
   SSLOptions +OptRenegotiate

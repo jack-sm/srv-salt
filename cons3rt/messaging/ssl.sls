@@ -25,14 +25,6 @@ validate-qpid-ssl-certificate-database-creation:
     - group: root
     - mode: '0644'
 
-/etc/pki/tls/certs/{{cacert}}:
-  file:
-    - managed
-    - source: salt://cons3rt/tls/{{cacert}}
-    - user: root
-    - group: root
-    - mode: '0644'
-
 remove-qpid-ssl-certificate-database:
   cmd:
     - wait

@@ -8,7 +8,7 @@ include:
 {% if selinux|lower == 'true' %}
   - cons3rt.selinux.enforcing
 {% endif %}
-{% for state in 'commons-daemon','cons3rt-profile','cons3rt-share','system-accounts','hosts','iptables','ntp','packages','admin-users','network' %}
+{% for state in 'commons-daemon','cons3rt-profile','cons3rt-share','system-accounts','hosts','iptables','packages','admin-users','network' %}
   - cons3rt.baseline.{{state}}
 {% endfor %}
 {% if grains['id'] == sourcebuilder %}
@@ -17,6 +17,7 @@ include:
   - cons3rt.baseline.java-jre
 {% endif %}
 {% if infratype|lower == 'kvm' or infratype|lower == 'vmware' %}
+  - cons3rt.baseline.ntp
   - cons3rt.baseline.resolv
 {% endif %}
 

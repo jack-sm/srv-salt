@@ -21,7 +21,7 @@
   SSLCACertificateFile /etc/pki/tls/certs/{{cacert}}
   SSLCertificateFile /etc/pki/tls/certs/{{webinterface}}.crt
   SSLCertificateKeyFile /etc/pki/tls/private/{{webinterface}}.key
-{%- if crl != 'undefined' %}
+{%- if crl|lower != 'undefined' %}
   SSLCARevocationPath {{crl}}{% endif %}
   SSLInsecureRenegotiation On
   SSLOptions +OptRenegotiate

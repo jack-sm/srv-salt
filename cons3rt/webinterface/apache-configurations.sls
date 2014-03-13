@@ -42,13 +42,19 @@ include:
     - require:
       - sls: cons3rt.webinterface.packages
 
+/var/www/html/cons3rt:
+  file:
+    - directory
+    - user: apache
+    - group: apache
+
 /etc/pki/tls/certs/{{webinterface}}.crt:
   file:
     - managed
     - source: salt://cons3rt/tls/{{webinterface}}.crt
     - user: root
     - group: root
-    - mode: '0600'
+    - mode: '0644'
 
 /etc/pki/tls/private/{{webinterface}}.key:
   file:
@@ -56,7 +62,7 @@ include:
     - source: salt://cons3rt/tls/{{webinterface}}.key
     - user: root
     - group: root
-    - mode: '0400'
+    - mode: '0644'
 
 /etc/pki/tls/certs/{{cacert}}:
   file:

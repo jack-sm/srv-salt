@@ -75,7 +75,7 @@ remove-java-jre-archive:
     - require:
       - cmd: deploy-java-jre-package
 
-{% if salt['file.file_exits'](jrepath~'/jre'~jre~'/lib/security/cacerts') == true %}
+{% if salt['file.file_exists'](jrepath~'/jre'~jre~'/lib/security/cacerts') == true %}
 validate-cacert-injected-java-keystore:
   file:
     - managed

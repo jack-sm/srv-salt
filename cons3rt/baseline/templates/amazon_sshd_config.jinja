@@ -43,10 +43,13 @@ SyslogFacility AUTHPRIV
 # Authentication:
 
 #LoginGraceTime 2m
-{%- if rootlogin|lower=='true' %}PermitRootLogin yes{%- else %}#PermitRootLogin yes{%- endif %}
-
+{% if rootlogin|lower=='true' %}PermitRootLogin yes
+{% elif rootlogin|lower=='false' %}#PermitRootLogin yes
+{% endif %}
 # Only allow root to run commands over ssh, no shell
-{%- if rootlogin|lower=='true' %}#PermitRootLogin forced-commands-only{%- else %}PermitRootLogin forced-commands-only{%- endif %}
+{% if rootlogin|lower=='true' %}#PermitRootLogin forced-commands-only
+{% elif rootlogin|lower=='false' %}PermitRootLogin forced-commands-only
+{% endif %}
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
@@ -77,8 +80,9 @@ AuthorizedKeysFile      .ssh/authorized_keys
 #PasswordAuthentication yes
 #PermitEmptyPasswords no
 # EC2 uses keys for remote access
-{%- if rootlogin|lower=='true' %}PasswordAuthentication yes{%- else %}PasswordAuthentication no{%- endif %}
-
+{% if rootlogin|lower=='true' %}PasswordAuthentication yes
+{% elif rootlogin|lower=='false' %}PasswordAuthentication no
+{% endif %}
 # Change to no to disable s/key passwords
 #ChallengeResponseAuthentication yes
 ChallengeResponseAuthentication no

@@ -1,7 +1,8 @@
-# FILE MANAGED BY SALTSTACK - DO NOT MODIFY LOCALLY
 {%- set searchpath=pillar['cons3rt-infrastructure']['search_domain'] %}
 {%- set nameservers=pillar['cons3rt-infrastructure']['dnsservers'] %}
-search {{ searchpath }}
+{%- for domain in nameserver %}
+search {{domain}}
+{%- endfor %}
 {%- for nameserver in nameservers %}
 nameserver {{ nameserver }}
 {%- endfor %}

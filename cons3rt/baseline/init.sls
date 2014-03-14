@@ -8,7 +8,7 @@ include:
 {% if selinux|lower == 'true' %}
   - cons3rt.selinux.enforcing
 {% endif %}
-{% for state in 'commons-daemon','cons3rt-profile','cons3rt-share','system-accounts','hosts','iptables','packages','admin-users','network' %}
+{% for state in 'commons-daemon','cons3rt-profile','cons3rt-share','system-accounts','hosts','iptables','packages','admin-users','network','ssh-config' %}
   - cons3rt.baseline.{{state}}
 {% endfor %}
 {% if grains['id'] == sourcebuilder %}

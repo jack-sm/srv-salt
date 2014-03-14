@@ -8,6 +8,7 @@ webinterface-keystore:
   file:
     - managed
     - name: /home/tomcat/{{webinterface}}.jks
+    - source: salt://cons3rt/tls/{{webinterface}}.jks
     - user: tomcat
     - group: tomcat
     - mode: '0644'

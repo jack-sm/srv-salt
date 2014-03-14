@@ -8,6 +8,7 @@ assetrepository-keystore:
   file:
     - managed
     - name: /home/tomcat/{{assetrepository}}.jks
+    - source: salt://cons3rt/tls/{{assetrepository}}.jks
     - user: tomcat
     - group: tomcat
     - mode: '0644'

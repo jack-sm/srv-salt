@@ -2,6 +2,7 @@
 {% set cons3rtdbuser=salt['pillar.get']('cons3rt:cons3rt_database_user','cons3rt') %}
 {% set domain=pillar['cons3rt-infrastructure']['domain'] %}
 {% set infratype = salt['pillar.get']('cons3rt-infrastructure:infrastructure_type','undefined') %}
+{% set installtype = salt['pillar.get']('cons3rt-infrastructure:deployment_type','saltstack') %}
 include:
   - cons3rt.database.mysql.packages
 
@@ -111,4 +112,28 @@ cons3rt-db-grant-local-{{host}}:
     - require:
       - mysql_user: cons3rt-db-user-local-{{host}}
 {% endfor %}
+{% if installtype|lower == 'otto' %}
+  {% for host in 'administration','database' %}
+    {% set fqdn=salt['pillar.get']('cons3rt-infrastructure:hosts:'~host~':fqdn') %}
+    {% if fqdn is defined and fqdn|lower!='none' %}
+root-db-user-{{host}}:
+    mysql_user:
+    - present
+    - name: root
+    - allow_passwordless: true
+    - host: {{host}}
+    - require:
+      - mysql_database: cons3rt-database
 
+root-db-grant-{{host}}:
+  mysql_grants:
+    - present
+    - user: root
+    - grant: all
+    - database: cons3rt.*
+    - host: {{host}}
+    - require:
+      - mysql_user: root-db-user-{{host}}
+    {% endif %}
+  {% endfor %}
+{% endif %}

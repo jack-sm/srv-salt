@@ -47,7 +47,7 @@ salt-call state.sls cons3rt.saltmaster.initiate-ec2-instances
 
 The above command will use the aws-cli along with information that has been populated within /srv/pillar/cons3rt_aws.sls to build the instances, and authorize
 them with the salt-master. A folder will be created named `/root/launched-aws-instances` which contains the bootstrap scripts, salt-minion
-keys and the output of running the aws cli. If you wish to rebuild the instances, remove the contents of this folder, use the aws cli or web console
+keys and the output of running the aws cli. If you wish to rebuild the instances, remove the contents of this folder, use the aws cli or [web console](https://signin.amazonaws-us-gov.com)
  to destroy the instances, and re-run the above salt-call command. 
 
 ## Run the Highstate
